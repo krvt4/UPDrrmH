@@ -10,7 +10,7 @@ import Slide3 from "../assets/DSC_9998.jpg";
 
 import BERSTImage from "../assets/BERSTImage.jpg";
 import SFATBLSImage from "../assets/SFATBLSImage.png";
-import MCIImage from "../assets/mci.jpg";
+import MCIImage from "../assets/MCI.jpg";
 
 import backgroundImage from "../assets/background.png";
 
