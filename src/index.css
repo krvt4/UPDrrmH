@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body,
+#root {
+  font-family: "Montserrat", sans-serif;
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  overscroll-behavior-y: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Global readable defaults */
+@layer base {
+  h1 {
+    @apply text-3xl md:text-4xl font-bold leading-tight break-words;
+  }
+
+  h2 {
+    @apply text-2xl md:text-3xl font-semibold leading-snug break-words;
+  }
+
+  p {
+    @apply text-base md:text-lg leading-relaxed;
+  }
+}
+
+/* News/article readability */
+.news-article p {
+  text-align: justify;
+  line-height: 1.75;
+  letter-spacing: normal;
+  word-spacing: normal;
+}
+
+/* Custom mustard scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #daa520;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #b8860b;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #daa520 transparent;
+}
