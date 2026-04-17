@@ -26,3 +26,6 @@ dist-ssr
 node_modules
 .env
 serviceAccountKey.json
+
+public/uploads/videos/
+*.mp4
