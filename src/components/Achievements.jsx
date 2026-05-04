@@ -91,7 +91,8 @@ function Achievements() {
       {
         id: 5,
         icon: Star,
-        title: "First Academic Society Conference on Climate and Disaster Resilience",
+        title:
+          "First Academic Society Conference on Climate and Disaster Resilience",
         image: "/uploads/pictures/DSC5.jpg",
         summary:
           "Awarded for invaluable contribution as Moderator during the First Academic Society Conference on Climate and Disaster Resilience.",
@@ -108,14 +109,12 @@ function Achievements() {
         description:
           "This award honors the meaningful contribution and leadership of Dr. Carlos Primero D. Gundran as Chief Resident in the Department of Emergency Medicine.",
       },
-    ],
-    []
-  );
 
-  const certifications = useMemo(
-    () => [
+      /*
+        Moved from Certifications into Recognitions
+      */
       {
-        id: 1,
+        id: 7,
         icon: FileBadge,
         title: "Visayas Leg 2025 Certificate of Appreciation",
         image: "/uploads/pictures/DSC_9328.JPG",
@@ -125,7 +124,7 @@ function Achievements() {
           "This certificate of appreciation was presented to the University of the Philippines Manila in grateful recognition of invaluable support and active participation as exhibitor during the Handa Pilipinas sa Bagong Pilipinas: Innovations in Climate and Disaster Resilience Nationwide Exposition 2025 (Visayas Leg).",
       },
       {
-        id: 2,
+        id: 8,
         icon: FileCheck,
         title: "Luzon Leg 2025 Certificate of Appreciation",
         image: "/uploads/pictures/DSC_9331.JPG",
@@ -135,7 +134,7 @@ function Achievements() {
           "This certificate of appreciation was awarded to UP–Manila in recognition of invaluable contribution as exhibitor during the 2025 Handa Pilipinas sa Bagong Pilipinas: Innovations in Climate and Disaster Resilience Nationwide Exposition (Luzon Leg).",
       },
       {
-        id: 3,
+        id: 9,
         icon: ScrollText,
         title: "Visayas Leg Partnership Certificate",
         image: "/uploads/pictures/DSC_9332.JPG",
@@ -145,7 +144,7 @@ function Achievements() {
           "This certificate recognizes the valuable support and partnership of the University of the Philippines Manila in the successful realization of Handa Pilipinas: Visayas Leg, further promoting disaster preparedness and resilience.",
       },
       {
-        id: 4,
+        id: 10,
         icon: ShieldCheck,
         title: "Pagkilala from Ugnayan ng Pahinungod Manila",
         image: "/uploads/pictures/DSC_9334.JPG",
@@ -155,7 +154,7 @@ function Achievements() {
           "This framed certificate of recognition honors Dr. Carlos Primero Gundran for his notable contribution and dedication to the programs of Ugnayan ng Pahinungod Manila and for his service to public-oriented initiatives.",
       },
       {
-        id: 5,
+        id: 11,
         icon: Star,
         title: "DRRM-H Team Recognition Photo",
         image: "/uploads/pictures/DSC_9336.JPG",
@@ -165,7 +164,7 @@ function Achievements() {
           "This framed group image represents the Disaster Risk Reduction and Management in Health Center team of the University of the Philippines Manila and serves as a visual recognition of the organization and its members.",
       },
       {
-        id: 6,
+        id: 12,
         icon: Award,
         title: "Emergency Medicine Workshop Certificate of Appreciation",
         image: "/uploads/pictures/DSC_9338.JPG",
@@ -175,7 +174,7 @@ function Achievements() {
           "This certificate of appreciation was presented to the UP-Manila Disaster Risk Reduction and Management in Health Center for facilitating the pre-convention workshop on Mass Casualty Incident and Disaster Preparedness during the 25th Postgraduate Course entitled EvolvED: The Future of Emergency Medicine Practice.",
       },
       {
-        id: 7,
+        id: 13,
         icon: BadgeCheck,
         title: "DRRM-H Summit 2025 Certificate of Appreciation",
         image: "/uploads/pictures/DSC_9340.JPG",
@@ -185,7 +184,7 @@ function Achievements() {
           "This certificate of appreciation recognizes the University of the Philippines for outstanding and invaluable contributions during disaster response operations, highlighting dedication, partnership, and resilience in times of crisis.",
       },
       {
-        id: 8,
+        id: 14,
         icon: Medal,
         title: "Certificate of Participation – Exhibitor",
         image: "/uploads/pictures/DSC_9343.JPG",
@@ -197,6 +196,8 @@ function Achievements() {
     ],
     []
   );
+
+  const certifications = useMemo(() => [], []);
 
   const scrollByCard = (ref, direction, selector) => {
     if (!ref.current) return;
@@ -253,18 +254,7 @@ function Achievements() {
     setActiveIndex(closestIndex);
   };
 
-  const renderGallery = ({
-    items,
-    scrollRef,
-    activeIndex,
-    setActiveIndex,
-    cardSelector,
-    sectionLabel,
-    sectionTitle,
-    sectionDescription,
-    prevLabel,
-    nextLabel,
-  }) => (
+  const renderEmptyState = ({ sectionLabel, sectionTitle, sectionDescription }) => (
     <section className="mb-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
@@ -278,7 +268,7 @@ function Achievements() {
         </div>
 
         <div
-          className="relative rounded-[30px] overflow-hidden shadow-[0_16px_40px_rgba(123,17,19,0.22)] px-4 md:px-6 py-8 md:py-10"
+          className="relative rounded-[30px] overflow-hidden shadow-[0_16px_40px_rgba(123,17,19,0.22)] px-4 md:px-6 py-12 md:py-16"
           style={{
             backgroundImage: `url(${achievementsSectionBg})`,
             backgroundSize: "cover",
@@ -287,171 +277,246 @@ function Achievements() {
         >
           <div className="absolute inset-0 bg-[#7B1113]/72 backdrop-blur-[1px]" />
 
-          <div className="relative z-10">
-            <div className="flex items-center justify-between gap-3 mb-6">
-              <p className="text-xs uppercase tracking-[0.28em] text-white/70">
-                {sectionLabel}
+          <div className="relative z-10 text-center text-white">
+            <p className="text-xs uppercase tracking-[0.28em] text-white/70 mb-4">
+              {sectionLabel}
+            </p>
+
+            <div className="mx-auto max-w-2xl rounded-[26px] border border-white/15 bg-white/10 backdrop-blur-md px-6 py-10 shadow-[0_12px_28px_rgba(0,0,0,0.22)]">
+              <div className="mx-auto mb-5 h-16 w-16 rounded-full bg-white/15 border border-white/15 flex items-center justify-center">
+                <FileBadge size={30} className="text-[#F4C430]" />
+              </div>
+
+              <h3 className="text-2xl md:text-3xl font-extrabold">
+                Certifications Coming Soon
+              </h3>
+
+              <p className="mt-4 text-sm md:text-base text-white/85 leading-relaxed">
+                This section is currently blank and reserved for future
+                certification entries
               </p>
-
-              <div className="hidden md:flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => scrollByCard(scrollRef, "left", cardSelector)}
-                  className="h-12 w-12 rounded-full bg-white/15 border border-white/15 text-white backdrop-blur-md flex items-center justify-center hover:bg-white/25 transition"
-                  aria-label={prevLabel}
-                >
-                  <ArrowLeft size={20} />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => scrollByCard(scrollRef, "right", cardSelector)}
-                  className="h-12 w-12 rounded-full bg-[#F4C430] text-[#7B1113] border border-transparent flex items-center justify-center hover:scale-105 transition"
-                  aria-label={nextLabel}
-                >
-                  <ArrowRight size={20} />
-                </button>
-              </div>
-            </div>
-
-            <div
-              ref={scrollRef}
-              onScroll={() => handleScroll(scrollRef, cardSelector, setActiveIndex)}
-              className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 no-scrollbar"
-              style={{
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-              }}
-            >
-              {items.map((item, index) => {
-                const Icon = item.icon;
-                const isActive = index === activeIndex;
-
-                return (
-                  <button
-                    key={`${sectionLabel}-${item.id}`}
-                    type="button"
-                    data-card
-                    onClick={() => setSelectedAchievement(item)}
-                    className={`group relative shrink-0 w-[86%] sm:w-[70%] md:w-[48%] xl:w-[37%] snap-start text-left rounded-[28px] overflow-hidden border transition duration-300 ${
-                      isActive
-                        ? "border-[#F4C430] shadow-[0_20px_40px_rgba(0,0,0,0.30)]"
-                        : "border-white/10 shadow-[0_12px_28px_rgba(0,0,0,0.22)]"
-                    } bg-white/10 backdrop-blur-md hover:-translate-y-1`}
-                  >
-                    <div className="relative h-72 md:h-80 overflow-hidden">
-                      <div
-                        className="absolute inset-0 scale-110"
-                        style={{
-                          backgroundImage: `url(${item.image})`,
-                          backgroundSize: "cover",
-                          backgroundPosition: "center",
-                          filter: "blur(14px) brightness(1.08)",
-                          transform: "scale(1.12)",
-                        }}
-                      />
-
-                      <div className="absolute inset-0 bg-black/20" />
-                      <div className="absolute inset-y-0 left-0 w-[22%] bg-gradient-to-r from-black/30 to-transparent z-[1]" />
-                      <div className="absolute inset-y-0 right-0 w-[22%] bg-gradient-to-l from-black/30 to-transparent z-[1]" />
-
-                      <div className="absolute inset-0 z-[2] flex items-center justify-center px-6 md:px-8">
-                        <img
-                          src={item.image}
-                          alt={item.title}
-                          className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
-                          style={{
-                            filter:
-                              "brightness(1.13) contrast(1.05) saturate(1.04)",
-                            maskImage:
-                              "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.75) 18%, rgba(0,0,0,1) 30%, rgba(0,0,0,1) 70%, rgba(0,0,0,0.75) 82%, transparent 100%)",
-                            WebkitMaskImage:
-                              "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.75) 18%, rgba(0,0,0,1) 30%, rgba(0,0,0,1) 70%, rgba(0,0,0,0.75) 82%, transparent 100%)",
-                          }}
-                          onError={(e) => {
-                            e.currentTarget.src =
-                              "https://placehold.co/1200x800/f3f4f6/7B1113?text=Achievement+Image";
-                          }}
-                        />
-                      </div>
-
-                      <div className="absolute inset-0 z-[3] bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
-
-                      <div className="absolute top-4 left-4 z-[4]">
-                        <div className="h-12 w-12 rounded-full flex items-center justify-center bg-white/15 backdrop-blur-md border border-white/15 shadow">
-                          <Icon size={22} className="text-[#F4C430]" />
-                        </div>
-                      </div>
-
-                      <div className="absolute bottom-0 left-0 right-0 p-5 text-white z-[4]">
-                        <h3 className="text-lg md:text-xl font-extrabold leading-snug max-w-[95%] drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)]">
-                          {item.title}
-                        </h3>
-                      </div>
-                    </div>
-
-                    <div className="p-5 md:p-6 text-white min-h-[180px] flex flex-col">
-                      <p
-                        className="text-sm text-white/85 leading-relaxed flex-grow overflow-hidden"
-                        style={{
-                          display: "-webkit-box",
-                          WebkitLineClamp: 4,
-                          WebkitBoxOrient: "vertical",
-                        }}
-                      >
-                        {item.summary}
-                      </p>
-
-                      <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white group-hover:text-[#F4C430] transition">
-                        View Image
-                        <ArrowRight size={15} />
-                      </div>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="mt-6 flex flex-col items-center gap-4">
-              <div className="flex items-center gap-2 flex-wrap justify-center">
-                {items.map((item, index) => (
-                  <button
-                    key={`${sectionLabel}-dot-${item.id}`}
-                    type="button"
-                    onClick={() => scrollToCard(scrollRef, index, cardSelector)}
-                    className={`h-3 rounded-full transition-all duration-300 ${
-                      activeIndex === index
-                        ? "w-10 bg-[#F4C430]"
-                        : "w-3 bg-white/35 hover:bg-white/60"
-                    }`}
-                    aria-label={`Go to ${item.title}`}
-                  />
-                ))}
-              </div>
-
-              <div className="md:hidden flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => scrollByCard(scrollRef, "left", cardSelector)}
-                  className="h-11 px-4 rounded-full bg-white/15 border border-white/15 text-white backdrop-blur-md flex items-center justify-center hover:bg-white/25 transition"
-                >
-                  <ArrowLeft size={18} />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => scrollByCard(scrollRef, "right", cardSelector)}
-                  className="h-11 px-4 rounded-full bg-[#F4C430] text-[#7B1113] flex items-center justify-center hover:scale-105 transition"
-                >
-                  <ArrowRight size={18} />
-                </button>
-              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
   );
+
+  const renderGallery = ({
+    items,
+    scrollRef,
+    activeIndex,
+    setActiveIndex,
+    cardSelector,
+    sectionLabel,
+    sectionTitle,
+    sectionDescription,
+    prevLabel,
+    nextLabel,
+  }) => {
+    if (!items.length) {
+      return renderEmptyState({
+        sectionLabel,
+        sectionTitle,
+        sectionDescription,
+      });
+    }
+
+    return (
+      <section className="mb-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-[2rem] md:text-[3.2rem] font-extrabold text-[#7B1113] tracking-wide">
+              {sectionTitle}
+            </h2>
+
+            <p className="mt-3 text-sm md:text-base text-gray-700">
+              {sectionDescription}
+            </p>
+          </div>
+
+          <div
+            className="relative rounded-[30px] overflow-hidden shadow-[0_16px_40px_rgba(123,17,19,0.22)] px-4 md:px-6 py-8 md:py-10"
+            style={{
+              backgroundImage: `url(${achievementsSectionBg})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
+            <div className="absolute inset-0 bg-[#7B1113]/72 backdrop-blur-[1px]" />
+
+            <div className="relative z-10">
+              <div className="flex items-center justify-between gap-3 mb-6">
+                <p className="text-xs uppercase tracking-[0.28em] text-white/70">
+                  {sectionLabel}
+                </p>
+
+                <div className="hidden md:flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => scrollByCard(scrollRef, "left", cardSelector)}
+                    className="h-12 w-12 rounded-full bg-white/15 border border-white/15 text-white backdrop-blur-md flex items-center justify-center hover:bg-white/25 transition"
+                    aria-label={prevLabel}
+                  >
+                    <ArrowLeft size={20} />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      scrollByCard(scrollRef, "right", cardSelector)
+                    }
+                    className="h-12 w-12 rounded-full bg-[#F4C430] text-[#7B1113] border border-transparent flex items-center justify-center hover:scale-105 transition"
+                    aria-label={nextLabel}
+                  >
+                    <ArrowRight size={20} />
+                  </button>
+                </div>
+              </div>
+
+              <div
+                ref={scrollRef}
+                onScroll={() =>
+                  handleScroll(scrollRef, cardSelector, setActiveIndex)
+                }
+                className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 no-scrollbar"
+                style={{
+                  scrollbarWidth: "none",
+                  msOverflowStyle: "none",
+                }}
+              >
+                {items.map((item, index) => {
+                  const Icon = item.icon;
+                  const isActive = index === activeIndex;
+
+                  return (
+                    <button
+                      key={`${sectionLabel}-${item.id}`}
+                      type="button"
+                      data-card
+                      onClick={() => setSelectedAchievement(item)}
+                      className={`group relative shrink-0 w-[86%] sm:w-[70%] md:w-[48%] xl:w-[37%] snap-start text-left rounded-[28px] overflow-hidden border transition duration-300 ${
+                        isActive
+                          ? "border-[#F4C430] shadow-[0_20px_40px_rgba(0,0,0,0.30)]"
+                          : "border-white/10 shadow-[0_12px_28px_rgba(0,0,0,0.22)]"
+                      } bg-white/10 backdrop-blur-md hover:-translate-y-1`}
+                    >
+                      <div className="relative h-72 md:h-80 overflow-hidden">
+                        <div
+                          className="absolute inset-0 scale-110"
+                          style={{
+                            backgroundImage: `url(${item.image})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            filter: "blur(14px) brightness(1.08)",
+                            transform: "scale(1.12)",
+                          }}
+                        />
+
+                        <div className="absolute inset-0 bg-black/20" />
+                        <div className="absolute inset-y-0 left-0 w-[22%] bg-gradient-to-r from-black/30 to-transparent z-[1]" />
+                        <div className="absolute inset-y-0 right-0 w-[22%] bg-gradient-to-l from-black/30 to-transparent z-[1]" />
+
+                        <div className="absolute inset-0 z-[2] flex items-center justify-center px-6 md:px-8">
+                          <img
+                            src={item.image}
+                            alt={item.title}
+                            className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
+                            style={{
+                              filter:
+                                "brightness(1.13) contrast(1.05) saturate(1.04)",
+                              maskImage:
+                                "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.75) 18%, rgba(0,0,0,1) 30%, rgba(0,0,0,1) 70%, rgba(0,0,0,0.75) 82%, transparent 100%)",
+                              WebkitMaskImage:
+                                "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.75) 18%, rgba(0,0,0,1) 30%, rgba(0,0,0,1) 70%, rgba(0,0,0,0.75) 82%, transparent 100%)",
+                            }}
+                            onError={(e) => {
+                              e.currentTarget.src =
+                                "https://placehold.co/1200x800/f3f4f6/7B1113?text=Achievement+Image";
+                            }}
+                          />
+                        </div>
+
+                        <div className="absolute inset-0 z-[3] bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+
+                        <div className="absolute top-4 left-4 z-[4]">
+                          <div className="h-12 w-12 rounded-full flex items-center justify-center bg-white/15 backdrop-blur-md border border-white/15 shadow">
+                            <Icon size={22} className="text-[#F4C430]" />
+                          </div>
+                        </div>
+
+                        <div className="absolute bottom-0 left-0 right-0 p-5 text-white z-[4]">
+                          <h3 className="text-lg md:text-xl font-extrabold leading-snug max-w-[95%] drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)]">
+                            {item.title}
+                          </h3>
+                        </div>
+                      </div>
+
+                      <div className="p-5 md:p-6 text-white min-h-[180px] flex flex-col">
+                        <p
+                          className="text-sm text-white/85 leading-relaxed flex-grow overflow-hidden"
+                          style={{
+                            display: "-webkit-box",
+                            WebkitLineClamp: 4,
+                            WebkitBoxOrient: "vertical",
+                          }}
+                        >
+                          {item.summary}
+                        </p>
+
+                        <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white group-hover:text-[#F4C430] transition">
+                          View Image
+                          <ArrowRight size={15} />
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="mt-6 flex flex-col items-center gap-4">
+                <div className="flex items-center gap-2 flex-wrap justify-center">
+                  {items.map((item, index) => (
+                    <button
+                      key={`${sectionLabel}-dot-${item.id}`}
+                      type="button"
+                      onClick={() => scrollToCard(scrollRef, index, cardSelector)}
+                      className={`h-3 rounded-full transition-all duration-300 ${
+                        activeIndex === index
+                          ? "w-10 bg-[#F4C430]"
+                          : "w-3 bg-white/35 hover:bg-white/60"
+                      }`}
+                      aria-label={`Go to ${item.title}`}
+                    />
+                  ))}
+                </div>
+
+                <div className="md:hidden flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => scrollByCard(scrollRef, "left", cardSelector)}
+                    className="h-11 px-4 rounded-full bg-white/15 border border-white/15 text-white backdrop-blur-md flex items-center justify-center hover:bg-white/25 transition"
+                  >
+                    <ArrowLeft size={18} />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      scrollByCard(scrollRef, "right", cardSelector)
+                    }
+                    className="h-11 px-4 rounded-full bg-[#F4C430] text-[#7B1113] flex items-center justify-center hover:scale-105 transition"
+                  >
+                    <ArrowRight size={18} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  };
 
   return (
     <main
@@ -476,7 +541,7 @@ function Achievements() {
               ACHIEVEMENTS
             </h1>
 
-            <p className="mt-4 text-sm md:text-lg leading-relaxed max-w-3xl mx-auto text-white/95">
+              <p className="mt-4 text-sm md:text-lg leading-relaxed max-w-3xl mx-auto text-white/95">
               A showcase of awards, certifications, and institutional
               recognitions connected to 
             </p>
@@ -489,13 +554,7 @@ function Achievements() {
       </section>
 
       <section className="pt-14 pb-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-            Explore selected recognitions, certificates, and milestones that
-            highlight contributions to disaster risk reduction, emergency
-            medicine, health resilience, and public service.
-          </p>
-        </div>
+        
       </section>
 
       {renderGallery({
@@ -504,11 +563,12 @@ function Achievements() {
         activeIndex: activeAwardsIndex,
         setActiveIndex: setActiveAwardsIndex,
         cardSelector: "[data-card]",
-        sectionLabel: "Awards Series",
+        sectionLabel: "Recognition Series",
         sectionTitle: "Recognitions",
-        sectionDescription: "Received by Dr. Carlos Primero D. Gundran.",
-        prevLabel: "Previous awards",
-        nextLabel: "Next awards",
+        sectionDescription:
+          "Awards, certificates, and institutional recognitions received by Dr. Carlos Primero D. Gundran and UP Manila",
+        prevLabel: "Previous recognition",
+        nextLabel: "Next recognition",
       })}
 
       {renderGallery({
@@ -519,9 +579,10 @@ function Achievements() {
         cardSelector: "[data-card]",
         sectionLabel: "Certifications Series",
         sectionTitle: "Certifications",
-        sectionDescription: "Certificates and related institutional recognitions.",
-        prevLabel: "Previous certifications",
-        nextLabel: "Next certifications",
+        sectionDescription:
+          "This section is intentionally left blank for future certifications",
+        prevLabel: "Previous certification",
+        nextLabel: "Next certification",
       })}
 
       {selectedAchievement && (

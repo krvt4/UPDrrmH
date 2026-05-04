@@ -12,7 +12,7 @@ function Projects() {
       id: 1,
       title: "Project Alpha",
       description:
-        "A standalone DRRM-related platform for simulation, learning, and public engagement.",
+        "A standalone DRRM-related platform for simulation, learning, and public engagement",
       image: projectsBg,
       url: "https://your-project-alpha-url.com",
       status: "Live",
@@ -22,7 +22,7 @@ function Projects() {
       id: 2,
       title: "Project Beta",
       description:
-        "An independent project website focused on disaster preparedness resources and digital tools.",
+        "An independent project website focused on disaster preparedness resources and digital tools",
       image: projectsBg,
       url: "https://your-project-beta-url.com",
       status: "Live",
@@ -32,7 +32,7 @@ function Projects() {
       id: 3,
       title: "Project Gamma",
       description:
-        "A separate web platform that can be maintained and deployed independently from the main DRRM-H site.",
+        "A separate web platform that can be maintained and deployed independently from the main DRRM-H site",
       image: projectsBg,
       url: "https://your-project-gamma-url.com",
       status: "Coming Soon",
@@ -60,7 +60,7 @@ function Projects() {
             <p className="mt-4 text-sm md:text-base leading-relaxed max-w-3xl mx-auto">
               Explore DRRM-H related platforms, digital initiatives, and
               standalone websites connected to our work in disaster risk
-              reduction and management in health.
+              reduction and management in health
             </p>
           </div>
         </div>
@@ -77,7 +77,7 @@ function Projects() {
               This page serves as a hub for separate project websites and
               digital platforms. Each project can be developed, deployed, and
               maintained independently while remaining connected to the main
-              DRRM-H website.
+              DRRM-H website
             </p>
           </div>
         </div>

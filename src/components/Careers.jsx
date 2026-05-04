@@ -80,7 +80,7 @@ const Careers = () => {
             from various fields to support our dynamic, technology-driven
             disaster preparedness initiatives. This is an exciting opportunity
             to contribute to national resilience through virtual reality,
-            research, community engagement, and systems development.
+            research, community engagement, and systems development
           </p>
         </div>
       </section>
