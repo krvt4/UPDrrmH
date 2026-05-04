@@ -30,6 +30,8 @@ const allowedOrigins = [
   "http://127.0.0.1:8000",
   "http://localhost:5173",
   "http://127.0.0.1:5173",
+  "https://up-drrm-4kfw56dqv-krvt4s-projects.vercel.app",
+  "https://up-drrm-h.vercel.app",
 ];
 
 if (process.env.CLIENT_URL) {
@@ -39,9 +41,26 @@ if (process.env.CLIENT_URL) {
 app.use(
   cors({
     origin(origin, callback) {
+      // allow requests with no origin (mobile apps, curl, postman)
       if (!origin) return callback(null, true);
 
+      // allow exact matches
       if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      // allow ALL vercel preview + deployments
+      if (/\.vercel\.app$/.test(origin)) {
+        return callback(null, true);
+      }
+
+      // allow devtunnel (your current backend exposure)
+      if (origin.includes("devtunnels.ms")) {
+        return callback(null, true);
+      }
+
+      // allow localhost (extra safety fallback)
+      if (origin.includes("localhost") || origin.includes("127.0.0.1")) {
         return callback(null, true);
       }
 
@@ -54,6 +73,7 @@ app.use(
   })
 );
 
+// handle preflight requests properly
 app.options("*", cors());
 
 app.use(express.json({ limit: "2mb" }));
