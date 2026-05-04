@@ -155,7 +155,7 @@ function AboutUs() {
             </h1>
             <p className="mt-4 text-xl md:text-[2rem] leading-relaxed text-white/95 font-semibold">
               A leading academic center advancing disaster preparedness through
-              simulation-based training.
+              simulation-based training
             </p>
           </div>
         </section>

@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import CareersBG from "../assets/careers-redbg.png";
+import CareerJobOpportunities from "../assets/career-jobopportunities.jpg";
+import CareersInternship from "../assets/careers-internship.jpg";
 import { Check } from "lucide-react";
 import { db } from "../firebase/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
+
+const localCareerImages = {
+  Internship: CareersInternship,
+  Internships: CareersInternship,
+  "Job Opportunity": CareerJobOpportunities,
+};
 
 const Careers = () => {
   const [careerData, setCareerData] = useState([]);
@@ -88,101 +96,109 @@ const Careers = () => {
           </div>
         ) : (
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-            {careerData.map((item) => (
-              <div
-                key={item.id}
-                className="bg-white rounded-xl shadow-xl overflow-hidden flex flex-col h-full"
-              >
-                <div className="p-6 md:p-8">
-                  <h2 className="text-xl md:text-2xl font-bold text-red-900 mb-4 text-center">
-                    {item.title || item.type}
-                  </h2>
+            {careerData.map((item) => {
+              const imageSrc =
+                localCareerImages[item.title] ||
+                localCareerImages[item.type] ||
+                item.imageUrl ||
+                "";
 
-                  {item.imageUrl ? (
-                    <div className="w-full h-48 sm:h-64 md:h-80 mb-6 mx-auto overflow-hidden rounded-lg">
-                      <img
-                        src={item.imageUrl}
-                        alt={item.title || item.type}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  ) : null}
-
-                  {item.details ? (
-                    <div className="mb-6">
-                      <p className="text-sm text-gray-700 leading-relaxed text-center">
-                        {item.details}
-                      </p>
-                    </div>
-                  ) : null}
-
-                  <div className="mt-4 w-full text-left">
-                    <p className="font-bold text-xs text-gray-800 mb-2">
-                      {item.type === "Internship"
-                        ? "Open for the following courses"
-                        : "Open for the following qualifications"}
-                    </p>
-                    <hr className="border-t border-gray-300 mb-4" />
-
-                    <ul className="space-y-3">
-                      {Array.isArray(item.description) &&
-                      item.description.length > 0 ? (
-                        item.description.map((desc, idx) => (
-                          <li key={idx} className="flex gap-2 items-start">
-                            <div className="pt-1">
-                              <Check className="text-red-800 w-4 h-4" />
-                            </div>
-                            <p className="font-medium text-sm text-red-900 leading-snug">
-                              {desc}
-                            </p>
-                          </li>
-                        ))
-                      ) : (
-                        <li className="text-sm text-gray-500 italic">
-                          No details available at this time
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-
-                  <div className="mt-6 w-full text-left">
-                    <p className="font-bold text-xs text-gray-800 mb-2">
-                      Requirements
-                    </p>
-                    <hr className="border-t border-gray-300 mb-4" />
-
-                    <ul className="space-y-3">
-                      {Array.isArray(item.requirements) &&
-                      item.requirements.length > 0 ? (
-                        item.requirements.map((req, idx) => (
-                          <li key={idx} className="flex gap-2 items-start">
-                            <div className="pt-1">
-                              <Check className="text-red-800 w-4 h-4" />
-                            </div>
-                            <p className="font-medium text-sm text-red-900 leading-snug">
-                              {req}
-                            </p>
-                          </li>
-                        ))
-                      ) : (
-                        <li className="text-sm text-gray-500 italic">
-                          No specific requirements at this time
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-                </div>
-
+              return (
                 <div
-                  className="text-white rounded-b-lg px-4 py-3 mt-auto text-center"
-                  style={{ backgroundColor: item.bgColor || "#7a0000" }}
+                  key={item.id}
+                  className="bg-white rounded-xl shadow-xl overflow-hidden flex flex-col h-full"
                 >
-                  {item.accepting
-                    ? "Now accepting applications!"
-                    : "Not accepting applications at the moment."}
+                  <div className="p-6 md:p-8">
+                    <h2 className="text-xl md:text-2xl font-bold text-red-900 mb-4 text-center">
+                      {item.title || item.type}
+                    </h2>
+
+                    {imageSrc ? (
+                      <div className="w-full h-48 sm:h-64 md:h-80 mb-6 mx-auto overflow-hidden rounded-lg">
+                        <img
+                          src={imageSrc}
+                          alt={item.title || item.type}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ) : null}
+
+                    {item.details ? (
+                      <div className="mb-6">
+                        <p className="text-sm text-gray-700 leading-relaxed text-center">
+                          {item.details}
+                        </p>
+                      </div>
+                    ) : null}
+
+                    <div className="mt-4 w-full text-left">
+                      <p className="font-bold text-xs text-gray-800 mb-2">
+                        {item.type === "Internship"
+                          ? "Open for the following courses"
+                          : "Open for the following qualifications"}
+                      </p>
+                      <hr className="border-t border-gray-300 mb-4" />
+
+                      <ul className="space-y-3">
+                        {Array.isArray(item.description) &&
+                        item.description.length > 0 ? (
+                          item.description.map((desc, idx) => (
+                            <li key={idx} className="flex gap-2 items-start">
+                              <div className="pt-1">
+                                <Check className="text-red-800 w-4 h-4" />
+                              </div>
+                              <p className="font-medium text-sm text-red-900 leading-snug">
+                                {desc}
+                              </p>
+                            </li>
+                          ))
+                        ) : (
+                          <li className="text-sm text-gray-500 italic">
+                            No details available at this time
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+
+                    <div className="mt-6 w-full text-left">
+                      <p className="font-bold text-xs text-gray-800 mb-2">
+                        Requirements
+                      </p>
+                      <hr className="border-t border-gray-300 mb-4" />
+
+                      <ul className="space-y-3">
+                        {Array.isArray(item.requirements) &&
+                        item.requirements.length > 0 ? (
+                          item.requirements.map((req, idx) => (
+                            <li key={idx} className="flex gap-2 items-start">
+                              <div className="pt-1">
+                                <Check className="text-red-800 w-4 h-4" />
+                              </div>
+                              <p className="font-medium text-sm text-red-900 leading-snug">
+                                {req}
+                              </p>
+                            </li>
+                          ))
+                        ) : (
+                          <li className="text-sm text-gray-500 italic">
+                            No specific requirements at this time
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div
+                    className="text-white rounded-b-lg px-4 py-3 mt-auto text-center"
+                    style={{ backgroundColor: item.bgColor || "#7a0000" }}
+                  >
+                    {item.accepting
+                      ? "Now accepting applications!"
+                      : "Not accepting applications at the moment."}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 

@@ -478,8 +478,11 @@ function Achievements() {
 
             <p className="mt-4 text-sm md:text-lg leading-relaxed max-w-3xl mx-auto text-white/95">
               A showcase of awards, certifications, and institutional
-              recognitions connected to Dr. Carlos Primero D. Gundran and the
-              University of the Philippines Manila.
+              recognitions connected to 
+            </p>
+            <p>
+              Dr. Carlos Primero D. Gundran and the
+              University of the Philippines Manila
             </p>
           </div>
         </div>
