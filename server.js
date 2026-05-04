@@ -90,9 +90,7 @@ app.get("/api/ping", (req, res) => {
 /* =========================
    FIREBASE ADMIN
 ========================= */
-/* =========================
-   FIREBASE ADMIN
-========================= */
+
 
 delete process.env.GOOGLE_APPLICATION_CREDENTIALS;
 
@@ -100,34 +98,49 @@ let db;
 
 try {
   if (!admin.apps.length) {
-    const possiblePaths = [
-      path.resolve(__dirname, "drrm-importer", "serviceAccountKey.json"),
-      path.resolve(process.cwd(), "drrm-importer", "serviceAccountKey.json"),
-      path.resolve(__dirname, "..", "drrm-importer", "serviceAccountKey.json"),
-    ];
+    let serviceAccount;
 
-    console.log("Checking Firebase service account paths:");
-    possiblePaths.forEach((p) => console.log(" -", p));
+    if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+      serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
-    const serviceAccountPath = possiblePaths.find((p) => fs.existsSync(p));
+      if (serviceAccount.private_key) {
+        serviceAccount.private_key = serviceAccount.private_key.replace(
+          /\\n/g,
+          "\n"
+        );
+      }
 
-    if (!serviceAccountPath) {
-      throw new Error(
-        "serviceAccountKey.json not found. Make sure it is inside drrm-app/drrm-importer/"
+      console.log("Using Firebase service account from env");
+    } else {
+      const possiblePaths = [
+        path.resolve(__dirname, "drrm-importer", "serviceAccountKey.json"),
+        path.resolve(process.cwd(), "drrm-importer", "serviceAccountKey.json"),
+        path.resolve(__dirname, "..", "drrm-importer", "serviceAccountKey.json"),
+      ];
+
+      console.log("Checking Firebase service account paths:");
+      possiblePaths.forEach((p) => console.log(" -", p));
+
+      const serviceAccountPath = possiblePaths.find((p) => fs.existsSync(p));
+
+      if (!serviceAccountPath) {
+        throw new Error(
+          "serviceAccountKey.json not found and FIREBASE_SERVICE_ACCOUNT env is missing."
+        );
+      }
+
+      console.log("Using Firebase service account:", serviceAccountPath);
+
+      serviceAccount = JSON.parse(
+        fs.readFileSync(serviceAccountPath, "utf8")
       );
     }
-
-    console.log("Using Firebase service account:", serviceAccountPath);
-
-    const serviceAccount = JSON.parse(
-      fs.readFileSync(serviceAccountPath, "utf8")
-    );
 
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
     });
 
-    console.log("Firebase Admin initialized from serviceAccountKey.json");
+    console.log("Firebase Admin initialized");
   }
 
   db = admin.firestore();
