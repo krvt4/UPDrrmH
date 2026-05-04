@@ -14,13 +14,21 @@ import MCIImage from "../assets/MCI.jpg";
 
 import backgroundImage from "../assets/background.png";
 
-import {
-  ChevronUp,
-  ChevronDown,
-} from "lucide-react";
+import { ChevronUp, ChevronDown } from "lucide-react";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 const slides = [Slide1, Slide2, Slide3];
+
+const localNewsImages = {
+  "UP Manila DRRM-H Concludes Mass Casualty Incident and Triage Training Program":
+    "/uploads/news/DSC_1111.jpg",
+
+  "UP Manila DRRM-H Conducts Simulation-Based Emergency Response Training":
+    "/uploads/news/DSC_1112.jpg",
+
+  "DRRM-H Strengthens Emergency Response through 2026 BERTST Training":
+    "/uploads/news/DSC_7214.JPG",
+};
 
 function Body() {
   const [user] = useAuthState(auth);
@@ -73,7 +81,6 @@ function Body() {
     setTimeout(() => setLoginMessage(""), 2000);
   };
 
-  // ONLY training offer buttons stay protected
   const blockTrainingAccess = (e) => {
     if (!user) {
       e?.preventDefault?.();
@@ -300,41 +307,54 @@ function Body() {
                         (a.createdAt?.toDate?.()?.getTime?.() || 0)
                     )
                     .slice(0, 3)
-                    .map((news) => (
-                      <Link
-                        key={news.id}
-                        to={`/news/${news.id}`}
-                        state={{ news }}
-                        className="rounded-3xl overflow-hidden border border-red-200/70 bg-white/85 backdrop-blur-[2px] shadow-[0_10px_22px_rgba(0,0,0,0.08)] hover:shadow-[0_16px_35px_rgba(0,0,0,0.12)] transition-all duration-300"
-                      >
-                        <div className="h-[220px] overflow-hidden">
-                          <img
-                            src={news.image}
-                            alt={news.title}
-                            className="w-full h-full object-cover hover:scale-105 transition duration-500"
-                          />
-                        </div>
+                    .map((news) => {
+                      const imageSrc =
+                        localNewsImages[news.title] || news.image || "";
 
-                        <div className="p-6">
-                          <p className="font-bold text-lg leading-snug text-gray-900 hover:text-red-900 transition line-clamp-3">
-                            {news.title}
-                          </p>
+                      return (
+                        <Link
+                          key={news.id}
+                          to={`/news/${news.id}`}
+                          state={{
+                            news: {
+                              ...news,
+                              image: imageSrc,
+                            },
+                          }}
+                          className="rounded-3xl overflow-hidden border border-red-200/70 bg-white/85 backdrop-blur-[2px] shadow-[0_10px_22px_rgba(0,0,0,0.08)] hover:shadow-[0_16px_35px_rgba(0,0,0,0.12)] transition-all duration-300"
+                        >
+                          <div className="h-[220px] overflow-hidden">
+                            <img
+                              src={imageSrc}
+                              alt={news.title}
+                              className="w-full h-full object-cover hover:scale-105 transition duration-500"
+                              onError={(e) => {
+                                e.currentTarget.style.display = "none";
+                              }}
+                            />
+                          </div>
 
-                          <p className="text-gray-600 text-sm mt-4">
-                            {news.createdAt?.toDate
-                              ? news.createdAt.toDate().toLocaleString("en-US", {
-                                  year: "numeric",
-                                  month: "short",
-                                  day: "2-digit",
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                                  hour12: true,
-                                })
-                              : "N/A"}
-                          </p>
-                        </div>
-                      </Link>
-                    ))}
+                          <div className="p-6">
+                            <p className="font-bold text-lg leading-snug text-gray-900 hover:text-red-900 transition line-clamp-3">
+                              {news.title}
+                            </p>
+
+                            <p className="text-gray-600 text-sm mt-4">
+                              {news.createdAt?.toDate
+                                ? news.createdAt.toDate().toLocaleString("en-US", {
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "2-digit",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    hour12: true,
+                                  })
+                                : "N/A"}
+                            </p>
+                          </div>
+                        </Link>
+                      );
+                    })}
                 </div>
 
                 <div className="mt-10 flex justify-center">

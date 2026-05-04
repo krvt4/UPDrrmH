@@ -16,17 +16,50 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-console.log("✅ API running from file:", __filename);
-console.log("✅ NODE_ENV:", process.env.NODE_ENV || "(not set)");
-console.log("✅ PORT env:", process.env.PORT || "(not set)");
+console.log("API running from file:", __filename);
+console.log("NODE_ENV:", process.env.NODE_ENV || "(not set)");
+console.log("PORT env:", process.env.PORT || "(not set)");
 
 const app = express();
 
-app.use(cors({ origin: true }));
+/* =========================
+   CORS FIX
+========================= */
+const allowedOrigins = [
+  "http://localhost:8000",
+  "http://127.0.0.1:8000",
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+];
+
+if (process.env.CLIENT_URL) {
+  allowedOrigins.push(process.env.CLIENT_URL);
+}
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      console.warn("Blocked by CORS:", origin);
+      return callback(new Error(`CORS blocked: ${origin}`));
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+app.options("*", cors());
+
 app.use(express.json({ limit: "2mb" }));
 
 app.use((req, res, next) => {
-  console.log(`➡️  ${req.method} ${req.url}`);
+  console.log(`${req.method} ${req.url}`);
   next();
 });
 
@@ -34,39 +67,82 @@ app.get("/api/ping", (req, res) => {
   return res.json({ ok: true, from: "api", file: __filename });
 });
 
+/* =========================
+   FIREBASE ADMIN
+========================= */
+/* =========================
+   FIREBASE ADMIN
+========================= */
+
+delete process.env.GOOGLE_APPLICATION_CREDENTIALS;
+
+let db;
+
 try {
-  if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
-    const svc = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
-    admin.initializeApp({ credential: admin.credential.cert(svc) });
-    console.log("✅ Firebase Admin: initialized from FIREBASE_SERVICE_ACCOUNT_JSON");
-  } else {
-    admin.initializeApp({ credential: admin.credential.applicationDefault() });
-    console.log("✅ Firebase Admin: initialized from applicationDefault()");
+  if (!admin.apps.length) {
+    const possiblePaths = [
+      path.resolve(__dirname, "drrm-importer", "serviceAccountKey.json"),
+      path.resolve(process.cwd(), "drrm-importer", "serviceAccountKey.json"),
+      path.resolve(__dirname, "..", "drrm-importer", "serviceAccountKey.json"),
+    ];
+
+    console.log("Checking Firebase service account paths:");
+    possiblePaths.forEach((p) => console.log(" -", p));
+
+    const serviceAccountPath = possiblePaths.find((p) => fs.existsSync(p));
+
+    if (!serviceAccountPath) {
+      throw new Error(
+        "serviceAccountKey.json not found. Make sure it is inside drrm-app/drrm-importer/"
+      );
+    }
+
+    console.log("Using Firebase service account:", serviceAccountPath);
+
+    const serviceAccount = JSON.parse(
+      fs.readFileSync(serviceAccountPath, "utf8")
+    );
+
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+    });
+
+    console.log("Firebase Admin initialized from serviceAccountKey.json");
   }
+
+  db = admin.firestore();
 } catch (e) {
-  console.error("❌ Firebase Admin init failed:", e?.message || e);
+  console.error("Firebase Admin init failed:", e?.message || e);
 }
 
-const db = admin.firestore();
-
+/* =========================
+   MAIL
+========================= */
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT || 587),
-  secure: false,
+  secure: String(process.env.SMTP_SECURE || "false").toLowerCase() === "true",
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
   },
 });
 
-transporter.verify((error) => {
-  if (error) {
-    console.error("❌ SMTP verification failed:", error?.message || error);
-  } else {
-    console.log("✅ SMTP server is ready to send emails");
-  }
-});
+if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
+  transporter.verify((error) => {
+    if (error) {
+      console.error("SMTP verification failed:", error?.message || error);
+    } else {
+      console.log("SMTP server is ready to send emails");
+    }
+  });
+} else {
+  console.log("SMTP skipped: missing SMTP env vars.");
+}
 
+/* =========================
+   HELPERS
+========================= */
 const OTP_TTL_MS = 10 * 60 * 1000;
 const RESEND_COOLDOWN_MS = 60 * 1000;
 const MAX_SENDS_PER_15MIN = 5;
@@ -108,8 +184,12 @@ async function verifyTokenOrThrow(token) {
 async function requireAdmin(decodedUid) {
   const snap = await db.collection("users").doc(decodedUid).get();
   if (!snap.exists) throw new Error("Admin profile not found.");
+
   const data = snap.data();
-  if ((data?.role || "").toLowerCase() !== "admin") throw new Error("Not authorized.");
+  if ((data?.role || "").toLowerCase() !== "admin") {
+    throw new Error("Not authorized.");
+  }
+
   return data;
 }
 
@@ -132,13 +212,13 @@ function toMillisMaybe(createdAt, createdAtMs) {
   return null;
 }
 
+function normalizeEmail(value = "") {
+  return String(value || "").trim().toLowerCase();
+}
+
 function extractTicketId(subject = "") {
   const match = String(subject).match(/\[Ticket:([A-Za-z0-9_-]+)\]/i);
   return match ? match[1] : "";
-}
-
-function normalizeEmail(value = "") {
-  return String(value || "").trim().toLowerCase();
 }
 
 function cleanEmailReplyText(text = "") {
@@ -153,6 +233,7 @@ function cleanEmailReplyText(text = "") {
   ];
 
   let cleaned = raw;
+
   for (const marker of splitters) {
     const idx = cleaned.indexOf(marker);
     if (idx > 0) {
@@ -163,177 +244,9 @@ function cleanEmailReplyText(text = "") {
   return cleaned.trim();
 }
 
-async function saveInboundReplyToTicket({
-  ticketId,
-  fromEmail,
-  fromName,
-  subject,
-  body,
-  messageId,
-}) {
-  const ticketRef = db.collection("contactMessages").doc(ticketId);
-  const ticketSnap = await ticketRef.get();
-
-  if (!ticketSnap.exists) {
-    throw new Error(`Ticket not found: ${ticketId}`);
-  }
-
-  const now = Date.now();
-  const safeBody = cleanEmailReplyText(body);
-
-  if (!safeBody) {
-    return { skipped: true, reason: "Empty body after cleaning." };
-  }
-
-  const existing = await ticketRef
-    .collection("thread")
-    .where("messageId", "==", String(messageId || ""))
-    .limit(1)
-    .get();
-
-  if (!existing.empty) {
-    return { skipped: true, reason: "Duplicate message." };
-  }
-
-  const replyData = {
-    body: safeBody,
-    senderRole: "user",
-    senderUid: "",
-    senderEmail: normalizeEmail(fromEmail),
-    senderName: fromName || fromEmail || "Requester",
-    sentViaEmail: true,
-    messageId: String(messageId || ""),
-    subject: String(subject || ""),
-    createdAt: admin.firestore.FieldValue.serverTimestamp(),
-    createdAtMs: now,
-  };
-
-  await ticketRef.collection("thread").add(replyData);
-
-  await ticketRef.set(
-    {
-      status: "open",
-      awaitingAdmin: true,
-      slaDueAtMs: now + 24 * 60 * 60 * 1000,
-      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-      updatedAtMs: now,
-      statusUpdatedAtMs: now,
-      lastSenderUid: "",
-      lastSenderEmail: normalizeEmail(fromEmail),
-      lastSenderName: fromName || fromEmail || "Requester",
-      lastInboundSubject: String(subject || ""),
-      lastInboundMessageId: String(messageId || ""),
-    },
-    { merge: true }
-  );
-
-  return { ok: true };
-}
-
-let inboundPollStarted = false;
-
-async function pollInboxOnce() {
-  const host = process.env.IMAP_HOST;
-  const port = Number(process.env.IMAP_PORT || 993);
-  const secure = String(process.env.IMAP_SECURE || "true").toLowerCase() === "true";
-  const user = process.env.IMAP_USER;
-  const pass = process.env.IMAP_PASS;
-  const mailbox = process.env.IMAP_MAILBOX || "INBOX";
-
-  if (!host || !user || !pass) {
-    console.log("ℹ️ IMAP polling skipped: missing IMAP env vars.");
-    return;
-  }
-
-  const client = new ImapFlow({
-    host,
-    port,
-    secure,
-    auth: { user, pass },
-    logger: false,
-  });
-
-  await client.connect();
-
-  let lock;
-  try {
-    lock = await client.getMailboxLock(mailbox);
-
-    const unseenUids = await client.search({ seen: false });
-
-    for (const uid of unseenUids) {
-      try {
-        const msg = await client.fetchOne(uid, {
-          uid: true,
-          envelope: true,
-          source: true,
-          flags: true,
-        });
-
-        if (!msg?.source) continue;
-
-        const parsed = await simpleParser(msg.source);
-        const subject = parsed.subject || "";
-        const ticketId = extractTicketId(subject);
-
-        if (!ticketId) {
-          await client.messageFlagsAdd(uid, ["\\Seen"]);
-          continue;
-        }
-
-        const fromValue = parsed.from?.value?.[0] || {};
-        const fromEmail = normalizeEmail(fromValue.address || "");
-        const fromName = fromValue.name || fromEmail;
-        const textBody =
-          parsed.text ||
-          parsed.html?.replace(/<[^>]+>/g, " ") ||
-          "";
-
-        const result = await saveInboundReplyToTicket({
-          ticketId,
-          fromEmail,
-          fromName,
-          subject,
-          body: textBody,
-          messageId: parsed.messageId || `${uid}`,
-        });
-
-        console.log("📥 inbound email processed:", {
-          uid,
-          ticketId,
-          fromEmail,
-          result,
-        });
-
-        await client.messageFlagsAdd(uid, ["\\Seen"]);
-      } catch (msgErr) {
-        console.error("❌ Failed to process inbound message:", msgErr?.message || msgErr);
-      }
-    }
-  } finally {
-    if (lock) lock.release();
-    await client.logout().catch(() => {});
-  }
-}
-
-function startInboundEmailPolling() {
-  if (inboundPollStarted) return;
-  inboundPollStarted = true;
-
-  const intervalMs = Number(process.env.IMAP_POLL_MS || 60000);
-
-  const run = async () => {
-    try {
-      await pollInboxOnce();
-    } catch (e) {
-      console.error("❌ IMAP poll failed:", e?.message || e);
-    }
-  };
-
-  run();
-  setInterval(run, intervalMs);
-}
-
+/* =========================
+   FILE UPLOADS
+========================= */
 const uploadDir = path.join(__dirname, "assets/uploads");
 const receiptDir = path.join(uploadDir, "receipts");
 
@@ -344,6 +257,7 @@ const storage = multer.diskStorage({
   destination: uploadDir,
   filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname)),
 });
+
 const upload = multer({ storage });
 
 app.use("/uploads", express.static(uploadDir));
@@ -352,6 +266,7 @@ app.post("/upload", upload.array("images", 5), (req, res) => {
   if (!req.files || req.files.length === 0) {
     return res.status(400).json({ error: "No files uploaded" });
   }
+
   const imageUrls = req.files.map((file) => `/uploads/${file.filename}`);
   res.json({ imageUrls });
 });
@@ -360,36 +275,47 @@ const receiptStorage = multer.diskStorage({
   destination: receiptDir,
   filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname)),
 });
+
 const receiptUpload = multer({ storage: receiptStorage });
 
 app.post("/upload-receipt", receiptUpload.single("receipt"), (req, res) => {
-  if (!req.file) return res.status(400).json({ error: "No receipt uploaded" });
+  if (!req.file) {
+    return res.status(400).json({ error: "No receipt uploaded" });
+  }
+
   const receiptUrl = `/uploads/receipts/${req.file.filename}`;
   res.json({ receiptUrl });
 });
 
+/* =========================
+   CONTACT API
+========================= */
 app.post("/api/contact", async (req, res) => {
   try {
-    console.log("✅ HIT POST /api/contact body:", req.body);
+    console.log("HIT POST /api/contact body:", req.body);
 
     const { name, email, company, category, message } = req.body || {};
+
     if (!name || !email || !company || !category || !message) {
-      return res.status(400).json({ ok: false, error: "Missing required fields." });
+      return res.status(400).json({
+        ok: false,
+        error: "Missing required fields.",
+      });
     }
 
     const now = Date.now();
 
-    await db.collection("contactMessages").add({
-      name,
-      email,
-      company,
-      category,
-      message,
+    const docRef = await db.collection("contactMessages").add({
+      name: String(name).trim(),
+      email: String(email).trim(),
+      company: String(company).trim(),
+      category: String(category).trim(),
+      message: String(message).trim(),
       status: "open",
       awaitingAdmin: true,
       slaDueAtMs: now + 24 * 60 * 60 * 1000,
-      lastSenderName: name,
-      lastSenderEmail: email,
+      lastSenderName: String(name).trim(),
+      lastSenderEmail: String(email).trim(),
       lastSenderUid: "",
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
       createdAtMs: now,
@@ -398,10 +324,17 @@ app.post("/api/contact", async (req, res) => {
       statusUpdatedAtMs: now,
     });
 
-    return res.json({ ok: true });
+    return res.json({
+      ok: true,
+      id: docRef.id,
+      message: "Contact submission saved.",
+    });
   } catch (e) {
-    console.error("❌ /api/contact error:", e?.message || e);
-    return res.status(500).json({ ok: false, error: e?.message || "Failed to save message." });
+    console.error("/api/contact error:", e?.message || e);
+    return res.status(500).json({
+      ok: false,
+      error: e?.message || "Failed to save message.",
+    });
   }
 });
 
@@ -415,11 +348,17 @@ app.get("/api/contact", async (req, res) => {
 
     return res.json({
       ok: true,
-      messages: snap.docs.map((d) => ({ id: d.id, ...d.data() })),
+      messages: snap.docs.map((d) => ({
+        id: d.id,
+        ...d.data(),
+      })),
     });
   } catch (e) {
-    console.error("❌ GET /api/contact error:", e?.message || e);
-    return res.status(500).json({ ok: false, error: e?.message || "Failed to load messages." });
+    console.error("GET /api/contact error:", e?.message || e);
+    return res.status(500).json({
+      ok: false,
+      error: e?.message || "Failed to load messages.",
+    });
   }
 });
 
@@ -427,15 +366,14 @@ app.delete("/api/contact/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    if (!id) {
-      return res.status(400).json({ ok: false, error: "Missing message id." });
-    }
-
     const docRef = db.collection("contactMessages").doc(id);
     const docSnap = await docRef.get();
 
     if (!docSnap.exists) {
-      return res.status(404).json({ ok: false, error: "Message not found." });
+      return res.status(404).json({
+        ok: false,
+        error: "Message not found.",
+      });
     }
 
     const threadSnap = await docRef.collection("thread").get();
@@ -444,14 +382,17 @@ app.delete("/api/contact/:id", async (req, res) => {
     threadSnap.forEach((threadDoc) => {
       batch.delete(threadDoc.ref);
     });
-    batch.delete(docRef);
 
+    batch.delete(docRef);
     await batch.commit();
 
     return res.json({ ok: true, deletedId: id });
   } catch (e) {
-    console.error("❌ /api/contact DELETE error:", e?.message || e);
-    return res.status(500).json({ ok: false, error: e?.message || "Failed to delete message." });
+    console.error("DELETE /api/contact/:id error:", e?.message || e);
+    return res.status(500).json({
+      ok: false,
+      error: e?.message || "Failed to delete message.",
+    });
   }
 });
 
@@ -461,11 +402,12 @@ app.patch("/api/contact/:id/status", async (req, res) => {
     const { status, token } = req.body || {};
 
     const allowed = ["open", "in_progress", "closed"];
-    if (!id) return res.status(400).json({ ok: false, error: "Missing id" });
-    if (!status || !allowed.includes(String(status))) {
-      return res
-        .status(400)
-        .json({ ok: false, error: `Invalid status. Use: ${allowed.join(", ")}` });
+
+    if (!allowed.includes(String(status))) {
+      return res.status(400).json({
+        ok: false,
+        error: `Invalid status. Use: ${allowed.join(", ")}`,
+      });
     }
 
     const decoded = await verifyTokenOrThrow(token);
@@ -473,8 +415,12 @@ app.patch("/api/contact/:id/status", async (req, res) => {
 
     const docRef = db.collection("contactMessages").doc(id);
     const snap = await docRef.get();
+
     if (!snap.exists) {
-      return res.status(404).json({ ok: false, error: "Message not found" });
+      return res.status(404).json({
+        ok: false,
+        error: "Message not found.",
+      });
     }
 
     const now = Date.now();
@@ -494,11 +440,15 @@ app.patch("/api/contact/:id/status", async (req, res) => {
       update.slaDueAtMs = now + 24 * 60 * 60 * 1000;
       update.closedAt = null;
       update.closedAtMs = null;
-    } else if (status === "in_progress") {
+    }
+
+    if (status === "in_progress") {
       update.awaitingAdmin = false;
       update.closedAt = null;
       update.closedAtMs = null;
-    } else if (status === "closed") {
+    }
+
+    if (status === "closed") {
       update.awaitingAdmin = false;
       update.closedAt = admin.firestore.FieldValue.serverTimestamp();
       update.closedAtMs = now;
@@ -508,23 +458,26 @@ app.patch("/api/contact/:id/status", async (req, res) => {
 
     return res.json({ ok: true, id, status });
   } catch (e) {
-    console.error("❌ PATCH /api/contact/:id/status error:", e?.message || e);
-    return res.status(500).json({ ok: false, error: e?.message || "Failed to update status" });
+    console.error("PATCH /api/contact/:id/status error:", e?.message || e);
+    return res.status(500).json({
+      ok: false,
+      error: e?.message || "Failed to update status.",
+    });
   }
 });
 
 app.get("/api/contact/:id/thread", async (req, res) => {
   try {
     const { id } = req.params;
-    if (!id) {
-      return res.status(400).json({ ok: false, error: "Missing ticket id." });
-    }
 
     const ticketRef = db.collection("contactMessages").doc(id);
     const ticketSnap = await ticketRef.get();
 
     if (!ticketSnap.exists) {
-      return res.status(404).json({ ok: false, error: "Ticket not found." });
+      return res.status(404).json({
+        ok: false,
+        error: "Ticket not found.",
+      });
     }
 
     const threadSnap = await ticketRef
@@ -539,10 +492,11 @@ app.get("/api/contact/:id/thread", async (req, res) => {
 
     return res.json({ ok: true, thread });
   } catch (e) {
-    console.error("❌ GET /api/contact/:id/thread error:", e?.message || e);
-    return res
-      .status(500)
-      .json({ ok: false, error: e?.message || "Failed to load thread." });
+    console.error("GET /api/contact/:id/thread error:", e?.message || e);
+    return res.status(500).json({
+      ok: false,
+      error: e?.message || "Failed to load thread.",
+    });
   }
 });
 
@@ -551,12 +505,11 @@ app.post("/api/contact/:id/reply", async (req, res) => {
     const { id } = req.params;
     const { token, body } = req.body || {};
 
-    if (!id) {
-      return res.status(400).json({ ok: false, error: "Missing ticket id." });
-    }
-
     if (!body || !String(body).trim()) {
-      return res.status(400).json({ ok: false, error: "Reply body is required." });
+      return res.status(400).json({
+        ok: false,
+        error: "Reply body is required.",
+      });
     }
 
     const decoded = await verifyTokenOrThrow(token);
@@ -566,7 +519,10 @@ app.post("/api/contact/:id/reply", async (req, res) => {
     const ticketSnap = await ticketRef.get();
 
     if (!ticketSnap.exists) {
-      return res.status(404).json({ ok: false, error: "Ticket not found." });
+      return res.status(404).json({
+        ok: false,
+        error: "Ticket not found.",
+      });
     }
 
     const ticket = ticketSnap.data() || {};
@@ -599,7 +555,7 @@ app.post("/api/contact/:id/reply", async (req, res) => {
       { merge: true }
     );
 
-    if (ticket.email) {
+    if (ticket.email && process.env.SMTP_HOST) {
       try {
         await transporter.sendMail({
           from: process.env.MAIL_FROM || process.env.SMTP_USER,
@@ -607,8 +563,10 @@ app.post("/api/contact/:id/reply", async (req, res) => {
           subject: `Re: [Ticket:${id}] ${ticket.category || "Contact Inquiry"} - DRRM for Health`,
           text: String(body).trim(),
         });
+
+        replyData.sentViaEmail = true;
       } catch (mailErr) {
-        console.error("⚠️ Failed to send reply email:", mailErr?.message || mailErr);
+        console.error("Failed to send reply email:", mailErr?.message || mailErr);
       }
     }
 
@@ -621,13 +579,17 @@ app.post("/api/contact/:id/reply", async (req, res) => {
       },
     });
   } catch (e) {
-    console.error("❌ POST /api/contact/:id/reply error:", e?.message || e);
-    return res
-      .status(500)
-      .json({ ok: false, error: e?.message || "Failed to send reply." });
+    console.error("POST /api/contact/:id/reply error:", e?.message || e);
+    return res.status(500).json({
+      ok: false,
+      error: e?.message || "Failed to send reply.",
+    });
   }
 });
 
+/* =========================
+   OTP ROUTES
+========================= */
 app.post("/api/send-login-code", async (req, res) => {
   try {
     const { uid, email, token } = req.body || {};
@@ -637,6 +599,7 @@ app.post("/api/send-login-code", async (req, res) => {
     const decoded = await verifyTokenOrThrow(token);
 
     if (decoded.uid !== uid) return res.status(403).json({ error: "UID mismatch." });
+
     if ((decoded.email || "").toLowerCase() !== (email || "").toLowerCase()) {
       return res.status(403).json({ error: "Email mismatch." });
     }
@@ -655,19 +618,18 @@ app.post("/api/send-login-code", async (req, res) => {
     const data = snap.exists ? snap.data() : null;
 
     const now = Date.now();
+
     if (data?.lastSentAt && now - data.lastSentAt < RESEND_COOLDOWN_MS) {
       return res.status(429).json({ error: "Please wait before resending." });
     }
 
     const otp = generateOtp();
-    const otpHash = hashOtp(uid, otp);
-    const expiresAt = now + OTP_TTL_MS;
 
     await ref.set(
       {
-        email: (email || "").toLowerCase(),
-        otpHash,
-        expiresAt,
+        email: String(email || "").toLowerCase(),
+        otpHash: hashOtp(uid, otp),
+        expiresAt: now + OTP_TTL_MS,
         lastSentAt: now,
         attempts: 0,
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
@@ -679,13 +641,12 @@ app.post("/api/send-login-code", async (req, res) => {
       from: process.env.MAIL_FROM || process.env.SMTP_USER,
       to: email,
       subject: "Your login verification code",
-      text: `Your 6-digit login code is: ${otp}\n\nThis code expires in 10 minutes. If you didn't request this, you can ignore this email.`,
+      text: `Your 6-digit login code is: ${otp}\n\nThis code expires in 10 minutes.`,
     });
 
     return res.json({ ok: true });
   } catch (e) {
-    console.error("❌ /api/send-login-code error:", e?.message || e);
-    if (e?.stack) console.error(e.stack);
+    console.error("/api/send-login-code error:", e?.message || e);
     return res.status(400).json({ error: e?.message || "Failed to send code." });
   }
 });
@@ -696,13 +657,17 @@ app.post("/api/verify-login-code", async (req, res) => {
     const decoded = await verifyTokenOrThrow(token);
 
     if (decoded.uid !== uid) return res.status(403).json({ error: "UID mismatch." });
+
     if (!/^\d{6}$/.test(String(code || ""))) {
       return res.status(400).json({ error: "Invalid code format." });
     }
 
     const ref = db.collection("loginOtps").doc(uid);
     const snap = await ref.get();
-    if (!snap.exists) return res.status(400).json({ error: "No code found. Please resend." });
+
+    if (!snap.exists) {
+      return res.status(400).json({ error: "No code found. Please resend." });
+    }
 
     const data = snap.data();
     const now = Date.now();
@@ -713,12 +678,14 @@ app.post("/api/verify-login-code", async (req, res) => {
     }
 
     const attempts = Number(data.attempts || 0);
+
     if (attempts >= 8) {
       await ref.delete().catch(() => {});
       return res.status(429).json({ error: "Too many attempts. Please resend." });
     }
 
     const candidateHash = hashOtp(uid, String(code));
+
     if (candidateHash !== data.otpHash) {
       await ref.set({ attempts: attempts + 1 }, { merge: true });
       return res.status(400).json({ error: "Invalid or expired code." });
@@ -727,159 +694,22 @@ app.post("/api/verify-login-code", async (req, res) => {
     await ref.delete().catch(() => {});
     return res.json({ ok: true });
   } catch (e) {
-    console.error("❌ /api/verify-login-code error:", e?.message || e);
-    if (e?.stack) console.error(e.stack);
+    console.error("/api/verify-login-code error:", e?.message || e);
     return res.status(400).json({ error: e?.message || "Verification failed." });
   }
 });
 
-app.post("/api/send-registration-otp", async (req, res) => {
-  try {
-    const { uid, email, token } = req.body || {};
-    const ip =
-      req.headers["x-forwarded-for"]?.toString().split(",")[0]?.trim() || req.ip;
-
-    console.log("📩 /api/send-registration-otp body:", {
-      uid,
-      email,
-      hasToken: !!token,
-    });
-
-    const decoded = await verifyTokenOrThrow(token);
-
-    console.log("✅ decoded token:", {
-      uid: decoded?.uid,
-      email: decoded?.email,
-    });
-
-    if (decoded.uid !== uid) {
-      return res.status(403).json({ error: "UID mismatch." });
-    }
-
-    if ((decoded.email || "").toLowerCase() !== (email || "").toLowerCase()) {
-      return res.status(403).json({ error: "Email mismatch." });
-    }
-
-    const rl1 = rateLimit(`regsend:uid:${uid}`, MAX_SENDS_PER_15MIN, 15 * 60 * 1000);
-    if (!rl1.ok) return res.status(429).json({ error: "Too many requests. Try later." });
-
-    const rl2 = rateLimit(`regsend:ip:${ip}`, MAX_SENDS_PER_IP_15MIN, 15 * 60 * 1000);
-    if (!rl2.ok) return res.status(429).json({ error: "Too many requests from this IP." });
-
-    const userRef = db.collection("users").doc(uid);
-    const userSnap = await userRef.get();
-
-    if (!userSnap.exists) {
-      return res.status(404).json({ error: "User profile not found." });
-    }
-
-    const userData = userSnap.data() || {};
-    if (userData.registrationOtpVerified) {
-      return res.status(400).json({ error: "Registration OTP already verified." });
-    }
-
-    const ref = db.collection("registrationOtps").doc(uid);
-    const snap = await ref.get();
-    const data = snap.exists ? snap.data() : null;
-
-    const now = Date.now();
-    if (data?.lastSentAt && now - data.lastSentAt < RESEND_COOLDOWN_MS) {
-      return res.status(429).json({ error: "Please wait before resending." });
-    }
-
-    const otp = generateOtp();
-    const otpHash = hashOtp(uid, otp);
-    const expiresAt = now + OTP_TTL_MS;
-
-    await ref.set(
-      {
-        email: (email || "").toLowerCase(),
-        otpHash,
-        expiresAt,
-        lastSentAt: now,
-        attempts: 0,
-        createdAt: admin.firestore.FieldValue.serverTimestamp(),
-      },
-      { merge: true }
-    );
-
-    console.log("📨 Sending registration OTP email to:", email);
-
-    await transporter.sendMail({
-      from: process.env.MAIL_FROM || process.env.SMTP_USER,
-      to: email,
-      subject: "Your registration verification code",
-      text: `Your 6-digit registration code is: ${otp}\n\nThis code expires in 10 minutes. After verifying this OTP, your account will still need admin approval before you can log in.`,
-    });
-
-    console.log("✅ Registration OTP email sent successfully to:", email);
-
-    return res.json({ ok: true });
-  } catch (e) {
-    console.error("❌ /api/send-registration-otp error:", e?.message || e);
-    if (e?.stack) console.error(e.stack);
-    return res.status(400).json({ error: e?.message || "Failed to send registration OTP." });
-  }
-});
-
-app.post("/api/verify-registration-otp", async (req, res) => {
-  try {
-    const { uid, code, token } = req.body || {};
-    const decoded = await verifyTokenOrThrow(token);
-
-    if (decoded.uid !== uid) return res.status(403).json({ error: "UID mismatch." });
-    if (!/^\d{6}$/.test(String(code || ""))) {
-      return res.status(400).json({ error: "Invalid code format." });
-    }
-
-    const ref = db.collection("registrationOtps").doc(uid);
-    const snap = await ref.get();
-    if (!snap.exists) return res.status(400).json({ error: "No code found. Please resend." });
-
-    const data = snap.data();
-    const now = Date.now();
-
-    if (!data?.expiresAt || now > data.expiresAt) {
-      await ref.delete().catch(() => {});
-      return res.status(400).json({ error: "Code expired. Please resend." });
-    }
-
-    const attempts = Number(data.attempts || 0);
-    if (attempts >= 8) {
-      await ref.delete().catch(() => {});
-      return res.status(429).json({ error: "Too many attempts. Please resend." });
-    }
-
-    const candidateHash = hashOtp(uid, String(code));
-    if (candidateHash !== data.otpHash) {
-      await ref.set({ attempts: attempts + 1 }, { merge: true });
-      return res.status(400).json({ error: "Invalid or expired code." });
-    }
-
-    await db.collection("users").doc(uid).set(
-      {
-        registrationOtpVerified: true,
-        registrationOtpVerifiedAt: admin.firestore.FieldValue.serverTimestamp(),
-        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-      },
-      { merge: true }
-    );
-
-    await ref.delete().catch(() => {});
-    return res.json({ ok: true });
-  } catch (e) {
-    console.error("❌ /api/verify-registration-otp error:", e?.message || e);
-    if (e?.stack) console.error(e.stack);
-    return res.status(400).json({ error: e?.message || "Registration verification failed." });
-  }
-});
-
+/* =========================
+   ADMIN ROUTES
+========================= */
 app.post("/api/admin/update-user-status", async (req, res) => {
   try {
     const { token, uid, status } = req.body || {};
+
     if (!uid) return res.status(400).json({ error: "Missing uid." });
 
     const s = String(status || "").toLowerCase();
+
     if (!["approved", "rejected", "pending"].includes(s)) {
       return res.status(400).json({ error: "Invalid status." });
     }
@@ -895,9 +725,7 @@ app.post("/api/admin/update-user-status", async (req, res) => {
       return res.status(404).json({ error: "User not found." });
     }
 
-    const registrationOtpIncomplete = before?.registrationOtpVerified === false;
-
-    if (s === "approved" && registrationOtpIncomplete) {
+    if (s === "approved" && before?.registrationOtpVerified === false) {
       return res.status(400).json({
         error: "User cannot be approved until registration OTP is verified.",
       });
@@ -907,13 +735,18 @@ app.post("/api/admin/update-user-status", async (req, res) => {
       {
         status: s,
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-        ...(s === "approved" ? { approvedAt: admin.firestore.FieldValue.serverTimestamp() } : {}),
-        ...(s === "rejected" ? { rejectedAt: admin.firestore.FieldValue.serverTimestamp() } : {}),
+        ...(s === "approved"
+          ? { approvedAt: admin.firestore.FieldValue.serverTimestamp() }
+          : {}),
+        ...(s === "rejected"
+          ? { rejectedAt: admin.firestore.FieldValue.serverTimestamp() }
+          : {}),
       },
       { merge: true }
     );
 
-    const action = s === "approved" ? "approve" : s === "rejected" ? "reject" : "set_pending";
+    const action =
+      s === "approved" ? "approve" : s === "rejected" ? "reject" : "set_pending";
 
     await writeAuditLog({
       adminUid: decoded.uid,
@@ -935,15 +768,17 @@ app.post("/api/admin/update-user-status", async (req, res) => {
 
     return res.json({ ok: true });
   } catch (e) {
-    console.error("❌ /api/admin/update-user-status error:", e?.message || e);
-    if (e?.stack) console.error(e.stack);
-    return res.status(400).json({ error: e?.message || "Failed to update status." });
+    console.error("/api/admin/update-user-status error:", e?.message || e);
+    return res.status(400).json({
+      error: e?.message || "Failed to update status.",
+    });
   }
 });
 
 app.post("/api/admin/remove-users", async (req, res) => {
   try {
     const { token, uids } = req.body || {};
+
     if (!Array.isArray(uids) || uids.length === 0) {
       return res.status(400).json({ error: "No users selected." });
     }
@@ -955,7 +790,11 @@ app.post("/api/admin/remove-users", async (req, res) => {
 
     for (const uid of uids) {
       if (uid === decoded.uid) {
-        results.push({ uid, ok: false, error: "You cannot remove your own admin account." });
+        results.push({
+          uid,
+          ok: false,
+          error: "You cannot remove your own admin account.",
+        });
         continue;
       }
 
@@ -964,25 +803,16 @@ app.post("/api/admin/remove-users", async (req, res) => {
       const data = targetSnap.exists ? targetSnap.data() : null;
 
       if ((data?.role || "").toLowerCase() === "admin") {
-        results.push({ uid, ok: false, error: "You cannot remove another admin account." });
-        continue;
-      }
-
-      const beforeStatus = (data?.status || "unknown").toLowerCase();
-
-      try {
-        await admin.auth().deleteUser(uid);
-      } catch (err) {
-        console.error("❌ Failed to delete Firebase Auth user:", uid, err?.message || err);
         results.push({
           uid,
           ok: false,
-          error: err?.message || "Failed to delete Firebase Auth account.",
+          error: "You cannot remove another admin account.",
         });
         continue;
       }
 
       try {
+        await admin.auth().deleteUser(uid);
         await db.collection("loginOtps").doc(uid).delete().catch(() => {});
         await db.collection("registrationOtps").doc(uid).delete().catch(() => {});
         await targetRef.delete().catch(() => {});
@@ -999,31 +829,28 @@ app.post("/api/admin/remove-users", async (req, res) => {
               `${data?.firstName || ""} ${data?.lastName || ""}`.trim() ||
               "",
             role: data?.role || "",
-            beforeStatus,
+            beforeStatus: data?.status || "unknown",
             afterStatus: "removed",
-            region: data?.region || "",
-            address: data?.address || "",
-            gender: data?.gender || "",
             registrationOtpVerified: !!data?.registrationOtpVerified,
           },
         });
 
         results.push({ uid, ok: true });
       } catch (err) {
-        console.error("❌ Failed to delete Firestore user data:", uid, err?.message || err);
         results.push({
           uid,
           ok: false,
-          error: err?.message || "Firebase Auth deleted, but Firestore cleanup failed.",
+          error: err?.message || "Failed to remove user.",
         });
       }
     }
 
     return res.json({ ok: true, results });
   } catch (e) {
-    console.error("❌ /api/admin/remove-users error:", e?.message || e);
-    if (e?.stack) console.error(e.stack);
-    return res.status(400).json({ error: e?.message || "Failed to remove users." });
+    console.error("/api/admin/remove-users error:", e?.message || e);
+    return res.status(400).json({
+      error: e?.message || "Failed to remove users.",
+    });
   }
 });
 
@@ -1035,7 +862,11 @@ app.get("/api/admin/audit-log", async (req, res) => {
     const decoded = await verifyTokenOrThrow(token);
     await requireAdmin(decoded.uid);
 
-    const snap = await db.collection("adminAuditLogs").orderBy("createdAt", "desc").limit(limit).get();
+    const snap = await db
+      .collection("adminAuditLogs")
+      .orderBy("createdAt", "desc")
+      .limit(limit)
+      .get();
 
     let logs = snap.docs.map((d) => {
       const data = d.data();
@@ -1047,20 +878,213 @@ app.get("/api/admin/audit-log", async (req, res) => {
 
     return res.json({ ok: true, logs });
   } catch (e) {
-    console.error("❌ /api/admin/audit-log error:", e?.message || e);
-    if (e?.stack) console.error(e.stack);
-    return res.status(400).json({ error: e?.message || "Failed to load audit logs." });
+    console.error("/api/admin/audit-log error:", e?.message || e);
+    return res.status(400).json({
+      error: e?.message || "Failed to load audit logs.",
+    });
   }
 });
 
+/* =========================
+   OPTIONAL IMAP POLLING
+========================= */
+async function saveInboundReplyToTicket({
+  ticketId,
+  fromEmail,
+  fromName,
+  subject,
+  body,
+  messageId,
+}) {
+  const ticketRef = db.collection("contactMessages").doc(ticketId);
+  const ticketSnap = await ticketRef.get();
+
+  if (!ticketSnap.exists) {
+    throw new Error(`Ticket not found: ${ticketId}`);
+  }
+
+  const now = Date.now();
+  const safeBody = cleanEmailReplyText(body);
+
+  if (!safeBody) {
+    return { skipped: true, reason: "Empty body after cleaning." };
+  }
+
+  const existing = await ticketRef
+    .collection("thread")
+    .where("messageId", "==", String(messageId || ""))
+    .limit(1)
+    .get();
+
+  if (!existing.empty) {
+    return { skipped: true, reason: "Duplicate message." };
+  }
+
+  await ticketRef.collection("thread").add({
+    body: safeBody,
+    senderRole: "user",
+    senderUid: "",
+    senderEmail: normalizeEmail(fromEmail),
+    senderName: fromName || fromEmail || "Requester",
+    sentViaEmail: true,
+    messageId: String(messageId || ""),
+    subject: String(subject || ""),
+    createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    createdAtMs: now,
+  });
+
+  await ticketRef.set(
+    {
+      status: "open",
+      awaitingAdmin: true,
+      slaDueAtMs: now + 24 * 60 * 60 * 1000,
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      updatedAtMs: now,
+      statusUpdatedAtMs: now,
+      lastSenderUid: "",
+      lastSenderEmail: normalizeEmail(fromEmail),
+      lastSenderName: fromName || fromEmail || "Requester",
+      lastInboundSubject: String(subject || ""),
+      lastInboundMessageId: String(messageId || ""),
+    },
+    { merge: true }
+  );
+
+  return { ok: true };
+}
+
+async function pollInboxOnce() {
+  const host = process.env.IMAP_HOST;
+  const port = Number(process.env.IMAP_PORT || 993);
+  const secure = String(process.env.IMAP_SECURE || "true").toLowerCase() === "true";
+  const user = process.env.IMAP_USER;
+  const pass = process.env.IMAP_PASS;
+  const mailbox = process.env.IMAP_MAILBOX || "INBOX";
+
+  if (!host || !user || !pass) {
+    console.log("IMAP polling skipped: missing IMAP env vars.");
+    return;
+  }
+
+  const client = new ImapFlow({
+    host,
+    port,
+    secure,
+    auth: { user, pass },
+    logger: false,
+  });
+
+  await client.connect();
+
+  let lock;
+
+  try {
+    lock = await client.getMailboxLock(mailbox);
+    const unseenUids = await client.search({ seen: false });
+
+    for (const uid of unseenUids) {
+      try {
+        const msg = await client.fetchOne(uid, {
+          uid: true,
+          envelope: true,
+          source: true,
+          flags: true,
+        });
+
+        if (!msg?.source) continue;
+
+        const parsed = await simpleParser(msg.source);
+        const subject = parsed.subject || "";
+        const ticketId = extractTicketId(subject);
+
+        if (!ticketId) {
+          await client.messageFlagsAdd(uid, ["\\Seen"]);
+          continue;
+        }
+
+        const fromValue = parsed.from?.value?.[0] || {};
+        const fromEmail = normalizeEmail(fromValue.address || "");
+        const fromName = fromValue.name || fromEmail;
+
+        const textBody =
+          parsed.text ||
+          parsed.html?.replace(/<[^>]+>/g, " ") ||
+          "";
+
+        const result = await saveInboundReplyToTicket({
+          ticketId,
+          fromEmail,
+          fromName,
+          subject,
+          body: textBody,
+          messageId: parsed.messageId || `${uid}`,
+        });
+
+        console.log("Inbound email processed:", {
+          uid,
+          ticketId,
+          fromEmail,
+          result,
+        });
+
+        await client.messageFlagsAdd(uid, ["\\Seen"]);
+      } catch (msgErr) {
+        console.error("Failed to process inbound message:", msgErr?.message || msgErr);
+      }
+    }
+  } finally {
+    if (lock) lock.release();
+    await client.logout().catch(() => {});
+  }
+}
+
+function startInboundEmailPolling() {
+  if (String(process.env.ENABLE_IMAP_POLLING || "false").toLowerCase() !== "true") {
+    console.log("IMAP polling disabled. Set ENABLE_IMAP_POLLING=true to enable.");
+    return;
+  }
+
+  const intervalMs = Number(process.env.IMAP_POLL_MS || 60000);
+
+  const run = async () => {
+    try {
+      await pollInboxOnce();
+    } catch (e) {
+      console.error("IMAP poll failed:", e?.message || e);
+    }
+  };
+
+  run();
+  setInterval(run, intervalMs);
+}
+
+/* =========================
+   SERVE REACT BUILD
+========================= */
 const clientDist = path.join(__dirname, "dist");
-app.use(express.static(clientDist));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(clientDist, "index.html"));
-});
+if (fs.existsSync(clientDist)) {
+  app.use(express.static(clientDist));
 
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(clientDist, "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.json({
+      ok: true,
+      message: "API server is running. React dev server should run on http://localhost:8000",
+    });
+  });
+}
+
+/* =========================
+   START SERVER
+========================= */
 startInboundEmailPolling();
 
 const PORT = Number(process.env.PORT || 5000);
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

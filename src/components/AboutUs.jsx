@@ -5,8 +5,7 @@ import Target from "../assets/Target.png";
 import Values from "../assets/Values.png";
 import MisVisBg3 from "../assets/misvis-bg3.png";
 import videoBg from "../assets/background.png";
-
-const aboutBg = "/assets/uploads/careers-redbg.png";
+import aboutBg from "../assets/careers-redbg.png";
 
 const MAROON = "#7B1113";
 const YELLOW = "#F4C430";

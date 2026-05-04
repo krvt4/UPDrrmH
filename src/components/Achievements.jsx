@@ -13,8 +13,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-const achievementsBg = "/assets/uploads/careers-redbg.png";
-const achievementsSectionBg = "/assets/uploads/background.png";
+import achievementsBg from "../assets/careers-redbg.png";
+import achievementsSectionBg from "../assets/background.png";
 
 function Achievements() {
   const [selectedAchievement, setSelectedAchievement] = useState(null);
@@ -30,9 +30,7 @@ function Achievements() {
 
   useEffect(() => {
     const onKeyDown = (e) => {
-      if (e.key === "Escape") {
-        setSelectedAchievement(null);
-      }
+      if (e.key === "Escape") setSelectedAchievement(null);
     };
 
     if (selectedAchievement) {
@@ -207,8 +205,7 @@ function Achievements() {
     const card = container.querySelector(selector);
     if (!card) return;
 
-    const gap = 24;
-    const amount = card.clientWidth + gap;
+    const amount = card.clientWidth + 24;
 
     container.scrollBy({
       left: direction === "left" ? -amount : amount,
@@ -236,7 +233,6 @@ function Achievements() {
 
     const container = ref.current;
     const cards = Array.from(container.querySelectorAll(selector));
-
     if (!cards.length) return;
 
     const containerCenter = container.scrollLeft + container.clientWidth / 2;
@@ -269,12 +265,13 @@ function Achievements() {
     prevLabel,
     nextLabel,
   }) => (
-    <section className="mt-2 mb-16 px-4 sm:px-6 lg:px-8">
+    <section className="mb-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
           <h2 className="text-[2rem] md:text-[3.2rem] font-extrabold text-[#7B1113] tracking-wide">
             {sectionTitle}
           </h2>
+
           <p className="mt-3 text-sm md:text-base text-gray-700">
             {sectionDescription}
           </p>
@@ -292,11 +289,9 @@ function Achievements() {
 
           <div className="relative z-10">
             <div className="flex items-center justify-between gap-3 mb-6">
-              <div className="text-white">
-                <p className="text-xs uppercase tracking-[0.28em] text-white/70">
-                  {sectionLabel}
-                </p>
-              </div>
+              <p className="text-xs uppercase tracking-[0.28em] text-white/70">
+                {sectionLabel}
+              </p>
 
               <div className="hidden md:flex items-center gap-3">
                 <button
@@ -319,107 +314,102 @@ function Achievements() {
               </div>
             </div>
 
-            <div className="relative">
-              <div
-                ref={scrollRef}
-                onScroll={() =>
-                  handleScroll(scrollRef, cardSelector, setActiveIndex)
-                }
-                className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 no-scrollbar"
-                style={{
-                  scrollbarWidth: "none",
-                  msOverflowStyle: "none",
-                }}
-              >
-                {items.map((item, index) => {
-                  const Icon = item.icon;
-                  const isActive = index === activeIndex;
+            <div
+              ref={scrollRef}
+              onScroll={() => handleScroll(scrollRef, cardSelector, setActiveIndex)}
+              className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 no-scrollbar"
+              style={{
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+              }}
+            >
+              {items.map((item, index) => {
+                const Icon = item.icon;
+                const isActive = index === activeIndex;
 
-                  return (
-                    <button
-                      key={`${sectionLabel}-${item.id}`}
-                      type="button"
-                      data-card
-                      onClick={() => setSelectedAchievement(item)}
-                      className={`group relative shrink-0 w-[86%] sm:w-[70%] md:w-[48%] xl:w-[37%] snap-start text-left rounded-[28px] overflow-hidden border transition duration-300 ${
-                        isActive
-                          ? "border-[#F4C430] shadow-[0_20px_40px_rgba(0,0,0,0.30)]"
-                          : "border-white/10 shadow-[0_12px_28px_rgba(0,0,0,0.22)]"
-                      } bg-white/10 backdrop-blur-md hover:-translate-y-1`}
-                    >
-                      <div className="relative h-72 md:h-80 overflow-hidden">
-                        <div
-                          className="absolute inset-0 scale-110"
+                return (
+                  <button
+                    key={`${sectionLabel}-${item.id}`}
+                    type="button"
+                    data-card
+                    onClick={() => setSelectedAchievement(item)}
+                    className={`group relative shrink-0 w-[86%] sm:w-[70%] md:w-[48%] xl:w-[37%] snap-start text-left rounded-[28px] overflow-hidden border transition duration-300 ${
+                      isActive
+                        ? "border-[#F4C430] shadow-[0_20px_40px_rgba(0,0,0,0.30)]"
+                        : "border-white/10 shadow-[0_12px_28px_rgba(0,0,0,0.22)]"
+                    } bg-white/10 backdrop-blur-md hover:-translate-y-1`}
+                  >
+                    <div className="relative h-72 md:h-80 overflow-hidden">
+                      <div
+                        className="absolute inset-0 scale-110"
+                        style={{
+                          backgroundImage: `url(${item.image})`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                          filter: "blur(14px) brightness(1.08)",
+                          transform: "scale(1.12)",
+                        }}
+                      />
+
+                      <div className="absolute inset-0 bg-black/20" />
+                      <div className="absolute inset-y-0 left-0 w-[22%] bg-gradient-to-r from-black/30 to-transparent z-[1]" />
+                      <div className="absolute inset-y-0 right-0 w-[22%] bg-gradient-to-l from-black/30 to-transparent z-[1]" />
+
+                      <div className="absolute inset-0 z-[2] flex items-center justify-center px-6 md:px-8">
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
                           style={{
-                            backgroundImage: `url(${item.image})`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                            filter: "blur(14px) brightness(1.08)",
-                            transform: "scale(1.12)",
+                            filter:
+                              "brightness(1.13) contrast(1.05) saturate(1.04)",
+                            maskImage:
+                              "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.75) 18%, rgba(0,0,0,1) 30%, rgba(0,0,0,1) 70%, rgba(0,0,0,0.75) 82%, transparent 100%)",
+                            WebkitMaskImage:
+                              "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.75) 18%, rgba(0,0,0,1) 30%, rgba(0,0,0,1) 70%, rgba(0,0,0,0.75) 82%, transparent 100%)",
+                          }}
+                          onError={(e) => {
+                            e.currentTarget.src =
+                              "https://placehold.co/1200x800/f3f4f6/7B1113?text=Achievement+Image";
                           }}
                         />
+                      </div>
 
-                        <div className="absolute inset-0 bg-black/20" />
-                        <div className="absolute inset-y-0 left-0 w-[22%] bg-gradient-to-r from-black/30 to-transparent z-[1]" />
-                        <div className="absolute inset-y-0 right-0 w-[22%] bg-gradient-to-l from-black/30 to-transparent z-[1]" />
+                      <div className="absolute inset-0 z-[3] bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
 
-                        <div className="absolute inset-0 z-[2] flex items-center justify-center px-6 md:px-8">
-                          <img
-                            src={item.image}
-                            alt={item.title}
-                            className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
-                            style={{
-                              filter:
-                                "brightness(1.13) contrast(1.05) saturate(1.04)",
-                              clipPath: "inset(0 round 0)",
-                              maskImage:
-                                "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.75) 18%, rgba(0,0,0,1) 30%, rgba(0,0,0,1) 70%, rgba(0,0,0,0.75) 82%, transparent 100%)",
-                              WebkitMaskImage:
-                                "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.75) 18%, rgba(0,0,0,1) 30%, rgba(0,0,0,1) 70%, rgba(0,0,0,0.75) 82%, transparent 100%)",
-                            }}
-                            onError={(e) => {
-                              e.currentTarget.src =
-                                "https://placehold.co/1200x800/f3f4f6/7B1113?text=Achievement+Image";
-                            }}
-                          />
-                        </div>
-
-                        <div className="absolute inset-0 z-[3] bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
-
-                        <div className="absolute top-4 left-4 z-[4]">
-                          <div className="h-12 w-12 rounded-full flex items-center justify-center bg-white/15 backdrop-blur-md border border-white/15 shadow">
-                            <Icon size={22} className="text-[#F4C430]" />
-                          </div>
-                        </div>
-
-                        <div className="absolute bottom-0 left-0 right-0 p-5 text-white z-[4]">
-                          <h3 className="text-lg md:text-xl font-extrabold leading-snug max-w-[95%] drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)]">
-                            {item.title}
-                          </h3>
+                      <div className="absolute top-4 left-4 z-[4]">
+                        <div className="h-12 w-12 rounded-full flex items-center justify-center bg-white/15 backdrop-blur-md border border-white/15 shadow">
+                          <Icon size={22} className="text-[#F4C430]" />
                         </div>
                       </div>
 
-                      <div className="p-5 md:p-6 text-white min-h-[180px] flex flex-col">
-                        <p
-                          className="text-sm text-white/85 leading-relaxed flex-grow overflow-hidden"
-                          style={{
-                            display: "-webkit-box",
-                            WebkitLineClamp: 4,
-                            WebkitBoxOrient: "vertical",
-                          }}
-                        >
-                          {item.summary}
-                        </p>
-
-                        <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white group-hover:text-[#F4C430] transition">
-                          View Image
-                          <ArrowRight size={15} />
-                        </div>
+                      <div className="absolute bottom-0 left-0 right-0 p-5 text-white z-[4]">
+                        <h3 className="text-lg md:text-xl font-extrabold leading-snug max-w-[95%] drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)]">
+                          {item.title}
+                        </h3>
                       </div>
-                    </button>
-                  );
-                })}
-              </div>
+                    </div>
+
+                    <div className="p-5 md:p-6 text-white min-h-[180px] flex flex-col">
+                      <p
+                        className="text-sm text-white/85 leading-relaxed flex-grow overflow-hidden"
+                        style={{
+                          display: "-webkit-box",
+                          WebkitLineClamp: 4,
+                          WebkitBoxOrient: "vertical",
+                        }}
+                      >
+                        {item.summary}
+                      </p>
+
+                      <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white group-hover:text-[#F4C430] transition">
+                        View Image
+                        <ArrowRight size={15} />
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
 
             <div className="mt-6 flex flex-col items-center gap-4">
@@ -487,26 +477,21 @@ function Achievements() {
             </h1>
 
             <p className="mt-4 text-sm md:text-lg leading-relaxed max-w-3xl mx-auto text-white/95">
-              A showcase of awards and certifications associated with Dr. Carlos
-              Primero D. Gundran and related institutional recognitions.
+              A showcase of awards, certifications, and institutional
+              recognitions connected to Dr. Carlos Primero D. Gundran and the
+              University of the Philippines Manila.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-[28px] shadow-[0_16px_40px_rgba(123,17,19,0.12)] overflow-hidden max-w-7xl mx-auto">
-          <div className="p-6 md:p-10 text-center">
-            <h2 className="text-2xl md:text-4xl font-extrabold text-[#7B1113]">
-              Achievements Gallery
-            </h2>
-
-            <p className="mt-4 text-sm md:text-base text-gray-700 max-w-4xl mx-auto leading-relaxed">
-              This page presents awards, recognitions, certificates, and related
-              institutional milestones connected to Dr. Carlos Primero D.
-              Gundran and the University of the Philippines Manila.
-            </p>
-          </div>
+      <section className="pt-14 pb-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm md:text-base text-gray-700 leading-relaxed">
+            Explore selected recognitions, certificates, and milestones that
+            highlight contributions to disaster risk reduction, emergency
+            medicine, health resilience, and public service.
+          </p>
         </div>
       </section>
 
@@ -518,8 +503,7 @@ function Achievements() {
         cardSelector: "[data-card]",
         sectionLabel: "Awards Series",
         sectionTitle: "Recognitions",
-        sectionDescription:
-          "Received by Dr. Carlos Primero D. Gundran.",
+        sectionDescription: "Received by Dr. Carlos Primero D. Gundran.",
         prevLabel: "Previous awards",
         nextLabel: "Next awards",
       })}
@@ -532,8 +516,7 @@ function Achievements() {
         cardSelector: "[data-card]",
         sectionLabel: "Certifications Series",
         sectionTitle: "Certifications",
-        sectionDescription:
-          "Certificates and related recognitions.",
+        sectionDescription: "Certificates and related institutional recognitions.",
         prevLabel: "Previous certifications",
         nextLabel: "Next certifications",
       })}
