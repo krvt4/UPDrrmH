@@ -54,9 +54,9 @@ function Achievements() {
         title: "Learning and Development Summit Recognition",
         image: "/uploads/pictures/DSC1.jpg",
         summary:
-          "Recognition for technical expertise and valuable contribution to the successful conduct of the 2023 Learning and Development Summit.",
+          "Recognition for technical expertise and valuable contribution to the successful conduct of the 2023 Learning and Development Summit",
         description:
-          "This plaque recognizes the efforts, technical expertise, and invaluable contribution of Dr. Carlos Primero D. Gundran to the successful conduct of the 2023 Learning and Development Summit.",
+          "This plaque recognizes the efforts, technical expertise, and invaluable contribution of Dr. Carlos Primero D. Gundran to the successful conduct of the 2023 Learning and Development Summit",
       },
       {
         id: 2,
@@ -64,9 +64,9 @@ function Achievements() {
         title: "Cordillera Resiliency Framework and Plan Development",
         image: "/uploads/pictures/DSC2.jpg",
         summary:
-          "Awarded for distinguished and invaluable service as Resource Speaker during the Webinar-Workshop on Cordillera Resiliency Framework and Plan Development.",
+          "Awarded for distinguished and invaluable service as Resource Speaker during the Webinar-Workshop on Cordillera Resiliency Framework and Plan Development",
         description:
-          "This plaque of appreciation honors the distinguished and invaluable service rendered by Dr. Carlos Primero D. Gundran as Resource Speaker during the Webinar-Workshop on Cordillera Resiliency Framework and Plan Development.",
+          "This plaque of appreciation honors the distinguished and invaluable service rendered by Dr. Carlos Primero D. Gundran as Resource Speaker during the Webinar-Workshop on Cordillera Resiliency Framework and Plan Development",
       },
       {
         id: 3,
@@ -74,9 +74,9 @@ function Achievements() {
         title: "EMTECH Asia 2011",
         image: "/uploads/pictures/DSC3.jpg",
         summary:
-          "Given for sharing insights, expertise, and experiences on Emergency Medical Services during EMTECH Asia 2011.",
+          "Given for sharing insights, expertise, and experiences on Emergency Medical Services during EMTECH Asia 2011",
         description:
-          "This recognition was awarded to Dr. Carlos Primero D. Gundran for sharing insights, expertise, and experiences on Emergency Medical Services during EMTECH Asia 2011.",
+          "This recognition was awarded to Dr. Carlos Primero D. Gundran for sharing insights, expertise, and experiences on Emergency Medical Services during EMTECH Asia 2011",
       },
       {
         id: 4,
@@ -84,9 +84,9 @@ function Achievements() {
         title: "APO Preparedness Webinar",
         image: "/uploads/pictures/DSC4.jpg",
         summary:
-          "Presented in appreciation for serving as Resource Speaker in the webinar “What Is The Big One? And Why We Need To Prepare For It.”",
+          "Presented in appreciation for serving as Resource Speaker in the webinar “What Is The Big One? And Why We Need To Prepare For It”",
         description:
-          "This plaque was presented to Dr. Carlos Primero D. Gundran in appreciation for the valuable time and expertise he shared as Resource Speaker in the preparedness webinar titled “What Is The Big One? And Why We Need To Prepare For It.”",
+          "This plaque was presented to Dr. Carlos Primero D. Gundran in appreciation for the valuable time and expertise he shared as Resource Speaker in the preparedness webinar titled “What Is The Big One? And Why We Need To Prepare For It”",
       },
       {
         id: 5,
@@ -95,9 +95,9 @@ function Achievements() {
           "First Academic Society Conference on Climate and Disaster Resilience",
         image: "/uploads/pictures/DSC5.jpg",
         summary:
-          "Awarded for invaluable contribution as Moderator during the First Academic Society Conference on Climate and Disaster Resilience.",
+          "Awarded for invaluable contribution as Moderator during the First Academic Society Conference on Climate and Disaster Resilience",
         description:
-          "This plaque of appreciation recognizes the invaluable contribution of Dr. Carlos Primero D. Gundran as Moderator during the First Academic Society Conference on Climate and Disaster Resilience.",
+          "This plaque of appreciation recognizes the invaluable contribution of Dr. Carlos Primero D. Gundran as Moderator during the First Academic Society Conference on Climate and Disaster Resilience",
       },
       {
         id: 6,
@@ -105,23 +105,19 @@ function Achievements() {
         title: "Gawad Sinag",
         image: "/uploads/pictures/DSC6.jpg",
         summary:
-          "Conferred in recognition of meaningful contribution and leadership as Chief Resident in the Department of Emergency Medicine.",
+          "Conferred in recognition of meaningful contribution and leadership as Chief Resident in the Department of Emergency Medicine",
         description:
-          "This award honors the meaningful contribution and leadership of Dr. Carlos Primero D. Gundran as Chief Resident in the Department of Emergency Medicine.",
+          "This award honors the meaningful contribution and leadership of Dr. Carlos Primero D. Gundran as Chief Resident in the Department of Emergency Medicine",
       },
-
-      /*
-        Moved from Certifications into Recognitions
-      */
       {
         id: 7,
         icon: FileBadge,
         title: "Visayas Leg 2025 Certificate of Appreciation",
         image: "/uploads/pictures/DSC_9328.JPG",
         summary:
-          "Presented to the University of the Philippines Manila for invaluable support and active participation as exhibitor during the Handa Pilipinas sa Bagong Pilipinas exposition.",
+          "Presented to the University of the Philippines Manila for invaluable support and active participation as exhibitor during the Handa Pilipinas sa Bagong Pilipinas exposition",
         description:
-          "This certificate of appreciation was presented to the University of the Philippines Manila in grateful recognition of invaluable support and active participation as exhibitor during the Handa Pilipinas sa Bagong Pilipinas: Innovations in Climate and Disaster Resilience Nationwide Exposition 2025 (Visayas Leg).",
+          "This certificate of appreciation was presented to the University of the Philippines Manila in grateful recognition of invaluable support and active participation as exhibitor during the Handa Pilipinas sa Bagong Pilipinas: Innovations in Climate and Disaster Resilience Nationwide Exposition 2025 (Visayas Leg)",
       },
       {
         id: 8,
@@ -129,9 +125,9 @@ function Achievements() {
         title: "Luzon Leg 2025 Certificate of Appreciation",
         image: "/uploads/pictures/DSC_9331.JPG",
         summary:
-          "Awarded to UP–Manila in grateful recognition of invaluable contribution as exhibitor during the 2025 Handa Pilipinas sa Bagong Pilipinas: Luzon Leg.",
+          "Awarded to UP-Manila in grateful recognition of invaluable contribution as exhibitor during the 2025 Handa Pilipinas sa Bagong Pilipinas: Luzon Leg",
         description:
-          "This certificate of appreciation was awarded to UP–Manila in recognition of invaluable contribution as exhibitor during the 2025 Handa Pilipinas sa Bagong Pilipinas: Innovations in Climate and Disaster Resilience Nationwide Exposition (Luzon Leg).",
+          "This certificate of appreciation was awarded to UP-Manila in recognition of invaluable contribution as exhibitor during the 2025 Handa Pilipinas sa Bagong Pilipinas: Innovations in Climate and Disaster Resilience Nationwide Exposition (Luzon Leg)",
       },
       {
         id: 9,
@@ -139,9 +135,9 @@ function Achievements() {
         title: "Visayas Leg Partnership Certificate",
         image: "/uploads/pictures/DSC_9332.JPG",
         summary:
-          "Certificate of appreciation awarded to the University of the Philippines Manila for invaluable support and partnership during Handa Pilipinas: Visayas Leg.",
+          "Certificate of appreciation awarded to the University of the Philippines Manila for invaluable support and partnership during Handa Pilipinas: Visayas Leg",
         description:
-          "This certificate recognizes the valuable support and partnership of the University of the Philippines Manila in the successful realization of Handa Pilipinas: Visayas Leg, further promoting disaster preparedness and resilience.",
+          "This certificate recognizes the valuable support and partnership of the University of the Philippines Manila in the successful realization of Handa Pilipinas: Visayas Leg, further promoting disaster preparedness and resilience",
       },
       {
         id: 10,
@@ -149,9 +145,9 @@ function Achievements() {
         title: "Pagkilala from Ugnayan ng Pahinungod Manila",
         image: "/uploads/pictures/DSC_9334.JPG",
         summary:
-          "Certificate of recognition awarded to Dr. Carlos Primero Gundran for notable contribution and dedication to the programs of Ugnayan ng Pahinungod Manila.",
+          "Certificate of recognition awarded to Dr. Carlos Primero Gundran for notable contribution and dedication to the programs of Ugnayan ng Pahinungod Manila",
         description:
-          "This framed certificate of recognition honors Dr. Carlos Primero Gundran for his notable contribution and dedication to the programs of Ugnayan ng Pahinungod Manila and for his service to public-oriented initiatives.",
+          "This framed certificate of recognition honors Dr. Carlos Primero Gundran for his notable contribution and dedication to the programs of Ugnayan ng Pahinungod Manila and for his service to public-oriented initiatives",
       },
       {
         id: 11,
@@ -159,9 +155,9 @@ function Achievements() {
         title: "DRRM-H Team Recognition Photo",
         image: "/uploads/pictures/DSC_9336.JPG",
         summary:
-          "A framed group recognition image featuring the University of the Philippines Manila Disaster Risk Reduction and Management in Health Center team.",
+          "A framed group recognition image featuring the University of the Philippines Manila Disaster Risk Reduction and Management in Health Center team",
         description:
-          "This framed group image represents the Disaster Risk Reduction and Management in Health Center team of the University of the Philippines Manila and serves as a visual recognition of the organization and its members.",
+          "This framed group image represents the Disaster Risk Reduction and Management in Health Center team of the University of the Philippines Manila and serves as a visual recognition of the organization and its members",
       },
       {
         id: 12,
@@ -169,9 +165,9 @@ function Achievements() {
         title: "Emergency Medicine Workshop Certificate of Appreciation",
         image: "/uploads/pictures/DSC_9338.JPG",
         summary:
-          "Presented to the UP-Manila Disaster Risk Reduction and Management in Health Center for facilitating the pre-convention workshop on Mass Casualty Incident and Disaster Preparedness.",
+          "Presented to the UP-Manila Disaster Risk Reduction and Management in Health Center for facilitating the pre-convention workshop on Mass Casualty Incident and Disaster Preparedness",
         description:
-          "This certificate of appreciation was presented to the UP-Manila Disaster Risk Reduction and Management in Health Center for facilitating the pre-convention workshop on Mass Casualty Incident and Disaster Preparedness during the 25th Postgraduate Course entitled EvolvED: The Future of Emergency Medicine Practice.",
+          "This certificate of appreciation was presented to the UP-Manila Disaster Risk Reduction and Management in Health Center for facilitating the pre-convention workshop on Mass Casualty Incident and Disaster Preparedness during the 25th Postgraduate Course entitled EvolvED: The Future of Emergency Medicine Practice",
       },
       {
         id: 13,
@@ -179,9 +175,9 @@ function Achievements() {
         title: "DRRM-H Summit 2025 Certificate of Appreciation",
         image: "/uploads/pictures/DSC_9340.JPG",
         summary:
-          "Presented to the University of the Philippines for outstanding and invaluable contributions during disaster response operations.",
+          "Presented to the University of the Philippines for outstanding and invaluable contributions during disaster response operations",
         description:
-          "This certificate of appreciation recognizes the University of the Philippines for outstanding and invaluable contributions during disaster response operations, highlighting dedication, partnership, and resilience in times of crisis.",
+          "This certificate of appreciation recognizes the University of the Philippines for outstanding and invaluable contributions during disaster response operations, highlighting dedication, partnership, and resilience in times of crisis",
       },
       {
         id: 14,
@@ -189,9 +185,9 @@ function Achievements() {
         title: "Certificate of Participation – Exhibitor",
         image: "/uploads/pictures/DSC_9343.JPG",
         summary:
-          "Presented to the Philippine Council for Health Research and Development as exhibitor during the Handa Pilipinas exposition.",
+          "Presented to the Philippine Council for Health Research and Development as exhibitor during the Handa Pilipinas exposition",
         description:
-          "This framed certificate of participation was presented to the Philippine Council for Health Research and Development as exhibitor for featured technologies during the Handa Pilipinas exposition.",
+          "This framed certificate of participation was presented to the Philippine Council for Health Research and Development as exhibitor for featured technologies during the Handa Pilipinas exposition",
       },
     ],
     []
@@ -254,7 +250,11 @@ function Achievements() {
     setActiveIndex(closestIndex);
   };
 
-  const renderEmptyState = ({ sectionLabel, sectionTitle, sectionDescription }) => (
+  const renderEmptyState = ({
+    sectionLabel,
+    sectionTitle,
+    sectionDescription,
+  }) => (
     <section className="mb-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
@@ -262,7 +262,7 @@ function Achievements() {
             {sectionTitle}
           </h2>
 
-          <p className="mt-3 text-sm md:text-base text-gray-700">
+          <p className="mt-3 text-sm md:text-base text-gray-700 text-justify max-w-3xl mx-auto">
             {sectionDescription}
           </p>
         </div>
@@ -291,7 +291,7 @@ function Achievements() {
                 Certifications Coming Soon
               </h3>
 
-              <p className="mt-4 text-sm md:text-base text-white/85 leading-relaxed">
+              <p className="mt-4 text-sm md:text-base text-white/85 leading-relaxed text-justify">
                 This section is currently blank and reserved for future
                 certification entries
               </p>
@@ -330,7 +330,7 @@ function Achievements() {
               {sectionTitle}
             </h2>
 
-            <p className="mt-3 text-sm md:text-base text-gray-700">
+            <p className="mt-3 text-sm md:text-base text-gray-700 text-justify max-w-3xl mx-auto">
               {sectionDescription}
             </p>
           </div>
@@ -454,7 +454,7 @@ function Achievements() {
 
                       <div className="p-5 md:p-6 text-white min-h-[180px] flex flex-col">
                         <p
-                          className="text-sm text-white/85 leading-relaxed flex-grow overflow-hidden"
+                          className="text-sm text-white/85 leading-relaxed flex-grow overflow-hidden text-justify"
                           style={{
                             display: "-webkit-box",
                             WebkitLineClamp: 4,
@@ -541,21 +541,16 @@ function Achievements() {
               ACHIEVEMENTS
             </h1>
 
-              <p className="mt-4 text-sm md:text-lg leading-relaxed max-w-3xl mx-auto text-white/95">
+            <p className="mt-4 text-sm md:text-lg leading-relaxed max-w-3xl mx-auto text-white/95 text-justify">
               A showcase of awards, certifications, and institutional
-              recognitions connected to 
-            </p>
-            <p>
-              Dr. Carlos Primero D. Gundran and the
+              recognitions connected to Dr. Carlos Primero D. Gundran and the
               University of the Philippines Manila
             </p>
           </div>
         </div>
       </section>
 
-      <section className="pt-14 pb-8 px-4 sm:px-6 lg:px-8">
-        
-      </section>
+      <section className="pt-14 pb-8 px-4 sm:px-6 lg:px-8" />
 
       {renderGallery({
         items: awards,
