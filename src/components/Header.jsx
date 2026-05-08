@@ -466,159 +466,131 @@ function Header() {
         </div>
       </header>
 
-      {menuOpen && (
-        <div className="xl:hidden fixed top-[76px] right-0 w-72 h-[calc(100vh-76px)] bg-red-900 text-white p-5 z-50 shadow-lg overflow-y-auto">
-          <ul className="flex flex-col gap-4 mt-2">
-            {mobileNav.map((item) => {
-              const Icon = item.icon;
+     {menuOpen && (
+  <div className="xl:hidden fixed top-[76px] left-0 w-full bg-red-900 text-white z-50 shadow-lg border-t border-white/10 max-h-[calc(100vh-76px)] overflow-y-auto">
+    <ul className="flex flex-col px-5 py-4 gap-2">
+      {mobileNav.map((item) => {
+        const Icon = item.icon;
 
-              if (item.type === "protected-hash") {
-                return (
-                  <li key={item.label}>
-                    <HashLink
-                      smooth
-                      to={fullyAuthenticated ? item.to : "#"}
-                      onClick={(e) => {
-                        const blocked = requireLoginForPath(item.to, e);
-                        if (!blocked) setMenuOpen(false);
-                      }}
-                      className="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-white/10 hover:text-yellow-300 transition"
-                    >
-                      <Icon size={22} />
-                      <span>{item.label}</span>
-                    </HashLink>
-                  </li>
-                );
-              }
+        const className =
+          "flex items-center gap-3 px-4 py-3 rounded-xl font-semibold hover:bg-white/10 hover:text-yellow-300 transition";
 
-              if (item.type === "public-hash") {
-                return (
-                  <li key={item.label}>
-                    <HashLink
-                      smooth
-                      to={item.to}
-                      onClick={() => setMenuOpen(false)}
-                      className="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-white/10 hover:text-yellow-300 transition"
-                    >
-                      <Icon size={22} />
-                      <span>{item.label}</span>
-                    </HashLink>
-                  </li>
-                );
-              }
-
-              return (
-                <li key={item.label}>
-                  <Link
-                    to={item.to}
-                    onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-white/10 hover:text-yellow-300 transition"
-                  >
-                    <Icon size={22} />
-                    <span>{item.label}</span>
-                  </Link>
-                </li>
-              );
-            })}
-
-            <li>
-              <Link
-                to="/shop"
-                onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-white/10 hover:text-yellow-300 transition"
-              >
-                <ShoppingCart size={22} />
-                <span>Shop</span>
-              </Link>
-            </li>
-
-            {fullyAuthenticated && (isAdmin || isStaff) && (
-              <li>
-                <Link
-                  to="/admin/manual-post"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-white/10 hover:text-yellow-300 transition"
-                >
-                  <Shield size={22} />
-                  <span>Admin Panel</span>
-                </Link>
-              </li>
-            )}
-
-            {fullyAuthenticated && !isAdmin && !isStaff && userRole !== "visitor" && (
-              <li>
-                <Link
-                  to="/user-panel"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-white/10 hover:text-yellow-300 transition"
-                >
-                  <LayoutDashboard size={22} />
-                  <span>Dashboard</span>
-                </Link>
-              </li>
-            )}
-
-            {fullyAuthenticated && (
-              <li>
-                <button
-                  onClick={() => {
-                    setMenuOpen(false);
-                    handleLogout();
-                  }}
-                  className="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-white/10 hover:text-yellow-300 transition"
-                >
-                  <LogOut size={22} />
-                  <span>Log Out</span>
-                </button>
-              </li>
-            )}
-          </ul>
-
-          {!fullyAuthenticated && (
-            <div className="mt-8">
-              <button
-                onClick={() => {
-                  setShowLogin(true);
-                  setMenuOpen(false);
+        if (item.type === "protected-hash") {
+          return (
+            <li key={item.label}>
+              <HashLink
+                smooth
+                to={fullyAuthenticated ? item.to : "#"}
+                onClick={(e) => {
+                  const blocked = requireLoginForPath(item.to, e);
+                  if (!blocked) setMenuOpen(false);
                 }}
-                className="w-full bg-yellow-500 border border-transparent hover:bg-transparent hover:border-white text-white font-semibold text-sm px-4 py-3 transition rounded-full flex items-center justify-center gap-2"
+                className={className}
               >
-                <LogIn size={20} />
-                Log In
-              </button>
-            </div>
-          )}
-        </div>
+                <Icon size={21} />
+                <span>{item.label}</span>
+              </HashLink>
+            </li>
+          );
+        }
+
+        if (item.type === "public-hash") {
+          return (
+            <li key={item.label}>
+              <HashLink
+                smooth
+                to={item.to}
+                onClick={() => setMenuOpen(false)}
+                className={className}
+              >
+                <Icon size={21} />
+                <span>{item.label}</span>
+              </HashLink>
+            </li>
+          );
+        }
+
+        return (
+          <li key={item.label}>
+            <Link
+              to={item.to}
+              onClick={() => setMenuOpen(false)}
+              className={className}
+            >
+              <Icon size={21} />
+              <span>{item.label}</span>
+            </Link>
+          </li>
+        );
+      })}
+
+      <li className="border-t border-white/10 pt-3 mt-2">
+        <Link
+          to="/shop"
+          onClick={() => setMenuOpen(false)}
+          className="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold hover:bg-white/10 hover:text-yellow-300 transition"
+        >
+          <ShoppingCart size={21} />
+          <span>Shop</span>
+        </Link>
+      </li>
+
+      {fullyAuthenticated && (isAdmin || isStaff) && (
+        <li>
+          <Link
+            to="/admin/manual-post"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold hover:bg-white/10 hover:text-yellow-300 transition"
+          >
+            <Shield size={21} />
+            <span>Admin Panel</span>
+          </Link>
+        </li>
       )}
 
-      {showLogin && (
-        <LoginRegisterForm
-          closeForm={() => setShowLogin(false)}
-          setUser={setUser}
-          onOtpRequired={handleOtpRequired}
-          setAuthTransitioning={setAuthTransitioning}
-        />
+      {fullyAuthenticated && !isAdmin && !isStaff && userRole !== "visitor" && (
+        <li>
+          <Link
+            to="/user-panel"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold hover:bg-white/10 hover:text-yellow-300 transition"
+          >
+            <LayoutDashboard size={21} />
+            <span>Dashboard</span>
+          </Link>
+        </li>
       )}
 
-      {showOtpModal && (
-        <VerifyOTPModal
-          otpUser={otpUser}
-          onClose={() => {
-            setShowOtpModal(false);
-            setOtpUser(null);
-          }}
-          onVerified={handleOtpVerified}
-          onCancel={handleOtpCancel}
-        />
+      {fullyAuthenticated ? (
+        <li>
+          <button
+            onClick={() => {
+              setMenuOpen(false);
+              handleLogout();
+            }}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-left hover:bg-white/10 hover:text-yellow-300 transition"
+          >
+            <LogOut size={21} />
+            <span>Log Out</span>
+          </button>
+        </li>
+      ) : (
+        <li className="pt-3">
+          <button
+            onClick={() => {
+              setShowLogin(true);
+              setMenuOpen(false);
+            }}
+            className="w-full bg-yellow-500 border border-transparent hover:bg-transparent hover:border-white text-white font-semibold px-4 py-3 transition rounded-full flex items-center justify-center gap-2"
+          >
+            <LogIn size={20} />
+            Log In
+          </button>
+        </li>
       )}
-
-      {message && (
-        <div className="fixed inset-0 flex justify-center items-center z-50">
-          <div className="bg-black/60 text-white text-xl font-bold px-6 py-4 rounded-lg shadow-lg text-center">
-            {message}
-          </div>
-        </div>
-      )}
+    </ul>
+  </div>
+)}
     </>
   );
 }
