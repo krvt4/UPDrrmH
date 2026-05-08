@@ -10,13 +10,13 @@ function Projects() {
   const projects = [
     {
       id: 1,
-      title: "Project Alpha",
+      title: "HARMONISYS",
       description:
-        "A standalone DRRM-related platform for simulation, learning, and public engagement",
-      image: projectsBg,
-      url: "https://your-project-alpha-url.com",
+        "A unified DRRM-H platform with integrated tools for disaster preparedness, simulation, health management, and public engagement",
+      image: "/projects/Harmonisys.jpg",
+      url: "https://harmonisys.vercel.app/",
       status: "Live",
-      category: "External Website",
+      category: "DRRM-H Platform",
     },
     {
       id: 2,
@@ -57,7 +57,7 @@ function Projects() {
               PROJECTS
             </h1>
 
-            <p className="mt-4 text-sm md:text-base leading-relaxed max-w-3xl mx-auto">
+            <p className="mt-4 text-sm md:text-base leading-relaxed max-w-3xl mx-auto text-justify">
               Explore DRRM-H related platforms, digital initiatives, and
               standalone websites connected to our work in disaster risk
               reduction and management in health
@@ -73,7 +73,7 @@ function Projects() {
               Featured Projects
             </h2>
 
-            <p className="mt-4 text-sm md:text-base text-gray-700 max-w-4xl mx-auto leading-relaxed">
+            <p className="mt-4 text-sm md:text-base text-gray-700 max-w-4xl mx-auto leading-relaxed text-justify">
               This page serves as a hub for separate project websites and
               digital platforms. Each project can be developed, deployed, and
               maintained independently while remaining connected to the main
@@ -89,13 +89,17 @@ function Projects() {
             {projects.map((project) => (
               <div
                 key={project.id}
-                className="bg-white rounded-xl shadow-xl overflow-hidden flex flex-col h-full"
+                className="bg-white rounded-xl shadow-xl overflow-hidden flex flex-col h-full hover:-translate-y-1 transition duration-300"
               >
                 <div className="w-full h-56 bg-gray-200 overflow-hidden">
                   <img
                     src={project.image}
                     alt={project.title}
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src =
+                        "https://placehold.co/1200x800/f3f4f6/7B1113?text=Project+Image";
+                    }}
                   />
                 </div>
 
@@ -126,7 +130,7 @@ function Projects() {
                     </span>
                   </div>
 
-                  <p className="mt-4 text-sm md:text-base text-gray-700 leading-relaxed text-center">
+                  <p className="mt-4 text-sm md:text-base text-gray-700 leading-relaxed text-justify flex-grow">
                     {project.description}
                   </p>
 
