@@ -367,12 +367,49 @@ function AboutUs() {
                         marginLeft: "-245px",
                       }}
                     >
-                      <div className="p-3 rounded-full bg-white/90 ring-1 ring-white/100">
-                        <img
-                          src={Values}
-                          alt="Values Icon"
-                          className="h-10 w-10 md:h-12 md:w-12 object-contain"
-                        />
+                      <div className="p-4 rounded-full bg-white/90 ring-1 ring-white/100 shadow-md">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 64 64"
+                          className="h-12 w-12 md:h-14 md:w-14"
+                          fill="none"
+                        >
+                          {/* Sparkle Left */}
+                          <path
+                            d="M14 22L15 25L18 26L15 27L14 30L13 27L10 26L13 25L14 22Z"
+                            fill="#000"
+                          />
+
+                          {/* Sparkle Right */}
+                          <path
+                            d="M50 24L51 27L54 28L51 29L50 32L49 29L46 28L49 27L50 24Z"
+                            fill="#000"
+                          />
+
+                          {/* Flame (clean torch-style, not candle-like) */}
+                          <path
+                            d="M32 8C38 14 42 20 42 28C42 35 37.5 40 32 40C26.5 40 22 35 22 28C22 20 26 14 32 8Z"
+                            fill="#000"
+                          />
+
+                          {/* Inner flame cut (gives depth like your image) */}
+                          <path
+                            d="M32 16C36 20 38 24 38 28C38 32 35.5 35 32 35C28.5 35 26 32 26 28C26 24 28 20 32 16Z"
+                            fill="#fff"
+                          />
+
+                          {/* Torch bowl (key difference vs candle look) */}
+                          <path
+                            d="M22 40H42C41 45 37 48 32 48C27 48 23 45 22 40Z"
+                            fill="#000"
+                          />
+
+                          {/* Stem */}
+                          <rect x="28" y="48" width="8" height="10" fill="#000" />
+
+                          {/* Base */}
+                          <rect x="26" y="58" width="12" height="3" rx="1.5" fill="#000" />
+                        </svg>
                       </div>
                       <h2 className="text-xl md:text-2xl font-extrabold uppercase tracking-wide">
                         Core Values
