@@ -2,39 +2,67 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Search, Calendar } from "lucide-react";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase/firebase"; // adjust the path as needed
+import { db } from "../firebase/firebase";
 
+// HARDCODED LOCAL IMAGES
+const localNewsImages = {
+  "UP Manila DRRM-H: Hands-On Learning Through Emergency Simulation Activities":
+    "/uploads/news/DSC_1111.jpg",
+
+  "UP Manila DRRM-H Opens Registration for Emergency Response Training Programs":
+    "/uploads/news/DSC_1112.jpg",
+
+  "DRRM-H Strengthens Emergency Response through 2026 BERTST Training":
+    "/uploads/news/DSC_7214.JPG",
+
+  "UP Manila DRRM-H Conducts Simulation-Based Emergency Response Training":
+    "/uploads/news/DSC_7296.JPG",
+
+  "UP Manila DRRM-H Concludes Mass Casualty Incident and Triage Training Program":
+    "/uploads/news/DSC_7644.JPG",
+};
 
 function News() {
   const location = useLocation();
-  const selectedCategoryFromDetail = location.state?.selectedCategory || "";
+
+  const selectedCategoryFromDetail =
+    location.state?.selectedCategory || "";
+
   const [newsData, setNewsData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [category, setCategory] = useState(selectedCategoryFromDetail);
+  const [category, setCategory] = useState(
+    selectedCategoryFromDetail
+  );
+
   const [filter, setFilter] = useState("Today");
 
-  // Filtered news based on search, category, and other filters
+  // FILTERED NEWS
   const filteredNews = newsData
-    .filter((news) => news.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    .filter((news) =>
+      news.title.toLowerCase().includes(searchTerm.toLowerCase())
+    )
     .filter((news) => !category || news.tags.includes(category));
 
-    useEffect(() => {
-      window.scrollTo(0, 0);
-      const fetchNews = async () => {
-        try {
-          const querySnapshot = await getDocs(collection(db, "news"));
-          const fetchedNews = querySnapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          setNewsData(fetchedNews);
-        } catch (error) {
-          console.error("Error fetching news:", error);
-        }
-      };
-  
-      fetchNews();
-    }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+
+    const fetchNews = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "news"));
+
+        const fetchedNews = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        setNewsData(fetchedNews);
+      } catch (error) {
+        console.error("Error fetching news:", error);
+      }
+    };
+
+    fetchNews();
+  }, []);
 
   return (
     <main className="bg-white text-black">
@@ -42,32 +70,48 @@ function News() {
         {/* Breadcrumb */}
         <div className="flex justify-between items-center">
           <nav aria-label="breadcrumb">
-                    <div className="flex md:flex-row md:items-center text-gray-500 text-sm md:text-base">
-                        <Link to="/" className="hover:text-red-900">Home</Link>
-                        <span className="mx-2 text-black font-bold">&gt;&gt;</span>
-                        <Link to="/news" className="hover:text-red-900">News</Link>
-                    </div>
-                  </nav>
-        </div>
-        
-        <h2 className="font-semibold text-red-900 uppercase text-left py-4">News</h2>
+            <div className="flex md:flex-row md:items-center text-gray-500 text-sm md:text-base">
+              <Link to="/" className="hover:text-red-900">
+                Home
+              </Link>
 
-        {/* Search & Filter Section */}
+              <span className="mx-2 text-black font-bold">
+                &gt;&gt;
+              </span>
+
+              <Link
+                to="/news"
+                className="hover:text-red-900"
+              >
+                News
+              </Link>
+            </div>
+          </nav>
+        </div>
+
+        <h2 className="font-semibold text-red-900 uppercase text-left py-4">
+          News
+        </h2>
+
+        {/* SEARCH + FILTER */}
         <div className="flex flex-col md:flex-row justify-between mb-6 space-y-4 md:space-y-0">
-          {/* Search Bar */}  
+          {/* SEARCH */}
           <div className="flex items-center border border-zinc-300 rounded-lg gap-2 p-2 flex-grow">
-            <Search className="text-gray-500" size={20}/>
-              <input
-                type="text"
-                placeholder="Search news..."
-                className=" w-full md:w-1/3 focus:outline-none"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
+            <Search className="text-gray-500" size={20} />
+
+            <input
+              type="text"
+              placeholder="Search news..."
+              className="w-full md:w-1/3 focus:outline-none"
+              value={searchTerm}
+              onChange={(e) =>
+                setSearchTerm(e.target.value)
+              }
+            />
           </div>
-            
+
           <div className="flex space-x-4">
-            {/* Category Dropdown */}
+            {/* CATEGORY */}
             <select
               className="p-2 border border-zinc-300 outline-none rounded-md"
               value={category}
@@ -80,8 +124,7 @@ function News() {
               <option value="Response">Response</option>
             </select>
 
-
-            {/* Date Filter Dropdown */}
+            {/* DATE FILTER */}
             <select
               className="p-2 border border-zinc-300 outline-none rounded-md"
               value={filter}
@@ -94,50 +137,78 @@ function News() {
           </div>
         </div>
 
-        {/* News List */}
+        {/* NEWS GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {filteredNews.length > 0 ? (
-            filteredNews.map((news) => (
-              <Link
-                key={news.id}
-                to={`/news/${news.id}`}
-                state={{ news }}
-                className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition"
-              >
-                <img
-                  src={news.image}
-                  alt={news.title}
-                  className="h-40 w-full object-cover rounded-md"
-                />
+            filteredNews.map((news) => {
+              const imageSrc =
+                localNewsImages[news.title] ||
+                "/uploads/news/default.jpg";
 
-                <h3 className="text-xl font-semibold mt-2 text-gray-800 hover:text-red-900">
-                  {news.title}
-                </h3>
-                <p className="flex items-center text-gray-600 text-sm my-3"><Calendar size={20} className="mr-1"/>{news.createdAt?.toDate().toLocaleString("en-US", {
-                    year: "numeric",
-                    month: "short",
-                    day: "2-digit",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: true,
-                  }) || "N/A"} • {news.readTime}</p>
-                <div className="mt-2">
-                  {news.tags.map((tag) => (
-                    <span key={tag} className="text-xs bg-gray-200 rounded-full px-2 py-1 mr-2">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </Link>
-            ))
+              return (
+                <Link
+                  key={news.id}
+                  to={`/news/${news.id}`}
+                  state={{
+                    news: {
+                      ...news,
+                      image: imageSrc,
+                    },
+                  }}
+                  className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition"
+                >
+                  <img
+                    src={imageSrc}
+                    alt={news.title}
+                    className="h-40 w-full object-cover rounded-md"
+                  />
+
+                  <h3 className="text-xl font-semibold mt-2 text-gray-800 hover:text-red-900">
+                    {news.title}
+                  </h3>
+
+                  <p className="flex items-center text-gray-600 text-sm my-3">
+                    <Calendar
+                      size={20}
+                      className="mr-1"
+                    />
+
+                    {news.createdAt?.toDate().toLocaleString(
+                      "en-US",
+                      {
+                        year: "numeric",
+                        month: "short",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                      }
+                    ) || "N/A"}{" "}
+                    • {news.readTime}
+                  </p>
+
+                  <div className="mt-2">
+                    {news.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-xs bg-gray-200 rounded-full px-2 py-1 mr-2"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </Link>
+              );
+            })
           ) : (
-            <p className="text-gray-600 text-center col-span-3">No news found.</p>
+            <p className="text-gray-600 text-center col-span-3">
+              No news found.
+            </p>
           )}
         </div>
       </section>
     </main>
   );
 }
-
 
 export default News;
