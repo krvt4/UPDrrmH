@@ -684,6 +684,93 @@ app.post("/api/send-login-code", async (req, res) => {
   }
 });
 
+/* =========================
+   REGISTRATION OTP ROUTES
+========================= */
+
+app.post("/api/send-registration-otp", async (req, res) => {
+  try {
+    const { uid, email, token } = req.body || {};
+
+    const decoded = await verifyTokenOrThrow(token);
+
+    if (decoded.uid !== uid) {
+      return res.status(403).json({ error: "UID mismatch." });
+    }
+
+    const otp = generateOtp();
+
+    await db.collection("registrationOtps").doc(uid).set({
+      email: String(email || "").toLowerCase(),
+      otpHash: hashOtp(uid, otp),
+      expiresAt: Date.now() + OTP_TTL_MS,
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    await transporter.sendMail({
+      from: process.env.MAIL_FROM || process.env.SMTP_USER,
+      to: email,
+      subject: "Your registration verification code",
+      text: `Your OTP code is: ${otp}`,
+    });
+
+    return res.json({ ok: true });
+  } catch (e) {
+    console.error("/api/send-registration-otp error:", e);
+
+    return res.status(400).json({
+      error: e?.message || "Failed to send registration OTP.",
+    });
+  }
+});
+
+app.post("/api/verify-registration-otp", async (req, res) => {
+  try {
+    const { uid, code } = req.body || {};
+
+    const snap = await db.collection("registrationOtps").doc(uid).get();
+
+    if (!snap.exists) {
+      return res.status(400).json({
+        error: "OTP not found.",
+      });
+    }
+
+    const data = snap.data();
+
+    if (Date.now() > data.expiresAt) {
+      return res.status(400).json({
+        error: "OTP expired.",
+      });
+    }
+
+    const hashed = hashOtp(uid, String(code));
+
+    if (hashed !== data.otpHash) {
+      return res.status(400).json({
+        error: "Invalid OTP.",
+      });
+    }
+
+    await db.collection("users").doc(uid).set(
+      {
+        registrationOtpVerified: true,
+      },
+      { merge: true }
+    );
+
+    await db.collection("registrationOtps").doc(uid).delete();
+
+    return res.json({ ok: true });
+  } catch (e) {
+    console.error("/api/verify-registration-otp error:", e);
+
+    return res.status(400).json({
+      error: e?.message || "OTP verification failed.",
+    });
+  }
+});
+
 app.post("/api/verify-login-code", async (req, res) => {
   try {
     const { uid, code, token } = req.body || {};
