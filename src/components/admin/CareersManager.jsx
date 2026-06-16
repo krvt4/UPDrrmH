@@ -307,11 +307,11 @@ const CareersManager = () => {
               Footer Background Color
             </label>
             <input
-              type="text"
+              type="color"
               name="bgColor"
               value={formData.bgColor}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2"
+              className="w-45 h-10 cursor-pointer"
               placeholder="#06441f"
             />
           </div>
@@ -481,7 +481,7 @@ const CareersManager = () => {
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => handleEdit(item)}
-                    className="px-4 py-2 rounded-lg text-white bg-indigo-600 hover:bg-indigo-700"
+                    className="px-4 py-2 rounded-lg text-white bg-yellow-500 hover:bg-yellow-600"
                   >
                     Edit
                   </button>
@@ -501,7 +501,7 @@ const CareersManager = () => {
                     onClick={() => toggleAccepting(item.id, item.accepting)}
                     className={`px-4 py-2 rounded-lg text-white ${
                       item.accepting
-                        ? "bg-yellow-600 hover:bg-yellow-700"
+                        ? "bg-gray-600 hover:bg-gray-700"
                         : "bg-blue-600 hover:bg-blue-700"
                     }`}
                   >

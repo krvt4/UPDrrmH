@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import SFATBLSQR from "../assets/SFATBLSqr.png";
 import BertsImg from "../assets/SFATBLSimg.png";
 import backgroundImage from "../assets/SFATBLSbg.png";
@@ -18,6 +19,10 @@ function SFATBLS() {
           <Link to="/" className="flex items-center text-gray-500">
             Home <ChevronsRight className="text-black mx-2" size={20} />
           </Link>
+
+          <HashLink to="/#trainings" className="flex items-center text-gray-500">
+            Trainings <ChevronsRight className="text-black mx-2" size={20} />
+          </HashLink>
           <p className="text-red-900">SFATBLS Training</p>
         </div>
       </section>

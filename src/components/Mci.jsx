@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import MCIQR from "../assets/BertsMciRegisQRcode.png";
 import MCIImg from "../assets/MCI-img.png";
 import backgroundImage from "../assets/mci-bg.png";
@@ -45,6 +46,10 @@ function Training2() {
           <Link to="/" className="flex items-center text-gray-500">
             Home <ChevronsRight className="text-black mx-2" size={20} />
           </Link>
+
+          <HashLink to="/#trainings" className="flex items-center text-gray-500">
+            Trainings <ChevronsRight className="text-black mx-2" size={20} />
+          </HashLink>
           <p className="text-red-900">MCI Training</p>
         </div>
       </section>
@@ -141,7 +146,7 @@ function Training2() {
               {trainingDates.map((date, i) => (
                 <li
                   key={i}
-                  className={`border border-white px-4 py-2 rounded-full text-center hover:bg-white hover:text-[#06441f] transition duration-300 cursor-default
+                  className={`border border-white px-4 py-2 rounded-full text-center cursor-default
                   ${date === "December 3-5" ? "col-span-2 mx-auto w-[70%]" : ""}`}
                 >
                   {date}
@@ -169,7 +174,7 @@ function Training2() {
               </div>
 
               <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLSfeSXyPo0XvruCV7-5Ei32lPkmoPSua15XX8VF19lLjAKImlw/viewform"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSeCgCLNYH2CzVjGp3Dr420FooFyGpLpR-0UgZ_RoLJyJx3KWQ/viewform"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-2 bg-yellow-500 text-white font-semibold px-6 py-3 rounded-lg transition-transform hover:scale-105 hover:bg-yellow-600 shadow-md"

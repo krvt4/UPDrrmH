@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import BertsQR from "../assets/BertsMciRegisQRcode.png";
 import BertsImg from "../assets/berts-img.png";
 import backgroundImage from "../assets/berts-bg.png";
@@ -30,6 +31,10 @@ function Trainings() {
           <Link to="/" className="flex items-center text-gray-500">
             Home <ChevronsRight className="text-black mx-2" size={20} />
           </Link>
+
+          <HashLink to="/#trainings" className="flex items-center text-gray-500">
+            Trainings <ChevronsRight className="text-black mx-2" size={20} />
+          </HashLink>
           <p className="text-red-900">BERTST Training</p>
         </div>
       </section>
@@ -118,7 +123,7 @@ function Trainings() {
               {dates.map((date, i) => (
                 <li
                   key={i}
-                  className="border border-white px-4 py-2 rounded-full text-center hover:bg-white hover:text-[#04204a] transition duration-300 cursor-default"
+                  className="border border-white px-4 py-2 rounded-full text-center cursor-default"
                 >
                   {date}
                 </li>
@@ -153,7 +158,7 @@ function Trainings() {
     </p>
 
     <a
-      href="https://docs.google.com/forms/d/e/1FAIpQLSdh5Bx157shCh1S566Y5XyXip8OuCTiv2LFR5_yvGw8qaSfoA/viewform"
+      href="https://docs.google.com/forms/d/e/1FAIpQLSeCgCLNYH2CzVjGp3Dr420FooFyGpLpR-0UgZ_RoLJyJx3KWQ/viewform"
       target="_blank"
       rel="noopener noreferrer"
       className="bg-yellow-500 text-white text-sm sm:text-base font-semibold px-5 py-2 rounded-lg transition-transform hover:scale-105 hover:bg-yellow-600 shadow-md"

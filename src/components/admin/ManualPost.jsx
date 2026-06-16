@@ -652,7 +652,7 @@ function ManualPost() {
       {manuals.map((manual) => (
         <tr
           key={manual.id}
-          className="cursor-pointer text-center border-b border-gray-300 text-sm hover:bg-gray-200"
+          className="text-center border-b border-gray-300 text-sm hover:bg-gray-200"
         >
           <td className="px-4 py-2 flex items-center gap-2">
             {manual.imageUrls?.length > 0 && (
@@ -677,7 +677,7 @@ function ManualPost() {
                 setIsEditing(false);
                 setShowForm(false);
               }}
-              className="text-gray-500 px-3 py-1"
+              className="text-gray-500 px-3 py-1 cursor-pointer"
             >
               <NotebookText size={30}/>
             </button>

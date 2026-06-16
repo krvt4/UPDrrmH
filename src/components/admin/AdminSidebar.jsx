@@ -25,6 +25,7 @@ const AdminSidebar = ({ adminName, menuOpen, setMenuOpen }) => {
     top-18 md:top-0 left-0
     h-screen
     w-4/5 md:w-1/5
+    overflow-y-auto
     ${menuOpen ? "translate-x-0" : "-translate-x-full"}
     md:translate-x-0
   `;
