@@ -109,7 +109,7 @@ const Careers = () => {
                   className="bg-white rounded-xl shadow-xl overflow-hidden flex flex-col h-full"
                 >
                   <div className="p-6 md:p-8">
-                    <h2 className="text-xl md:text-2xl font-bold text-red-900 mb-4 text-center">
+                    <h2 className="text-xl md:text-2xl font-bold text-[#7B1113] mb-4 text-center">
                       {item.title || item.type}
                     </h2>
 
@@ -145,9 +145,9 @@ const Careers = () => {
                           item.description.map((desc, idx) => (
                             <li key={idx} className="flex gap-2 items-start">
                               <div className="pt-1">
-                                <Check className="text-red-800 w-4 h-4" />
+                                <Check className="text-[#7B1113] w-4 h-4" />
                               </div>
-                              <p className="font-medium text-sm text-red-900 leading-snug">
+                              <p className="font-medium text-sm text-[#7B1113] leading-snug">
                                 {desc}
                               </p>
                             </li>
@@ -172,9 +172,9 @@ const Careers = () => {
                           item.requirements.map((req, idx) => (
                             <li key={idx} className="flex gap-2 items-start">
                               <div className="pt-1">
-                                <Check className="text-red-800 w-4 h-4" />
+                                <Check className="text-[#7B1113] w-4 h-4" />
                               </div>
-                              <p className="font-medium text-sm text-red-900 leading-snug">
+                              <p className="font-medium text-sm text-[#7B1113] leading-snug">
                                 {req}
                               </p>
                             </li>
@@ -205,7 +205,7 @@ const Careers = () => {
         <div className="bg-white rounded-xl shadow-xl overflow-hidden max-w-7xl mx-auto mt-10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 p-6 md:p-10">
             <div className="w-full md:w-1/2">
-              <h2 className="text-xl md:text-2xl font-bold text-red-900 text-center md:text-left">
+              <h2 className="text-xl md:text-2xl font-bold text-[#7B1113] text-center md:text-left">
                 Think you got what it takes to join our team?
               </h2>
             </div>

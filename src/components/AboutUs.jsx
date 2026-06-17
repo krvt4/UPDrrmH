@@ -265,7 +265,7 @@ function AboutUs() {
               <div className="flex items-center justify-center gap-4 md:gap-8 relative w-full">
                 <button
                   onClick={() => setRotationCount((prev) => prev - 1)}
-                  className="bg-white/70 backdrop-blur-md text-red-900 font-bold p-3 rounded-full hover:bg-white/85 shadow-md transform transition hover:scale-110 z-10 border border-white/40"
+                  className="bg-white/70 backdrop-blur-md text-[#7B1113] font-bold p-3 rounded-full hover:bg-white/85 shadow-md transform transition hover:scale-110 z-10 border border-white/40"
                   aria-label="Previous"
                   type="button"
                 >
@@ -431,7 +431,7 @@ function AboutUs() {
 
                 <button
                   onClick={() => setRotationCount((prev) => prev + 1)}
-                  className="bg-white/70 backdrop-blur-md text-red-900 font-bold p-3 rounded-full hover:bg-white/85 shadow-md transform transition hover:scale-110 z-10 border border-white/40"
+                  className="bg-white/70 backdrop-blur-md text-[#7B1113] font-bold p-3 rounded-full hover:bg-white/85 shadow-md transform transition hover:scale-110 z-10 border border-white/40"
                   aria-label="Next"
                   type="button"
                 >
@@ -518,7 +518,7 @@ function AboutUs() {
                 />
               </div>
 
-              <h3 className="mt-4 text-3xl md:text-4xl font-extrabold tracking-wide text-red-900 uppercase">
+              <h3 className="mt-4 text-3xl md:text-4xl font-extrabold tracking-wide text-[#7B1113] uppercase">
                 {modalConfig.title}
               </h3>
 
@@ -562,7 +562,7 @@ function AboutUs() {
                     {coreValues.map((value) => (
                       <span
                         key={value}
-                        className="px-4 py-2 rounded-full bg-red-900/10 text-red-900 font-semibold border border-red-900/15"
+                        className="px-4 py-2 rounded-full bg-red-900/10 text-[#7B1113] font-semibold border border-red-900/15"
                       >
                         {value}
                       </span>

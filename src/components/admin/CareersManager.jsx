@@ -306,14 +306,24 @@ const CareersManager = () => {
             <label className="block text-sm font-medium mb-1">
               Footer Background Color
             </label>
+            <div className="flex gap-2 flex-wrap">
             <input
               type="color"
               name="bgColor"
               value={formData.bgColor}
               onChange={handleChange}
-              className="w-45 h-10 cursor-pointer"
+              className="h-10 cursor-pointer appearance-none p-0 border-2 border-gray-300 rounded [&::-webkit-color-swatch-wrapper]:p-0 &::-webkit-color-swatch]:border-none [&::-moz-color-swatch]:border-none"
               placeholder="#06441f"
             />
+            <input
+              type="text"
+              name="bgColor"
+              value={formData.bgColor}
+              onChange={handleChange}
+              className="w-[50%] border border-gray-300 rounded-lg px-3 py-2"
+              placeholder="#06441f"
+            />
+            </div>
           </div>
 
           <div>

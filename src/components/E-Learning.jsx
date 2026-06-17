@@ -232,7 +232,7 @@ const ELearning = () => {
 
   return (
     <section className="mt-18 p-4 bg-gray-200">
-      <div className="border border-gray-200 bg-white shadow-2xl rounded-xl text-red-900 w-full min-h-screen flex flex-col items-center justify-center py-16 px-4 overflow-hidden">
+      <div className="border border-gray-200 bg-white shadow-2xl rounded-xl text-[#7b1113] w-full min-h-screen flex flex-col items-center justify-center py-16 px-4 overflow-hidden">
         {!showFinal ? (
           <motion.div
             initial={{ x: "-100%" }}

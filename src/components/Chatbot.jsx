@@ -1231,7 +1231,7 @@ export default function Chatbot() {
     <>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full bg-red-800 text-white px-4 py-3 shadow-lg hover:bg-red-900 active:scale-[0.98] transition"
+        className="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full bg-[#7b1113] text-white px-4 py-3 shadow-lg hover:bg-[#3b0000] active:scale-[0.98] transition"
         aria-label="Open help chat"
         type="button"
       >
@@ -1241,7 +1241,7 @@ export default function Chatbot() {
 
       {open && (
         <div className="fixed bottom-20 right-5 z-50 w-[320px] sm:w-[360px] rounded-2xl shadow-2xl border border-zinc-200 bg-white overflow-hidden">
-          <div className="bg-red-800 text-white px-4 py-3 font-semibold flex items-center justify-between">
+          <div className="bg-[#7b1113] text-white px-4 py-3 font-semibold flex items-center justify-between">
             <span>DRRM-H HelpDesk</span>
             <div className="flex items-center gap-2">
               <button
@@ -1271,7 +1271,7 @@ export default function Chatbot() {
                 : "Chat (typing enabled)"}
             </span>
             {aiLoading && (
-              <span className="ml-2 text-red-700 font-semibold">
+              <span className="ml-2 text-[#7b1113] font-semibold">
                 • AI is replying…
               </span>
             )}
@@ -1323,7 +1323,7 @@ export default function Chatbot() {
                           a: ({ children, ...props }) => (
                             <a
                               {...props}
-                              className="text-red-700 underline text-sm leading-5"
+                              className="text-[#7b1113] underline text-sm leading-5"
                               target="_blank"
                               rel="noreferrer"
                             >
@@ -1428,7 +1428,7 @@ export default function Chatbot() {
             <button
               onClick={() => send()}
               disabled={!canSend || mode === "select" || aiLoading}
-              className="bg-red-800 text-white px-4 py-2 rounded-lg disabled:opacity-50 hover:bg-red-900"
+              className="bg-[#7b1113] text-white px-4 py-2 rounded-lg disabled:opacity-50 hover:bg-[#3b0000]"
               type="button"
             >
               Send
@@ -1454,7 +1454,7 @@ export default function Chatbot() {
                   </button>
                   <button
                     onClick={confirmExitYes}
-                    className="px-3 py-2 rounded-lg bg-red-800 hover:bg-red-900 text-white text-sm"
+                    className="px-3 py-2 rounded-lg bg-[#7b1113] hover:bg-[#3b0000] text-white text-sm"
                     type="button"
                     disabled={aiLoading}
                   >
