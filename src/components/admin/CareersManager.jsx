@@ -384,6 +384,7 @@ const CareersManager = () => {
                 name="isPublished"
                 checked={formData.isPublished}
                 onChange={handleChange}
+                className="cursor-pointer accent-red-900"
               />
               Publish to public careers page
             </label>
@@ -394,6 +395,7 @@ const CareersManager = () => {
                 name="accepting"
                 checked={formData.accepting}
                 onChange={handleChange}
+                className="cursor-pointer accent-red-900"
               />
               Accepting applications
             </label>
@@ -403,7 +405,7 @@ const CareersManager = () => {
             <button
               type="submit"
               disabled={saving}
-              className="bg-red-900 hover:bg-red-800 text-white px-5 py-2 rounded-lg"
+              className="bg-red-800 hover:bg-red-900 text-white px-5 py-2 rounded-lg cursor-pointer"
             >
               {saving
                 ? "Saving..."
@@ -416,7 +418,7 @@ const CareersManager = () => {
               <button
                 type="button"
                 onClick={handleCancelEdit}
-                className="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-lg"
+                className="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-lg cursor-pointer"
               >
                 Cancel Edit
               </button>
@@ -481,14 +483,14 @@ const CareersManager = () => {
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => handleEdit(item)}
-                    className="px-4 py-2 rounded-lg text-white bg-yellow-500 hover:bg-yellow-600"
+                    className="px-4 py-2 rounded-lg text-white bg-yellow-500 hover:bg-yellow-600 cursor-pointer"
                   >
                     Edit
                   </button>
 
                   <button
                     onClick={() => togglePublish(item.id, item.isPublished)}
-                    className={`px-4 py-2 rounded-lg text-white ${
+                    className={`px-4 py-2 rounded-lg text-white cursor-pointer ${
                       item.isPublished
                         ? "bg-gray-600 hover:bg-gray-700"
                         : "bg-green-600 hover:bg-green-700"
@@ -499,7 +501,7 @@ const CareersManager = () => {
 
                   <button
                     onClick={() => toggleAccepting(item.id, item.accepting)}
-                    className={`px-4 py-2 rounded-lg text-white ${
+                    className={`px-4 py-2 rounded-lg text-white cursor-pointer ${
                       item.accepting
                         ? "bg-gray-600 hover:bg-gray-700"
                         : "bg-blue-600 hover:bg-blue-700"
@@ -512,7 +514,7 @@ const CareersManager = () => {
 
                   <button
                     onClick={() => handleDelete(item.id)}
-                    className="px-4 py-2 rounded-lg text-white bg-red-700 hover:bg-red-800"
+                    className="px-4 py-2 rounded-lg text-white bg-red-700 hover:bg-red-800 cursor-pointer"
                   >
                     Delete
                   </button>

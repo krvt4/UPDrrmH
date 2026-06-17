@@ -262,7 +262,13 @@ function ManualPost() {
   <div className="w-full">
     {isEditing ? (
       <>
-        <h2 className="font-bold mb-4">Edit Manual</h2>
+        <button
+          onClick={() => setIsEditing(false)}
+          className="mb-4 text-gray-500 hover:text-red-900 underline cursor-pointer"
+        >
+          ← Back to Manual Details
+        </button>
+        <h2 className="text-2xl font-bold text-red-900">Edit Manual</h2>
         <div className="md:flex items-center w-full gap-2">
           <p className="py-2 w-full font-bold md:w-1/8">Manual Title:
           
@@ -391,20 +397,18 @@ function ManualPost() {
           </div>
         </div>
         
-        <button onClick={handleUpdate} className="bg-green-600 text-white p-2 rounded w-full mb-2">Save Changes</button>
-        <button onClick={() => setIsEditing(false)} className="bg-gray-500 text-white p-2 rounded w-full hover:bg-gray-600">Cancel</button>
+        <button onClick={handleUpdate} className="bg-red-800 hover:bg-red-900 text-white p-2 rounded w-full mb-2 cursor-pointer">Save Changes</button>
+        <button onClick={() => setIsEditing(false)} className="bg-gray-500 text-white p-2 rounded w-full hover:bg-gray-600 cursor-pointer">Cancel</button>
       </>
     ) : (
       <>
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">Manual Details</h2>
-          <button
+        <button
             onClick={() => setSelectedManual(null)}
-            className="text-gray-600 text-xl font-bold"
+            className=" mb-4 text-gray-500 hover:text-red-900 underline cursor-pointer"
           >
-            <XIcon size={30}/>
+            ← Back to Manuals List
           </button>
-        </div>
+        <h2 className="text-2xl font-bold text-red-900">Manual Details</h2>
         <div className="md:flex items-center w-full gap-2 pt-2">
           <p className="py-2 md:w-1/8"><strong>Manual Title:</strong></p>
           <p>{selectedManual.title}</p>
@@ -427,9 +431,9 @@ function ManualPost() {
           <p className="py-2 w-1/6 pr-15"><strong>Content:</strong></p>
           <p className="whitespace-pre-line break-words text-justify">{selectedManual.content}</p>
         </div>
-        <div className="md:flex w-full gap-2 pt-2">
-          <p className="py-2 w-1/9"><strong>Specification:</strong></p>
-          <ul className="px-5">
+        <div className="md:flex w-full gap-2 md:gap-10 pt-2">
+          <p className="py-2 w-1/7 "><strong>Specification:</strong></p>
+          <ul>
             <li>Dimension: 8.27in X 11.69in (A4)</li>
             <li>Booktype: Ringbind</li>
           </ul>
@@ -471,14 +475,21 @@ function ManualPost() {
               </div>
             )}
 
-        <button onClick={handleEdit} className="bg-yellow-500 text-white p-2 rounded w-full mt-2 hover:bg-yellow-600">Edit</button>
-      <button onClick={() => setShowDeleteConfirmation(true)} className="bg-red-600 text-white p-2 rounded w-full  hover:bg-red-900 mt-2">Delete</button>
+        <button onClick={handleEdit} className="bg-yellow-500 text-white p-2 rounded w-full mt-2 hover:bg-yellow-600 cursor-pointer">Edit</button>
+      <button onClick={() => setShowDeleteConfirmation(true)} className="bg-red-600 text-white p-2 rounded w-full  hover:bg-red-900 mt-2 cursor-pointer">Delete</button>
       </>
     )}
   </div>
 ) : showForm ? (
   <div className="md:w-4/5 ">
-    <h2 className="font-bold mb-4">Post Manual</h2>
+    <button
+      type="button"
+      onClick={() => setShowForm(false)}
+      className="mb-4 text-gray-500 hover:text-red-900 underline cursor-pointer"
+    >
+      ← Back to Manuals List
+    </button>   
+    <h2 className="text-2xl font-bold text-red-900 mb-4">Post Manual</h2>   
     <form onSubmit={handlePost} className="space-y-3">
         <div className="md:flex items-center w-full space-y-4 ">
           <label className=" w-1/8 font-bold">Manual Title: </label>
@@ -610,13 +621,13 @@ function ManualPost() {
         </div>
       </div>
 
-      <button type="submit" className="bg-yellow-500 text-white p-2 rounded w-full hover:bg-yellow-600" disabled={loading}>
+      <button type="submit" className="bg-yellow-500 text-white p-2 rounded w-full hover:bg-yellow-600 cursor-pointer" disabled={loading}>
         {loading ? "Posting..." : "Post Manual"}
       </button>
       <button
         type="button"
         onClick={() => setShowForm(false)}
-        className="bg-gray-500 text-white p-2 rounded w-full hover:bg-gray-600"
+        className="bg-gray-500 text-white p-2 rounded w-full hover:bg-gray-600 cursor-pointer"
       >
         Cancel
       </button>
@@ -625,67 +636,69 @@ function ManualPost() {
 ):(
 <div className="w-full">
   <div className="flex justify-between">
-    <h2 className="text-2xl font-bold mb-4">Manuals List</h2>
+    <h2 className="text-2xl font-bold mb-4 mr-2">Manuals List</h2>
     <button
       onClick={() => {
         setShowForm(true);
         setSelectedManual(null); // Hide Manual Details
       }}
-      className="bg-yellow-500 text-white px-4 py-2 rounded-lg mb-4 flex items-center gap-2 hover:bg-yellow-600"
+      className="bg-yellow-500 text-white px-4 py-2 rounded-lg mb-4 flex items-center gap-2 hover:bg-yellow-600 cursor-pointer"
     > 
       <Plus size={20}/>New Post
     </button>
   </div>
 
-  <table className="w-full border-collapse">
-    <thead>
-      <tr className="bg-gray-200 text-center">
-        <th className="px-4 py-2">Title</th>
-        <th className="px-4 py-2">Price</th>
-        <th className="px-4 py-2">Stock</th>
-        <th className="px-4 py-2">Sold</th>
-        <th className="px-4 py-2">Total Revenue</th>
-        <th className="px-4 py-2">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {manuals.map((manual) => (
-        <tr
-          key={manual.id}
-          className="text-center border-b border-gray-300 text-sm hover:bg-gray-200"
-        >
-          <td className="px-4 py-2 flex items-center gap-2">
-            {manual.imageUrls?.length > 0 && (
-              <img
-                src={`http://localhost:5000${manual.imageUrls[0]}`}
-                alt={manual.title}
-                className="w-15 h-20 object-cover"
-                onError={(e) => (e.target.style.display = "none")}
-              />
-            )}
-            {manual.title}
-          </td>
-
-          <td className="px-4 py-2">₱{Number(manual.price).toFixed(2)}</td>
-          <td className="px-4 py-2">{manual.stock}</td>
-          <td className="px-4 py-2">{manual.sold || 0}</td>
-          <td className="px-4 py-2 font-bold">₱{manual.totalRevenue}.00</td>
-          <td className="px-4 py-2">
-            <button
-              onClick={() => {
-                setSelectedManual(manual);
-                setIsEditing(false);
-                setShowForm(false);
-              }}
-              className="text-gray-500 px-3 py-1 cursor-pointer"
-            >
-              <NotebookText size={30}/>
-            </button>
-          </td>
+  <div className="w-full overflow-x-auto bg-white">
+    <table className="min-w-[500px] w-full border-collapse mb-4 mt-4">
+      <thead>
+        <tr className="bg-gray-200 text-center">
+          <th className="px-4 py-2">Title</th>
+          <th className="px-4 py-2">Price</th>
+          <th className="px-4 py-2">Stock</th>
+          <th className="px-4 py-2">Sold</th>
+          <th className="px-4 py-2">Total Revenue</th>
+          <th className="px-4 py-2">Actions</th>
         </tr>
-      ))}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {manuals.map((manual) => (
+          <tr
+            key={manual.id}
+            className="text-center border-b border-gray-300 text-sm hover:bg-gray-200"
+          >
+            <td className="px-4 py-2 flex items-center gap-2">
+              {manual.imageUrls?.length > 0 && (
+                <img
+                  src={`http://localhost:5000${manual.imageUrls[0]}`}
+                  alt={manual.title}
+                  className="w-15 h-20 object-cover"
+                  onError={(e) => (e.target.style.display = "none")}
+                />
+              )}
+                {manual.title}
+            </td>
+
+            <td className="px-4 py-2">₱{Number(manual.price).toFixed(2)}</td>
+            <td className="px-4 py-2">{manual.stock}</td>
+            <td className="px-4 py-2">{manual.sold || 0}</td>
+            <td className="px-4 py-2 font-bold">₱{manual.totalRevenue}.00</td>
+            <td className="px-4 py-2">
+              <button
+                onClick={() => {
+                  setSelectedManual(manual);
+                  setIsEditing(false);
+                  setShowForm(false);
+                }}
+                className="text-gray-500 px-3 py-1 cursor-pointer"
+              >
+                <NotebookText size={30}/>
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
 </div>
 )
 }

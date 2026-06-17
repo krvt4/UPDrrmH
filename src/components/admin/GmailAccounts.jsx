@@ -603,7 +603,7 @@ export default function GmailAccounts() {
         <button
           onClick={() => removeOneUser(uid)}
           disabled={busy}
-          className={`${singleBtn} bg-red-900 hover:bg-red-800`}
+          className={`${singleBtn} bg-red-900 hover:bg-red-800 cursor-pointer`}
         >
           Remove
         </button>
@@ -615,7 +615,7 @@ export default function GmailAccounts() {
         <button
           onClick={() => approveUser(uid)}
           disabled={busy}
-          className={`${singleBtn} bg-green-600 hover:bg-green-700`}
+          className={`${singleBtn} bg-green-600 hover:bg-green-700 cursor-pointer`}
         >
           Approve
         </button>
@@ -627,7 +627,7 @@ export default function GmailAccounts() {
         <button
           onClick={() => rejectUser(uid)}
           disabled={busy}
-          className={`${singleBtn} bg-red-600 hover:bg-red-700`}
+          className={`${singleBtn} bg-red-600 hover:bg-red-700 cursor-pointer`}
         >
           Reject
         </button>
@@ -639,7 +639,7 @@ export default function GmailAccounts() {
         <button
           onClick={() => approveUser(uid)}
           disabled={busy}
-          className={`${splitBtn} bg-green-600 hover:bg-green-700`}
+          className={`${splitBtn} bg-green-600 hover:bg-green-700 cursor-pointer`}
         >
           Approve
         </button>
@@ -647,7 +647,7 @@ export default function GmailAccounts() {
         <button
           onClick={() => rejectUser(uid)}
           disabled={busy}
-          className={`${splitBtn} bg-red-600 hover:bg-red-700`}
+          className={`${splitBtn} bg-red-600 hover:bg-red-700 cursor-pointer`}
         >
           Reject
         </button>
@@ -665,10 +665,9 @@ export default function GmailAccounts() {
 
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex gap-2">
             <button
               onClick={() => setFilter("pending")}
-              className={`px-4 py-2 rounded font-semibold ${
+              className={`px-4 py-2 rounded font-semibold cursor-pointer ${
                 filter === "pending" ? "bg-red-900 text-white" : "bg-white border hover:bg-gray-50"
               }`}
             >
@@ -677,7 +676,7 @@ export default function GmailAccounts() {
 
             <button
               onClick={() => setFilter("approved")}
-              className={`px-4 py-2 rounded font-semibold ${
+              className={`px-4 py-2 rounded font-semibold cursor-pointer ${
                 filter === "approved" ? "bg-red-900 text-white" : "bg-white border hover:bg-gray-50"
               }`}
             >
@@ -686,7 +685,7 @@ export default function GmailAccounts() {
 
             <button
               onClick={() => setFilter("rejected")}
-              className={`px-4 py-2 rounded font-semibold ${
+              className={`px-4 py-2 rounded font-semibold cursor-pointer ${
                 filter === "rejected" ? "bg-red-900 text-white" : "bg-white border hover:bg-gray-50"
               }`}
             >
@@ -695,7 +694,7 @@ export default function GmailAccounts() {
 
             <button
               onClick={() => setFilter("all")}
-              className={`px-4 py-2 rounded font-semibold ${
+              className={`px-4 py-2 rounded font-semibold cursor-pointer ${
                 filter === "all" ? "bg-red-900 text-white" : "bg-white border hover:bg-gray-50"
               }`}
             >
@@ -704,11 +703,10 @@ export default function GmailAccounts() {
 
             <button
               onClick={openAuditLog}
-              className="px-4 py-2 rounded font-semibold bg-white border hover:bg-gray-50"
+              className="px-4 py-2 rounded font-semibold bg-white border hover:bg-gray-50 cursor-pointer"
             >
               Audit Log
             </button>
-          </div>
 
           <div className="flex items-center gap-2 border border-zinc-300 bg-white px-3 py-2 rounded-lg w-[280px]">
             <Search size={18} className="text-gray-500" />
@@ -724,7 +722,7 @@ export default function GmailAccounts() {
               <button
                 type="button"
                 onClick={() => setSearchTerm("")}
-                className="text-gray-500 hover:text-gray-700 px-1"
+                className="text-gray-500 hover:text-gray-700 px-1 cursor-pointer"
                 aria-label="Clear search"
                 title="Clear search"
               >
@@ -734,7 +732,7 @@ export default function GmailAccounts() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
           {!csvMode ? (
             <button
               onClick={() => {
@@ -743,7 +741,7 @@ export default function GmailAccounts() {
                 setError("");
               }}
               disabled={busy}
-              className="px-4 py-2 rounded font-semibold bg-white border hover:bg-gray-50 disabled:opacity-60"
+              className="px-4 py-2 rounded font-semibold bg-white border hover:bg-gray-50 disabled:opacity-60 cursor-pointer"
               type="button"
             >
               Export CSV
@@ -753,7 +751,7 @@ export default function GmailAccounts() {
               <button
                 onClick={exportSelectedTrainingRecordsCsv}
                 disabled={busy || selectedCsvIds.size === 0}
-                className="px-4 py-2 rounded font-semibold bg-white border hover:bg-gray-50 disabled:opacity-60"
+                className="px-4 py-2 rounded font-semibold bg-white border hover:bg-gray-50  cursor-pointer"
                 type="button"
                 title={
                   selectedCsvIds.size === 0
@@ -771,7 +769,7 @@ export default function GmailAccounts() {
                   setError("");
                 }}
                 disabled={busy}
-                className="px-4 py-2 rounded font-semibold bg-white border hover:bg-gray-50 disabled:opacity-60"
+                className="px-4 py-2 rounded font-semibold bg-white border hover:bg-gray-50 disabled:opacity-60 cursor-pointer"
                 type="button"
               >
                 Cancel
@@ -782,7 +780,7 @@ export default function GmailAccounts() {
           <div className="relative">
             <button
               onClick={() => setShowFilterDropdown((v) => !v)}
-              className="px-4 py-2 rounded font-semibold bg-white border hover:bg-gray-50"
+              className="px-4 py-2 rounded font-semibold bg-white border hover:bg-gray-50 cursor-pointer"
               type="button"
               disabled={busy}
             >
@@ -790,7 +788,7 @@ export default function GmailAccounts() {
             </button>
 
             {showFilterDropdown && (
-              <div className="absolute right-0 mt-2 w-[320px] bg-white border rounded shadow p-4 z-40">
+              <div className="absolute xs:w-[100px] mt-2 md:w-[320px] bg-white border rounded shadow p-4 z-40">
                 <div className="text-base font-semibold mb-3">Filter by</div>
 
                 <label className="block text-sm font-semibold text-gray-700 mb-1">
@@ -830,7 +828,7 @@ export default function GmailAccounts() {
                       setRoleFilter("all");
                       setRegionFilter("all");
                     }}
-                    className="px-4 py-2 rounded border text-sm"
+                    className="px-4 py-2 rounded border text-sm cursor-pointer"
                     type="button"
                   >
                     Clear
@@ -838,7 +836,7 @@ export default function GmailAccounts() {
 
                   <button
                     onClick={() => setShowFilterDropdown(false)}
-                    className="px-4 py-2 rounded bg-gray-900 text-white text-sm hover:bg-gray-800"
+                    className="px-4 py-2 rounded bg-gray-900 text-white text-sm hover:bg-gray-800 cursor-pointer"
                     type="button"
                   >
                     Done
@@ -874,7 +872,7 @@ export default function GmailAccounts() {
           No matching accounts found.
         </div>
       ) : (
-        <div className="bg-white rounded-md shadow border overflow-hidden">
+        <div className="bg-white rounded-md shadow border overflow-x-auto">
           <table className="w-full border-collapse table-fixed text-xs">
             <thead>
               <tr className="bg-gray-100 text-left">
@@ -887,6 +885,7 @@ export default function GmailAccounts() {
                       onClick={(e) => e.stopPropagation()}
                       aria-label="Select all visible"
                       title="Select all visible"
+                      className="cursor-pointer accent-red-900"
                     />
                   </th>
                 ) : null}
@@ -918,7 +917,7 @@ export default function GmailAccounts() {
                 </th>
 
                 {showActionColumn && (
-                  <th className="px-2 py-2 w-[170px] text-center">Action</th>
+                  <th className="px-2 py-2 w-[190px] text-center">Action</th>
                 )}
               </tr>
             </thead>
@@ -946,6 +945,7 @@ export default function GmailAccounts() {
                           checked={selected}
                           onChange={() => toggleCsvSelect(u.id)}
                           aria-label={`Select ${u.email || "user"}`}
+                          className="cursor-pointer accent-red-900"
                         />
                       </td>
                     ) : null}

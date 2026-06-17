@@ -139,7 +139,7 @@ const ReviewsPost = () => {
                 setContent("");
                 setRating(0);
               }}
-              className="bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900"
+              className="bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900 cursor-pointer"
             >
               + Add Review
             </button>
@@ -174,7 +174,7 @@ const ReviewsPost = () => {
                         startEdit(review);
                       }}
                       title="Edit"
-                      className="flex gap-2 text-center bg-yellow-500 p-2 text-white rounded hover:text-blue-800"
+                      className="flex gap-2 text-center bg-yellow-500 p-2 text-white rounded hover:text-blue-800 cursor-pointer"
                     >
                       <Pencil size={18} /> Edit
                     </button>
@@ -184,7 +184,7 @@ const ReviewsPost = () => {
                         deleteReview(review.id);
                       }}
                       title="Delete"
-                      className="text-red-600 hover:text-red-800"
+                      className="text-red-600 hover:text-red-800 cursor-pointer"
                     >
                       <Trash2 size={18} />
                     </button>
@@ -201,7 +201,7 @@ const ReviewsPost = () => {
           <div className="flex justify-between items-center mb-4">
             <button
               onClick={() => setView("list")}
-              className="text-red-700 underline"
+              className="text-gray-500 hover:text-red-900 underline cursor-pointer"
             >
               ← Back to Reviews List
             </button>
@@ -258,7 +258,7 @@ const ReviewsPost = () => {
               setView("list");
               setEditingId(null);
             }}
-            className="mb-4 text-red-700 underline"
+            className="mb-4 text-gray-500 hover:text-red-900 underline cursor-pointer"
           >
             ← Back to Reviews List
           </button>
@@ -301,7 +301,7 @@ const ReviewsPost = () => {
             </div>
             <button
               type="submit"
-              className="bg-red-800 text-white px-6 py-2 rounded hover:bg-red-900"
+              className="bg-red-800 text-white px-6 py-2 rounded hover:bg-red-900 cursor-pointer"
             >
               {editingId ? "Update Review" : "Submit Review"}
             </button>

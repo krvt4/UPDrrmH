@@ -161,7 +161,7 @@ const FAQManager = () => {
               setView("list");
               setEditingId(null);
             }}
-            className="mb-4 text-red-700 underline"
+            className="mb-4 text-gray-500 hover:text-red-900 underline cursor-pointer"
           >
             ← Back to FAQs List
           </button>

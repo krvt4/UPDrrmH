@@ -151,7 +151,7 @@ function Orders() {
                       ${
                         statusFilter === "total"
                           ? "bg-white"
-                          : "bg-gray-100"
+                          : "bg-[#f9f6e8]"
                       }`}>
               <div className="flex justify-between">
                 <h3 className="font-semibold">Total Orders</h3>
@@ -334,7 +334,7 @@ function Orders() {
                   </td>
 
                   <td className="px-4 py-2">
-                    <button className="text-gray-500 px-3 py-1">
+                    <button className="text-gray-500 px-3 py-1 cursor-pointer">
                       <ReceiptText size={26} />
                     </button>
                   </td>
@@ -349,14 +349,14 @@ function Orders() {
 
       {/* MODAL */}
       {selectedOrder && (
-        <div className="fixed inset-0 !bg-gray-800/50 flex items-center justify-center p-4 z-30">
+        <div className="fixed inset-0 !bg-gray-800/50 flex items-center justify-center pl-10 p-4 z-60">
           <div className="text-sm bg-white p-6 rounded-lg w-full max-w-4xl">
             <div className="flex items-center justify-between mb-4">
               <p className="text-xl">
                 <strong>Order ID :</strong> {selectedOrder.id}
               </p>
               <button
-                className="text-gray-600"
+                className="text-gray-600 cursor-pointer"
                 onClick={() => setSelectedOrder(null)}
               >
                 <XIcon size={30} />
@@ -389,30 +389,32 @@ function Orders() {
               </p>
             </div>
 
-            <table className="w-full border-collapse border border-gray-300 mb-4 mt-4">
-              <thead>
-                <tr className="bg-gray-100">
-                  <th className="px-4 py-2 border text-left">Item</th>
-                  <th className="px-4 py-2 border text-left">Category</th>
-                  <th className="px-4 py-2 border text-left">Price</th>
-                  <th className="px-4 py-2 border text-left">Qnty.</th>
-                  <th className="px-4 py-2 border text-left">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {selectedOrder.cartItems.map((item, index) => (
-                  <tr key={index} className="border-b">
-                    <td className="px-4 py-2 border">{item.title}</td>
-                    <td className="px-4 py-2 border">{item.category}</td>
-                    <td className="px-4 py-2 border">₱{item.price}.00</td>
-                    <td className="px-4 py-2 border text-center">{item.quantity}</td>
-                    <td className="px-4 py-2 border font-bold">
-                      ₱{item.price * item.quantity}.00
-                    </td>
+            <div className="w-full overflow-x-auto bg-white">
+              <table className="min-w-[500px] w-full border-collapse mb-4 mt-4">
+                <thead>
+                  <tr className="bg-gray-100">
+                    <th className="px-4 py-2 border text-left">Item</th>
+                    <th className="px-4 py-2 border text-left">Category</th>
+                    <th className="px-4 py-2 border text-left">Price</th>
+                    <th className="px-4 py-2 border text-left">Qnty.</th>
+                    <th className="px-4 py-2 border text-left">Total</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {selectedOrder.cartItems.map((item, index) => (
+                    <tr key={index} className="border-b">
+                      <td className="px-4 py-2 border">{item.title}</td>
+                      <td className="px-4 py-2 border">{item.category}</td>
+                      <td className="px-4 py-2 border">₱{item.price}.00</td>
+                      <td className="px-4 py-2 border text-center">{item.quantity}</td>
+                      <td className="px-4 py-2 border font-bold">
+                        ₱{item.price * item.quantity}.00
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
             <div className="flex items-center gap-4">
               <h3 className="font-semibold py-1">Courier Service:</h3>

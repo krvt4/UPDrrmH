@@ -24,6 +24,7 @@ const AdminSidebar = ({ adminName, menuOpen, setMenuOpen }) => {
     fixed md:static
     top-18 md:top-0 left-0
     h-screen
+    min-w-[200px]
     w-4/5 md:w-1/5
     overflow-y-auto
     ${menuOpen ? "translate-x-0" : "-translate-x-full"}
@@ -121,7 +122,7 @@ const AdminSidebar = ({ adminName, menuOpen, setMenuOpen }) => {
             className="flex items-center justify-between px-4 py-2 rounded hover:bg-gray-700"
             onClick={() => setMenuOpen(false)}
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mr-2">
               <BookOpenText size={25} /> Manuals
             </div>
             <span className="bg-white text-red-800 text-sm font-bold px-2 py-1 rounded">
@@ -134,7 +135,7 @@ const AdminSidebar = ({ adminName, menuOpen, setMenuOpen }) => {
             className="flex items-center justify-between px-4 py-2 rounded hover:bg-gray-700"
             onClick={() => setMenuOpen(false)}
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mr-2">
               <PackageOpenIcon size={25} /> Orders
             </div>
             <span className="bg-white text-red-800 text-sm font-bold px-2 py-1 rounded">
@@ -198,7 +199,7 @@ const AdminSidebar = ({ adminName, menuOpen, setMenuOpen }) => {
             className="flex items-center justify-between px-4 py-2 rounded hover:bg-gray-700"
             onClick={() => setMenuOpen(false)}
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mr-2">
               <Mail size={25} /> Gmail Accounts
             </div>
             <span className="bg-white text-red-800 text-sm font-bold px-2 py-1 rounded">

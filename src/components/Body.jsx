@@ -271,7 +271,7 @@ function Body() {
                 <button
                   key={index}
                   type="button"
-                  className={`h-3 w-3 rounded-full transition ${
+                  className={`h-3 w-3 rounded-full transition cursor-pointer ${
                     currentIndex === index
                       ? "bg-red-700 scale-110"
                       : "bg-red-200 hover:bg-red-300"
@@ -360,7 +360,7 @@ function Body() {
                 <div className="mt-10 flex justify-center">
                   <Link
                     to="/news"
-                    className="bg-red-900 text-white py-3 px-8 rounded-md text-lg font-semibold hover:bg-red-700 transition duration-300 text-center"
+                    className="bg-red-800 text-white py-3 px-8 rounded-md text-lg font-semibold hover:bg-red-900 transition duration-300 text-center"
                   >
                     Read All News
                   </Link>
@@ -497,7 +497,7 @@ function Body() {
                           <button
                             type="button"
                             onClick={() => toggleExpand(faq.id)}
-                            className="w-full flex justify-between items-center text-left"
+                            className="w-full flex justify-between items-center text-left cursor-pointer"
                             aria-expanded={isOpen}
                           >
                             <h3 className="text-lg md:text-xl font-bold pr-6">
@@ -532,8 +532,8 @@ function Body() {
 
             <div className="h-px w-full bg-white/20 rounded-full" />
 
-            <div className="relative flex flex-col md:flex-row px-6 md:px-10 pt-12 bg-black/50 backdrop-blur-lg rounded-2xl shadow-[0_0_25px_rgba(0,0,0,0.5)] items-stretch gap-8">
-              <div className="review-section flex-1 z-10 w-full flex flex-col h-[510px]">
+            <div className="flex flex-col md:flex-row p-10 bg-black/50 backdrop-blur-lg rounded-2xl shadow-[0_0_25px_rgba(0,0,0,0.5)] gap-8">
+              <div className="review-section z-10 w-full flex flex-col h-[500px]">
                 <div className="mb-6">
                   <h2 className="text-xl md:text-3xl uppercase font-semibold inline border-b-2 border-white">
                     REVIEW
@@ -572,7 +572,7 @@ function Body() {
 
               <div
                 id="contact"
-                className="contact-section flex-1 z-10 w-full flex flex-col scroll-mt-24 h-[650px]"
+                className="contact-section z-10 w-full flex flex-col scroll-mt-24 h-[500]"
               >
                 <div className="mb-6">
                   <h2 className="text-xl md:text-3xl uppercase font-semibold inline border-b-2 border-white">
@@ -660,7 +660,7 @@ function Body() {
                     <button
                       type="submit"
                       disabled={contactStatus.loading}
-                      className="w-full bg-white text-black py-3 px-6 font-bold rounded-md hover:bg-yellow-500 transition disabled:opacity-60 disabled:cursor-not-allowed"
+                      className="w-full bg-white text-black py-3 px-6 font-bold rounded-md hover:bg-yellow-500 transition disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
                     >
                       {contactStatus.loading ? "SENDING..." : "SUBMIT"}
                     </button>
