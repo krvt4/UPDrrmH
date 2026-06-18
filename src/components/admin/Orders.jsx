@@ -24,6 +24,7 @@ function Orders() {
   const [receiptImage, setReceiptImage] = useState(null);
   const [zoomedImage, setZoomedImage] = useState(null);
   const [sortOrder, setSortOrder] = useState("desc");
+  const [statusFilter, setStatusFilter] = useState("total");
 
   useEffect(() => {
     fetchOrders();
@@ -119,7 +120,17 @@ function Orders() {
     setSortOrder((prev) => (prev === "desc" ? "asc" : "desc"));
   };
 
-  const sortedOrders = [...filteredOrders].sort((a, b) => {
+  const filteredStatus = [...filteredOrders].filter((order) => {
+    if (statusFilter === "pending") {
+      return order.status === "pending";
+    } else if (statusFilter === "processed") {
+      return order.status === "processed";
+    } else {
+      return order;
+    }
+  });
+
+  const sortedOrders = [...filteredStatus].sort((a, b) => {
     if (!a.createdAt || !b.createdAt) return 0;
     return sortOrder === "asc"
       ? a.createdAt.toDate() - b.createdAt.toDate()
@@ -134,16 +145,47 @@ function Orders() {
         <h2 className="font-bold mb-4 text-3xl text-center">Overview</h2>
 
         <div className="flex gap-6 flex-wrap">
-          <div className="p-6 rounded-lg shadow-md flex-1 min-w-[250px] flex justify-between bg-white">
-            <h3 className="font-semibold">Total Orders</h3>
-            <p className="text-gray-700 font-semibold">
-              {orders.filter((o) => o.status).length}
-            </p>
-          </div>
 
-          <div className="p-6 rounded-lg shadow-md flex-1 min-w-[250px] bg-red-100">
+          <button onClick={() => setStatusFilter("total")} className="cursor-pointer">
+            <div className={`p-6 rounded-lg shadow-md flex-1 min-w-[250px]
+                      ${
+                        statusFilter === "total"
+                          ? "bg-white"
+                          : "bg-yellow-50"
+                      }`}>
+              <div className="flex justify-between">
+                <h3 className="font-semibold">Total Orders</h3>
+                <p className="text-gray-700 text-5xl font-semibold">
+                  {orders.filter((o) => o.status).length}
+                </p>
+              </div>
+              <p className="text-gray-700">
+                Total Amount: ₱{" "}
+                {orders
+                  .filter((o) => o.status)
+                  .reduce(
+                    (acc, o) =>
+                      acc +
+                      o.cartItems.reduce(
+                        (sum, item) => sum + item.price * item.quantity,
+                        0
+                      ),
+                    0
+                  )}
+                .00
+              </p>
+            </div>
+          </button>
+
+          <button onClick={() => setStatusFilter("pending")} className="cursor-pointer">
+          <div className={`p-6 rounded-lg shadow-md flex-1 min-w-[250px]
+                      ${
+                        statusFilter === "pending"
+                          ? "bg-red-300"
+                          : "bg-red-100 hover:bg-red-200"
+                      }`}>
             <div className="flex justify-between">
-              <h3 className="text-lg font-semibold text-red-900">Pending</h3>
+              <h3 className="text-lg font-semibold text-[#7b1113]">Pending</h3>
               <p className="text-gray-700 text-5xl font-semibold">
                 {orders.filter((o) => o.status === "pending").length}
               </p>
@@ -164,10 +206,17 @@ function Orders() {
               .00
             </p>
           </div>
+          </button>
 
-          <div className="p-6 rounded-lg shadow-md flex-1 min-w-[250px] bg-green-100">
+          <button onClick={() => setStatusFilter("processed")} className="cursor-pointer">
+          <div className={`p-6 rounded-lg shadow-md flex-1 min-w-[250px]
+                      ${
+                        statusFilter === "processed"
+                          ? "bg-green-300"
+                          : "bg-green-100 hover:bg-green-200"
+                      }`}>
             <div className="flex justify-between">
-              <h3 className="text-lg font-semibold text-green-900">Processed</h3>
+              <h3 className="text-lg font-semibold text-[#014421]">Processed</h3>
               <p className="text-gray-700 text-5xl font-semibold">
                 {orders.filter((o) => o.status === "processed").length}
               </p>
@@ -188,6 +237,7 @@ function Orders() {
               .00
             </p>
           </div>
+          </button>
         </div>
       </div>
 
@@ -248,7 +298,7 @@ function Orders() {
                     {order?.cartItems?.reduce((acc, item) => acc + item.quantity, 0) || 0}
                   </td>
 
-                  <td className="px-4 py-2 text-red-900 font-bold">
+                  <td className="px-4 py-2 text-[#7b1113] font-bold">
                     ₱{" "}
                     {order.cartItems?.reduce(
                       (acc, item) => acc + item.price * item.quantity,
@@ -273,10 +323,10 @@ function Orders() {
                       className={`rounded-lg px-4 py-1 font-bold inline-block
                       ${
                         order.status === "pending"
-                          ? "bg-red-200 text-red-900"
+                          ? "bg-red-100 text-[#7b1113]"
                           : order.status === "processed"
-                          ? "bg-orange-200 text-orange-900"
-                          : "bg-green-200 text-green-900"
+                          ? "bg-yellow-100 text-[#A66D1A]"
+                          : "bg-green-100 text-[#014421]"
                       }`}
                     >
                       {order.status}
@@ -284,7 +334,7 @@ function Orders() {
                   </td>
 
                   <td className="px-4 py-2">
-                    <button className="text-gray-500 px-3 py-1">
+                    <button className="text-gray-500 px-3 py-1 cursor-pointer">
                       <ReceiptText size={26} />
                     </button>
                   </td>
@@ -299,14 +349,14 @@ function Orders() {
 
       {/* MODAL */}
       {selectedOrder && (
-        <div className="fixed inset-0 !bg-gray-800/50 flex items-center justify-center p-4 z-30">
+        <div className="fixed inset-0 !bg-gray-800/50 flex items-center justify-center pl-10 p-4 z-60">
           <div className="text-sm bg-white p-6 rounded-lg w-full max-w-4xl">
             <div className="flex items-center justify-between mb-4">
               <p className="text-xl">
                 <strong>Order ID :</strong> {selectedOrder.id}
               </p>
               <button
-                className="text-gray-600"
+                className="text-gray-600 cursor-pointer"
                 onClick={() => setSelectedOrder(null)}
               >
                 <XIcon size={30} />
@@ -339,30 +389,32 @@ function Orders() {
               </p>
             </div>
 
-            <table className="w-full border-collapse border border-gray-300 mb-4 mt-4">
-              <thead>
-                <tr className="bg-gray-100">
-                  <th className="px-4 py-2 border text-left">Item</th>
-                  <th className="px-4 py-2 border text-left">Category</th>
-                  <th className="px-4 py-2 border text-left">Price</th>
-                  <th className="px-4 py-2 border text-left">Qnty.</th>
-                  <th className="px-4 py-2 border text-left">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {selectedOrder.cartItems.map((item, index) => (
-                  <tr key={index} className="border-b">
-                    <td className="px-4 py-2 border">{item.title}</td>
-                    <td className="px-4 py-2 border">{item.category}</td>
-                    <td className="px-4 py-2 border">₱{item.price}.00</td>
-                    <td className="px-4 py-2 border text-center">{item.quantity}</td>
-                    <td className="px-4 py-2 border font-bold">
-                      ₱{item.price * item.quantity}.00
-                    </td>
+            <div className="w-full overflow-x-auto bg-white">
+              <table className="min-w-[500px] w-full border-collapse mb-4 mt-4">
+                <thead>
+                  <tr className="bg-gray-100">
+                    <th className="px-4 py-2 border text-left">Item</th>
+                    <th className="px-4 py-2 border text-left">Category</th>
+                    <th className="px-4 py-2 border text-left">Price</th>
+                    <th className="px-4 py-2 border text-left">Qnty.</th>
+                    <th className="px-4 py-2 border text-left">Total</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {selectedOrder.cartItems.map((item, index) => (
+                    <tr key={index} className="border-b">
+                      <td className="px-4 py-2 border">{item.title}</td>
+                      <td className="px-4 py-2 border">{item.category}</td>
+                      <td className="px-4 py-2 border">₱{item.price}.00</td>
+                      <td className="px-4 py-2 border text-center">{item.quantity}</td>
+                      <td className="px-4 py-2 border font-bold">
+                        ₱{item.price * item.quantity}.00
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
             <div className="flex items-center gap-4">
               <h3 className="font-semibold py-1">Courier Service:</h3>
@@ -377,7 +429,7 @@ function Orders() {
                         value={option}
                         checked={courier === option}
                         onChange={(e) => setCourier(e.target.value)}
-                        className="cursor-pointer accent-red-900"
+                        className="cursor-pointer accent-[#7b1113]"
                       />
                       {option}
                     </label>

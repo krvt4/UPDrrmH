@@ -16,7 +16,7 @@ function Footer() {
     }, []);
 
     return (
-        <footer className="bg-red-900 text-white">
+        <footer className="bg-[#7b1113] text-white">
             <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
                     
@@ -53,7 +53,7 @@ function Footer() {
                         <p className="text-gray-300">Stay in the loop and sign up for the UP DRRM-H Program newsletter:</p>
                         <div className="flex items-center bg-white border rounded-xl shadow-md overflow-hidden">
                             <input type="email" placeholder="Enter your email" className="flex-1 px-4 py-2 text-gray-900 placeholder-gray-500 focus:outline-none"/>
-                            <button className="bg-red-900 text-white p-3 justify-center items-center rounded-full w-10 h-10 hover:bg-red-800 transition">
+                            <button className="bg-[#7b1113] text-white p-3 justify-center items-center rounded-full w-10 h-10 hover:bg-[#3b0000] transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-5 h-5">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                                 </svg>

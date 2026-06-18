@@ -118,7 +118,7 @@ const Cart = () => {
   return (
     <div className="p-6 mt-20">
       <div className="flex items-center mb-4">
-        <button onClick={() => navigate(-1)} className="text-white hover:bg-yellow-600 rounded-full bg-yellow-500 mr-4"><ChevronLeft size={35} /></button>
+        <button onClick={() => navigate(-1)} className="text-white hover:bg-[#F3AA2C] rounded-full bg-yellow-500 mr-4"><ChevronLeft size={35} /></button>
         <h2 className="text-2xl font-bold">My Cart</h2>
       </div>
 
@@ -146,7 +146,7 @@ const Cart = () => {
                     />
                       <p ><span className="text-sm text-gray-500">{item.category} </span><br />{item.title}</p>
                   </td>
-                  <td className=" px-4 py-2 text-red-900 font-bold">₱ {item.price}.00</td>
+                  <td className=" px-4 py-2 text-[#7b1113] font-bold">₱ {item.price}.00</td>
                   <td className=" px-4 py-2 gap-2">
                     <button
                       onClick={() => updateQuantity(item.manualId, item.quantity - 1)}
@@ -166,7 +166,7 @@ const Cart = () => {
                   <td className=" px-4 py-2">
                     <button
                       onClick={() => removeFromCart(item)}
-                      className="text-red-600"
+                      className="text-[#7b1113]"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
                     </button>
@@ -179,8 +179,8 @@ const Cart = () => {
           {/* Checkout Button */}
           <div className="flex justify-end mt-4 gap-4 items-center">
             <div>
-            <p className="text-md">Subtotal: <span className="text-2xl text-red-900 font-bold">₱{totalPrice}.00</span></p>
-            <p className="text-md">No. Items: <span className="font-bold text-red-900">({totalCartQuantity})</span></p>
+            <p className="text-md">Subtotal: <span className="text-2xl text-[#7b1113] font-bold">₱{totalPrice}.00</span></p>
+            <p className="text-md">No. Items: <span className="font-bold text-[#7b1113]">({totalCartQuantity})</span></p>
             </div>
             
             <button

@@ -236,7 +236,7 @@ function Body() {
         <section className="w-full bg-red-50/70">
           <div className="container mx-auto px-4 py-12">
             <div className="mb-6 text-left">
-              <h2 className="text-3xl font-bold uppercase text-red-900">
+              <h2 className="text-3xl font-bold uppercase text-[#7B1113]">
                 Recent Updates
               </h2>
             </div>
@@ -271,9 +271,9 @@ function Body() {
                 <button
                   key={index}
                   type="button"
-                  className={`h-3 w-3 rounded-full transition ${
+                  className={`h-3 w-3 rounded-full transition cursor-pointer ${
                     currentIndex === index
-                      ? "bg-red-700 scale-110"
+                      ? "bg-[#7B1113] scale-110"
                       : "bg-red-200 hover:bg-red-300"
                   }`}
                   onClick={() => goToSlide(index)}
@@ -282,13 +282,13 @@ function Body() {
             </div>
 
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-3xl font-bold uppercase text-red-900">
+              <h2 className="text-3xl font-bold uppercase text-[#7B1113]">
                 What's New?
               </h2>
 
               <Link
                 to="/news"
-                className="text-red-900 font-semibold hover:underline"
+                className="text-[#7B1113] font-semibold hover:underline"
               >
                 View All
               </Link>
@@ -335,7 +335,7 @@ function Body() {
                           </div>
 
                           <div className="p-6">
-                            <p className="font-bold text-lg leading-snug text-gray-900 hover:text-red-900 transition line-clamp-3">
+                            <p className="font-bold text-lg leading-snug text-gray-900 hover:text-[#7B1113] transition line-clamp-3">
                               {news.title}
                             </p>
 
@@ -360,7 +360,7 @@ function Body() {
                 <div className="mt-10 flex justify-center">
                   <Link
                     to="/news"
-                    className="bg-red-900 text-white py-3 px-8 rounded-md text-lg font-semibold hover:bg-red-700 transition duration-300 text-center"
+                    className="bg-[#7B1113] text-white py-3 px-8 rounded-md text-lg font-semibold hover:bg-[#3b0000] transition duration-300 text-center"
                   >
                     Read All News
                   </Link>
@@ -379,7 +379,7 @@ function Body() {
               <div className="relative">
                 <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
                   <div>
-                    <h2 className="text-3xl font-bold uppercase text-red-900">
+                    <h2 className="text-3xl font-bold uppercase text-[#7B1113]">
                       What We Offer
                     </h2>
                   </div>
@@ -398,14 +398,14 @@ function Body() {
                       image: MCIImage,
                       title: "Mass Casualty Incident (MCI) and Triage Training",
                       link: "/training2",
-                      buttonColor: "bg-[#06441f] hover:bg-[#042e16]",
+                      buttonColor: "bg-[#014421] hover:bg-[#042e16]",
                     },
                     {
                       image: SFATBLSImage,
                       title:
                         "Standard First Aid and Basic Life Support (SFATBLS)",
                       link: "/training3",
-                      buttonColor: "bg-[#7a0000] hover:bg-[#3b0000]",
+                      buttonColor: "bg-[#7B1113] hover:bg-[#3b0000]",
                     },
                   ].map((training, idx) => (
                     <div
@@ -497,7 +497,7 @@ function Body() {
                           <button
                             type="button"
                             onClick={() => toggleExpand(faq.id)}
-                            className="w-full flex justify-between items-center text-left"
+                            className="w-full flex justify-between items-center text-left cursor-pointer"
                             aria-expanded={isOpen}
                           >
                             <h3 className="text-lg md:text-xl font-bold pr-6">
@@ -532,8 +532,8 @@ function Body() {
 
             <div className="h-px w-full bg-white/20 rounded-full" />
 
-            <div className="relative flex flex-col md:flex-row px-6 md:px-10 pt-12 bg-black/50 backdrop-blur-lg rounded-2xl shadow-[0_0_25px_rgba(0,0,0,0.5)] items-stretch gap-8">
-              <div className="review-section flex-1 z-10 w-full flex flex-col h-[510px]">
+            <div className="flex flex-col md:flex-row p-10 bg-black/50 backdrop-blur-lg rounded-2xl shadow-[0_0_25px_rgba(0,0,0,0.5)] gap-8">
+              <div className="review-section z-10 w-full flex flex-col h-[500px]">
                 <div className="mb-6">
                   <h2 className="text-xl md:text-3xl uppercase font-semibold inline border-b-2 border-white">
                     REVIEW
@@ -550,7 +550,7 @@ function Body() {
                         <div className="review-content relative z-10">
                           <h3 className="text-lg md:text-xl font-bold">
                             {review.name}{" "}
-                            <span className="text-yellow-500">
+                            <span className="text-[#F3AA2C]">
                               {"★".repeat(review.rating)}
                               {"☆".repeat(5 - review.rating)}
                             </span>
@@ -572,7 +572,7 @@ function Body() {
 
               <div
                 id="contact"
-                className="contact-section flex-1 z-10 w-full flex flex-col scroll-mt-24 h-[650px]"
+                className="contact-section z-10 w-full flex flex-col scroll-mt-24 h-[500]"
               >
                 <div className="mb-6">
                   <h2 className="text-xl md:text-3xl uppercase font-semibold inline border-b-2 border-white">
@@ -592,7 +592,7 @@ function Body() {
                       required
                       value={contactForm.name}
                       onChange={handleContactChange}
-                      className="w-full bg-transparent border border-white text-white p-3 mb-4 rounded-md focus:ring-2 focus:ring-yellow-500"
+                      className="w-full bg-transparent border border-white text-white p-3 mb-4 rounded-md focus:ring-2 focus:ring-[#F3AA2C]"
                     />
 
                     <input
@@ -602,7 +602,7 @@ function Body() {
                       required
                       value={contactForm.email}
                       onChange={handleContactChange}
-                      className="w-full bg-transparent border border-white text-white p-3 mb-4 rounded-md focus:ring-2 focus:ring-yellow-500"
+                      className="w-full bg-transparent border border-white text-white p-3 mb-4 rounded-md focus:ring-2 focus:ring-[#F3AA2C]"
                     />
 
                     <input
@@ -612,7 +612,7 @@ function Body() {
                       required
                       value={contactForm.company}
                       onChange={handleContactChange}
-                      className="w-full bg-transparent border border-white text-white p-3 mb-4 rounded-md focus:ring-2 focus:ring-yellow-500"
+                      className="w-full bg-transparent border border-white text-white p-3 mb-4 rounded-md focus:ring-2 focus:ring-[#F3AA2C]"
                     />
 
                     <select
@@ -620,7 +620,7 @@ function Body() {
                       required
                       value={contactForm.category}
                       onChange={handleContactChange}
-                      className="w-full bg-transparent border border-white text-white p-3 mb-4 rounded-md focus:ring-2 focus:ring-yellow-500"
+                      className="w-full bg-transparent border border-white text-white p-3 mb-4 rounded-md focus:ring-2 focus:ring-[#F3AA2C]"
                     >
                       <option className="text-black" value="General Inquiry">
                         General Inquiry
@@ -654,13 +654,13 @@ function Body() {
                       required
                       value={contactForm.message}
                       onChange={handleContactChange}
-                      className="w-full bg-transparent border border-white text-white p-3 mb-4 rounded-md focus:ring-2 focus:ring-yellow-500 min-h-[120px]"
+                      className="w-full bg-transparent border border-white text-white p-3 mb-4 rounded-md focus:ring-2 focus:ring-[#F3AA2C] min-h-[120px]"
                     />
 
                     <button
                       type="submit"
                       disabled={contactStatus.loading}
-                      className="w-full bg-white text-black py-3 px-6 font-bold rounded-md hover:bg-yellow-500 transition disabled:opacity-60 disabled:cursor-not-allowed"
+                      className="w-full bg-white text-black py-3 px-6 font-bold rounded-md hover:bg-[#A66D1A] transition disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
                     >
                       {contactStatus.loading ? "SENDING..." : "SUBMIT"}
                     </button>

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import SFATBLSQR from "../assets/SFATBLSqr.png";
 import BertsImg from "../assets/SFATBLSimg.png";
 import backgroundImage from "../assets/SFATBLSbg.png";
@@ -18,13 +19,17 @@ function SFATBLS() {
           <Link to="/" className="flex items-center text-gray-500">
             Home <ChevronsRight className="text-black mx-2" size={20} />
           </Link>
-          <p className="text-red-900">SFATBLS Training</p>
+
+          <HashLink to="/#trainings" className="flex items-center text-gray-500">
+            Trainings <ChevronsRight className="text-black mx-2" size={20} />
+          </HashLink>
+          <p className="text-[#7b1113]">SFATBLS Training</p>
         </div>
       </section>
 
       {/* MAIN SECTION */}
       <section
-        className="relative flex flex-col lg:flex-row justify-center items-stretch text-red-900 px-4 mb-8 gap-4"
+        className="relative flex flex-col lg:flex-row justify-center items-stretch text-[#7b1113] px-4 mb-8 gap-4"
       >
         {/* LEFT CONTENT */}
         <div
@@ -63,7 +68,7 @@ function SFATBLS() {
               <div className="flex-1 space-y-6">
                 {/* What is SFATBLS */}
                 <div className="rounded-xl bg-white/35 backdrop-blur-sm border border-white/30 shadow-sm p-5">
-                  <h2 className="text-[#7a0000] text-2xl sm:text-4xl font-extrabold uppercase mb-4">
+                  <h2 className="text-[#7b1113] text-2xl sm:text-4xl font-extrabold uppercase mb-4">
                     What is SFATBLS?
                   </h2>
 
@@ -77,7 +82,7 @@ function SFATBLS() {
 
                 {/* What we do */}
                <div className="rounded-xl bg-white/35 backdrop-blur-sm border border-white/30 shadow-sm p-5">
-                  <h2 className="text-[#7a0000] text-2xl sm:text-4xl font-extrabold uppercase mb-4">
+                  <h2 className="text-[#7b1113] text-2xl sm:text-4xl font-extrabold uppercase mb-4">
                     What We Do at SFATBLS?
                   </h2>
 
@@ -101,13 +106,13 @@ function SFATBLS() {
               <div className="flex justify-center mb-6">
                 <div className="h-20 w-20 rounded-full bg-yellow-500/20 flex items-center justify-center relative">
                   <span className="text-4xl">📅</span>
-                  <span className="absolute -top-1 -right-1 h-7 w-7 rounded-full bg-yellow-500 flex items-center justify-center text-sm">
+                  <span className="absolute -top-1 -right-1 h-7 w-7 rounded-full bg-[#F3AA2C] flex items-center justify-center text-sm">
                     🔔
                   </span>
                 </div>
               </div>
 
-              <h2 className="text-3xl font-extrabold text-yellow-400 mb-4">
+              <h2 className="text-3xl font-extrabold text-[#F3AA2C] mb-4">
                 Registration Opens Soon
               </h2>
 
@@ -117,9 +122,9 @@ function SFATBLS() {
 
               {/* Loading dots */}
               <div className="flex justify-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-yellow-400 animate-bounce [animation-delay:0ms]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-yellow-400 animate-bounce [animation-delay:150ms]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-yellow-400 animate-bounce [animation-delay:300ms]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#F3AA2C] animate-bounce [animation-delay:0ms]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#F3AA2C] animate-bounce [animation-delay:150ms]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#F3AA2C] animate-bounce [animation-delay:300ms]" />
               </div>
             </div>
           </div>

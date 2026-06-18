@@ -702,7 +702,7 @@ export default function ContactSubmissionsTab() {
             onClick={() => setStatusFilter(s.key)}
             className={`px-3 py-2 rounded text-sm border ${
               statusFilter === s.key
-                ? "bg-red-700 text-white border-red-700"
+                ? "bg-[#7b1113] text-white border-[#7b1113]"
                 : "bg-white hover:bg-gray-50 border-gray-300"
             }`}
           >

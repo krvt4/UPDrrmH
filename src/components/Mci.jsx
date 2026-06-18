@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import MCIQR from "../assets/BertsMciRegisQRcode.png";
 import MCIImg from "../assets/MCI-img.png";
 import backgroundImage from "../assets/mci-bg.png";
@@ -45,7 +46,11 @@ function Training2() {
           <Link to="/" className="flex items-center text-gray-500">
             Home <ChevronsRight className="text-black mx-2" size={20} />
           </Link>
-          <p className="text-red-900">MCI Training</p>
+
+          <HashLink to="/#trainings" className="flex items-center text-gray-500">
+            Trainings <ChevronsRight className="text-black mx-2" size={20} />
+          </HashLink>
+          <p className="text-[#7b1113]">MCI Training</p>
         </div>
       </section>
 
@@ -63,7 +68,7 @@ function Training2() {
           <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-white/15" />
 
           <div className="relative z-10">
-            <h2 className="text-[#06441f] text-3xl sm:text-5xl font-extrabold leading-tight mt-6">
+            <h2 className="text-[#014421] text-3xl sm:text-5xl font-extrabold leading-tight mt-6">
               Mass Casualty Incident and Triage (MCI)
             </h2>
 
@@ -92,7 +97,7 @@ function Training2() {
               />
 
               <div className="flex-1">
-                <h2 className="text-[#06441f] text-xl sm:text-3xl font-extrabold uppercase mb-3">
+                <h2 className="text-[#014421] text-xl sm:text-3xl font-extrabold uppercase mb-3">
                   What is MCI?
                 </h2>
 
@@ -111,7 +116,7 @@ function Training2() {
                   </span>
                 </p>
 
-                <h2 className="text-[#06441f] text-xl sm:text-3xl font-extrabold uppercase mb-3">
+                <h2 className="text-[#014421] text-xl sm:text-3xl font-extrabold uppercase mb-3">
                   What we do at MCI training?
                 </h2>
 
@@ -131,9 +136,9 @@ function Training2() {
         </div>
 
         {/* RIGHT PANEL */}
-        <div className="p-6 bg-[#06441f] rounded-2xl shadow-md w-full lg:w-1/3 text-center flex flex-col">
+        <div className="p-6 bg-[#014421] rounded-2xl shadow-md w-full lg:w-1/3 text-center flex flex-col">
           <div>
-            <p className="text-yellow-400 text-lg sm:text-xl font-bold mb-4">
+            <p className="text-[#F3AA2C] text-lg sm:text-xl font-bold mb-4">
               Training Dates for 2026
             </p>
 
@@ -141,7 +146,7 @@ function Training2() {
               {trainingDates.map((date, i) => (
                 <li
                   key={i}
-                  className={`border border-white px-4 py-2 rounded-full text-center hover:bg-white hover:text-[#06441f] transition duration-300 cursor-default
+                  className={`border border-white px-4 py-2 rounded-full text-center cursor-default
                   ${date === "December 3-5" ? "col-span-2 mx-auto w-[70%]" : ""}`}
                 >
                   {date}
@@ -152,7 +157,7 @@ function Training2() {
 
           <div className="mt-10 grid grid-cols-2 gap-8 items-start">
             <div className="flex flex-col items-center text-center space-y-3">
-              <p className="text-yellow-400 text-lg sm:text-xl font-bold">
+              <p className="text-[#F3AA2C] text-lg sm:text-xl font-bold">
                 Training Fee:
               </p>
 
@@ -169,10 +174,10 @@ function Training2() {
               </div>
 
               <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLSfeSXyPo0XvruCV7-5Ei32lPkmoPSua15XX8VF19lLjAKImlw/viewform"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSeCgCLNYH2CzVjGp3Dr420FooFyGpLpR-0UgZ_RoLJyJx3KWQ/viewform"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 bg-yellow-500 text-white font-semibold px-6 py-3 rounded-lg transition-transform hover:scale-105 hover:bg-yellow-600 shadow-md"
+                className="mt-2 bg-[#F3AA2C] text-white font-semibold px-6 py-3 rounded-lg transition-transform hover:scale-105 hover:bg-[#A66D1A] shadow-md"
               >
                 JOIN NOW!
               </a>

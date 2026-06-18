@@ -196,7 +196,7 @@ const Checkout = () => {
                     Cancel
                   </button>
                   <button 
-                    className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded" 
+                    className="px-4 py-2 bg-[#014421] hover:bg-[#042e16] text-white rounded" 
                     onClick={async () => {
                       if (!auth.currentUser) return;
                       const userRef = doc(db, "users", auth.currentUser.uid);
@@ -227,8 +227,8 @@ const Checkout = () => {
 
         <div className="lg:w-1/3 lg:ml-6">
           <div>
-            <h2 className="text-base font-semibold bg-red-900 text-white p-2">Delivery Information</h2>
-            <p className="text-lg font-bold flex items-center gap-2 my-3 text-red-900">
+            <h2 className="text-base font-semibold bg-[#7b1113] text-white p-2">Delivery Information</h2>
+            <p className="text-lg font-bold flex items-center gap-2 my-3 text-[#7b1113]">
                   <Package
                     size={20} 
                     onClick={() => setShowCustomerDetails(true)}
@@ -242,7 +242,7 @@ const Checkout = () => {
             </div>
 
             {/* Drop-Off Address with Edit Icon */}
-            <p className="text-lg font-bold flex items-center gap-2 my-3 text-red-900">
+            <p className="text-lg font-bold flex items-center gap-2 my-3 text-[#7b1113]">
                   <Truck 
                     size={20} 
                     onClick={() => setShowCustomerDetails(true)}
@@ -270,30 +270,30 @@ const Checkout = () => {
                     value={option}
                     checked={courier === option}
                     onChange={(e) => setCourier(e.target.value)}
-                    className="cursor-pointer accent-red-900"
+                    className="cursor-pointer accent-[#7b1113]"
                   />
                   {option}
                 </label>
               ))}
             </div>
 
-            <h2 className="text-base font-semibold bg-red-900 text-white p-2 mt-4">Order Summary</h2>
+            <h2 className="text-base font-semibold bg-[#7b1113] text-white p-2 mt-4">Order Summary</h2>
             <div className="flex justify-between text-gray-500 my-2">
               <p>Payment Methods: </p>
-              <p className="text-red-900 font-bold">Cash on Delivery</p>
+              <p className="text-[#7b1113] font-bold">Cash on Delivery</p>
             </div>
             <div className="flex justify-between text-gray-500 my-2">
               <p>Total Items: </p>
-              <p className="text-red-900 font-bold">{cartItems.reduce((total, item) => total + (item.quantity || 1), 0)}</p>
+              <p className="text-[#7b1113] font-bold">{cartItems.reduce((total, item) => total + (item.quantity || 1), 0)}</p>
             </div>
             <div className="flex justify-between text-gray-500 my-2">
               <p>Subtotal: </p>
-              <p className="text-red-900 font-bold">₱ {cartItems.reduce((total, item) => total + (item.price * (item.quantity || 1)), 0)}.00</p>
+              <p className="text-[#7b1113] font-bold">₱ {cartItems.reduce((total, item) => total + (item.price * (item.quantity || 1)), 0)}.00</p>
             </div>
 
             {!customerInfo.address && (
               <button 
-                className="mt-4 p-2 bg-green-600 text-white rounded-lg w-full" 
+                className="mt-4 p-2 bg-[#014421] text-white rounded-lg w-full" 
                 onClick={() => setShowAddressForm(true)}
               >
                   Add Drop-off Address
@@ -305,11 +305,11 @@ const Checkout = () => {
                 type="checkbox"
                 checked={agreedToTerms}
                 onChange={() => setAgreedToTerms(!agreedToTerms)}
-                className="cursor-pointer accent-red-900"
+                className="cursor-pointer accent-[#7b1113]"
               />
               <label className="text-gray-700 text-sm">
                 By submitting this order, I acknowledge that I have read and agree to the 
-                <span onClick={() => setShowTermsCondition(true)} className="text-red-900 font-bold cursor-pointer"> Terms and Conditions</span>.
+                <span onClick={() => setShowTermsCondition(true)} className="text-[#7b1113] font-bold cursor-pointer"> Terms and Conditions</span>.
               </label>
             </div>
 
@@ -318,7 +318,7 @@ const Checkout = () => {
           <button
             onClick={handleCheckout}
             className={`w-full mt-4 py-2 rounded shadow ${
-              !courier || !agreedToTerms ? "bg-gray-400 cursor-not-allowed" : "bg-yellow-500 hover:bg-yellow-600 text-white"
+              !courier || !agreedToTerms ? "bg-gray-400 cursor-not-allowed" : "bg-[#F3AA2C] hover:bg-[#A66D1A] text-white"
             }`}
             disabled={!courier || !agreedToTerms}
           >
@@ -336,7 +336,7 @@ const Checkout = () => {
               setMessage(""); 
               navigate("/shop"); 
             }}
-            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg"
+            className="mt-4 bg-[#04204a] text-white px-4 py-2 rounded-lg"
           >
             Close
           </button>

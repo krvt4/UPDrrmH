@@ -226,10 +226,10 @@ const CareersManager = () => {
 
   return (
     <div className="p-6 w-full">
-      <h1 className="text-4xl font-bold text-red-900 mb-8">Career Manager</h1>
+      <h1 className="text-4xl font-bold text-[#7b1113] mb-8">Career Manager</h1>
 
      <div ref={formRef} className="bg-white rounded-xl shadow-md p-6 mb-8">
-        <h2 className="text-2xl font-semibold text-red-900 mb-4">
+        <h2 className="text-2xl font-semibold text-[#7b1113] mb-4">
           {editingId ? "Edit Career Template" : "Add Career Template"}
         </h2>
 
@@ -272,14 +272,14 @@ const CareersManager = () => {
               type="file"
               accept="image/*"
               onChange={handleImageSelect}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 cursor-pointer"
             />
 
             <button
               type="button"
               onClick={handleImageUpload}
               disabled={!selectedImage || uploadingImage}
-              className="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg disabled:opacity-50"
+              className="mt-2 bg-[#04204a] hover:bg-[#02162f] text-white px-4 py-2 rounded-lg disabled:opacity-50"
             >
               {uploadingImage ? "Uploading..." : "Upload Image"}
             </button>
@@ -306,14 +306,24 @@ const CareersManager = () => {
             <label className="block text-sm font-medium mb-1">
               Footer Background Color
             </label>
+            <div className="flex gap-2 flex-wrap">
+            <input
+              type="color"
+              name="bgColor"
+              value={formData.bgColor}
+              onChange={handleChange}
+              className="h-10 cursor-pointer appearance-none p-0 border-2 border-gray-300 rounded [&::-webkit-color-swatch-wrapper]:p-0 &::-webkit-color-swatch]:border-none [&::-moz-color-swatch]:border-none"
+              placeholder="#06441f"
+            />
             <input
               type="text"
               name="bgColor"
               value={formData.bgColor}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2"
+              className="w-[50%] border border-gray-300 rounded-lg px-3 py-2"
               placeholder="#06441f"
             />
+            </div>
           </div>
 
           <div>
@@ -384,6 +394,7 @@ const CareersManager = () => {
                 name="isPublished"
                 checked={formData.isPublished}
                 onChange={handleChange}
+                className="cursor-pointer accent-[#7b1113]"
               />
               Publish to public careers page
             </label>
@@ -394,6 +405,7 @@ const CareersManager = () => {
                 name="accepting"
                 checked={formData.accepting}
                 onChange={handleChange}
+                className="cursor-pointer accent-[#7b1113]"
               />
               Accepting applications
             </label>
@@ -403,7 +415,7 @@ const CareersManager = () => {
             <button
               type="submit"
               disabled={saving}
-              className="bg-red-900 hover:bg-red-800 text-white px-5 py-2 rounded-lg"
+              className="bg-[#7b1113] hover:bg-[#3b0000] text-white px-5 py-2 rounded-lg cursor-pointer"
             >
               {saving
                 ? "Saving..."
@@ -416,7 +428,7 @@ const CareersManager = () => {
               <button
                 type="button"
                 onClick={handleCancelEdit}
-                className="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-lg"
+                className="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-lg cursor-pointer"
               >
                 Cancel Edit
               </button>
@@ -426,7 +438,7 @@ const CareersManager = () => {
       </div>
 
       <div className="bg-white rounded-xl shadow-md p-6">
-        <h2 className="text-2xl font-semibold text-red-900 mb-4">
+        <h2 className="text-2xl font-semibold text-[#7b1113] mb-4">
           Existing Career Entries
         </h2>
 
@@ -442,7 +454,7 @@ const CareersManager = () => {
                 className="border border-gray-200 rounded-xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
               >
                 <div>
-                  <h3 className="text-lg font-bold text-red-900">
+                  <h3 className="text-lg font-bold text-[#7b1113]">
                     {item.title || "Untitled Career"}
                   </h3>
                   <p className="text-sm text-gray-600">{item.type}</p>
@@ -481,17 +493,17 @@ const CareersManager = () => {
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => handleEdit(item)}
-                    className="px-4 py-2 rounded-lg text-white bg-indigo-600 hover:bg-indigo-700"
+                    className="px-4 py-2 rounded-lg text-white bg-[#f3aa2c] hover:bg-[#A66D1A] cursor-pointer"
                   >
                     Edit
                   </button>
 
                   <button
                     onClick={() => togglePublish(item.id, item.isPublished)}
-                    className={`px-4 py-2 rounded-lg text-white ${
+                    className={`px-4 py-2 rounded-lg text-white cursor-pointer ${
                       item.isPublished
                         ? "bg-gray-600 hover:bg-gray-700"
-                        : "bg-green-600 hover:bg-green-700"
+                        : "bg-[#014421] hover:bg-[#042e16]"
                     }`}
                   >
                     {item.isPublished ? "Hide" : "Publish"}
@@ -499,10 +511,10 @@ const CareersManager = () => {
 
                   <button
                     onClick={() => toggleAccepting(item.id, item.accepting)}
-                    className={`px-4 py-2 rounded-lg text-white ${
+                    className={`px-4 py-2 rounded-lg text-white cursor-pointer ${
                       item.accepting
-                        ? "bg-yellow-600 hover:bg-yellow-700"
-                        : "bg-blue-600 hover:bg-blue-700"
+                        ? "bg-gray-600 hover:bg-gray-700"
+                        : "bg-[#04204a] hover:bg-[#02162f]"
                     }`}
                   >
                     {item.accepting
@@ -512,7 +524,7 @@ const CareersManager = () => {
 
                   <button
                     onClick={() => handleDelete(item.id)}
-                    className="px-4 py-2 rounded-lg text-white bg-red-700 hover:bg-red-800"
+                    className="px-4 py-2 rounded-lg text-white bg-[#7b1113] hover:bg-[#3b0000] cursor-pointer"
                   >
                     Delete
                   </button>

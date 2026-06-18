@@ -53,10 +53,10 @@ function AdminLogin() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-red-900">
+    <div className="flex justify-center items-center h-screen bg-[#7b1113]">
       <form onSubmit={handleLogin} className="bg-white shadow-lg rounded p-8">
         <h2 className="text-2xl font-bold mb-4">Admin Login</h2>
-        {error && <p className="text-red-600">{error}</p>}
+        {error && <p className="text-[#7b1113]">{error}</p>}
 
         <input
           type="email"
@@ -78,7 +78,7 @@ function AdminLogin() {
 
         <button
           type="submit"
-          className="bg-blue-600 text-white p-2 rounded w-full"
+          className="bg-[#04204a] hover:bg-[#02162f] text-white p-2 rounded w-full"
         >
           Login
         </button>

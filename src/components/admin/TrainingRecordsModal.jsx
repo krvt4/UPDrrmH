@@ -311,74 +311,20 @@ export default function TrainingRecordsModal({ user, onClose }) {
   return (
     <>
       {/* MAIN MODAL */}
-      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999] p-4" onClick={handleCloseAll}>
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[60] p-4" onClick={handleCloseAll}>
         <div
-          className="bg-white rounded-xl w-full max-w-7xl p-6 relative max-h-[88vh] overflow-auto"
+          className="bg-white rounded-xl w-[80%] p-6 relative max-h-[88vh]"
           onClick={(e) => e.stopPropagation()}
         >
           {/* X */}
           <button
             onClick={handleCloseAll}
-            className="absolute top-4 right-4 text-2xl leading-none"
+            className="absolute top-4 right-4 text-2xl text-gray-700 hover:text-black leading-none cursor-pointer"
             type="button"
             aria-label="Close"
           >
             ✕
           </button>
-
-          {/* Top-right buttons (moved away from X) */}
-          <div className="absolute top-4 right-16 flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => {
-                if (confirmDelete) return;
-                if (editKind === "create") {
-                  closeEdit();
-                } else {
-                  setMode("view");
-                  setSelectedId(null);
-                  openCreate();
-                }
-              }}
-              disabled={loading}
-              className={
-                "px-4 py-2 rounded border font-semibold disabled:opacity-60 " +
-                (editKind === "create" ? "bg-gray-800 text-white border-gray-800 hover:bg-gray-900" : "hover:bg-gray-50")
-              }
-            >
-              {editKind === "create" ? "Cancel" : "Add"}
-            </button>
-
-            <button
-              type="button"
-              onClick={() => {
-                if (editing) return;
-                toggleRemoveMode();
-              }}
-              disabled={loading || records.length === 0}
-              className={
-                "px-4 py-2 rounded border font-semibold disabled:opacity-60 " +
-                (mode === "remove" ? "bg-red-700 text-white border-red-700 hover:bg-red-800" : "hover:bg-gray-50")
-              }
-            >
-              {mode === "remove" ? "Cancel" : "Remove"}
-            </button>
-
-            <button
-              type="button"
-              onClick={() => {
-                if (editing) return;
-                toggleUpdateMode();
-              }}
-              disabled={loading || records.length === 0}
-              className={
-                "px-4 py-2 rounded border font-semibold disabled:opacity-60 " +
-                (mode === "update" ? "bg-red-900 text-white border-red-900 hover:bg-red-800" : "hover:bg-gray-50")
-              }
-            >
-              {mode === "update" ? "Cancel" : "Update"}
-            </button>
-          </div>
 
           <h2 className="text-4xl font-extrabold mb-1">Training Records</h2>
           <p className="text-base text-gray-600 mb-3">
@@ -394,7 +340,7 @@ export default function TrainingRecordsModal({ user, onClose }) {
           {loading ? (
             <div className="p-4">Loading...</div>
           ) : error ? (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded">{error}</div>
+            <div className="mb-4 p-3 bg-red-50 border border-[#7b1113] text-[#7b1113] rounded">{error}</div>
           ) : records.length === 0 ? (
             <div className="p-4 bg-gray-50 border rounded text-gray-700">No training records found for this user.</div>
           ) : (
@@ -457,9 +403,57 @@ export default function TrainingRecordsModal({ user, onClose }) {
             </div>
           )}
 
-          <div className="flex justify-end mt-6">
-            <button onClick={handleCloseAll} className="px-6 py-3 rounded border text-lg" type="button">
-              Close
+          {/* Top-right buttons (moved away from X) */}
+          <div className="flex justify-end mt-6 gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                if (confirmDelete) return;
+                if (editKind === "create") {
+                  closeEdit();
+                } else {
+                  setMode("view");
+                  setSelectedId(null);
+                  openCreate();
+                }
+              }}
+              disabled={loading}
+              className={
+                "px-4 py-2 rounded border font-semibold disabled:opacity-60" +
+                (editKind === "create" ? "bg-gray-800 text-white border-gray-800 hover:bg-gray-900 cursor-pointer" : "hover:bg-gray-50")
+              }
+            >
+              {editKind === "create" ? "Cancel" : "Add"}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                if (editing) return;
+                toggleRemoveMode();
+              }}
+              disabled={loading || records.length === 0}
+              className={
+                "px-4 py-2 rounded border font-semibold disabled:opacity-60 cursor-pointer" +
+                (mode === "remove" ? "bg-[#7b1113] text-white border-[#7b1113] hover:bg-[#3b0000]" : "hover:bg-gray-50")
+              }
+            >
+              {mode === "remove" ? "Cancel" : "Remove"}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                if (editing) return;
+                toggleUpdateMode();
+              }}
+              disabled={loading || records.length === 0}
+              className={
+                "px-4 py-2 rounded border font-semibold disabled:opacity-60 cursor-pointer" +
+                (mode === "update" ? "bg-[#7b1113] text-white border-[#7b1113] hover:bg-[#3b0000]" : "hover:bg-gray-50")
+              }
+            >
+              {mode === "update" ? "Cancel" : "Update"}
             </button>
           </div>
         </div>
@@ -471,7 +465,7 @@ export default function TrainingRecordsModal({ user, onClose }) {
           <div className="bg-white rounded-xl w-full max-w-lg p-6 relative" onClick={(e) => e.stopPropagation()}>
             <button
               onClick={cancelDelete}
-              className="absolute top-4 right-4 text-2xl leading-none"
+              className="absolute top-4 right-4 text-2xl leading-none cursor-pointer"
               type="button"
               aria-label="Close"
             >
@@ -496,7 +490,7 @@ export default function TrainingRecordsModal({ user, onClose }) {
             </div>
 
             {deleteError ? (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded">{deleteError}</div>
+              <div className="mb-4 p-3 bg-red-50 border border-[#7b1113] text-[#7b1113] rounded">{deleteError}</div>
             ) : null}
 
             <div className="flex justify-end gap-2">
@@ -505,7 +499,7 @@ export default function TrainingRecordsModal({ user, onClose }) {
               </button>
               <button
                 onClick={confirmDeleteNow}
-                className="px-4 py-2 rounded bg-red-700 text-white hover:bg-red-800 disabled:opacity-60"
+                className="px-4 py-2 rounded bg-[#7b1113] text-white hover:bg-[#3b0000] disabled:opacity-60"
                 type="button"
                 disabled={deleting}
               >
@@ -525,7 +519,7 @@ export default function TrainingRecordsModal({ user, onClose }) {
           >
             <button
               onClick={closeEdit}
-              className="absolute top-4 right-4 text-2xl leading-none"
+              className="absolute top-4 right-4 text-2xl leading-none cursor-pointer"
               type="button"
               aria-label="Close"
             >
@@ -548,7 +542,7 @@ export default function TrainingRecordsModal({ user, onClose }) {
             </p>
 
             {saveError ? (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded">{saveError}</div>
+              <div className="mb-4 p-3 bg-red-50 border border-[#7b1113] text-[#7b1113] rounded">{saveError}</div>
             ) : null}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -591,14 +585,14 @@ export default function TrainingRecordsModal({ user, onClose }) {
             </div>
 
             <div className="flex justify-end gap-2 mt-6">
-              <button onClick={closeEdit} className="px-6 py-3 rounded border text-lg" type="button" disabled={saving}>
+              <button onClick={closeEdit} className="px-6 py-3 rounded border text-lg cursor-pointer" type="button" disabled={saving}>
                 Cancel
               </button>
 
               <button
                 onClick={onSave}
                 disabled={saving}
-                className="px-6 py-3 rounded bg-red-900 text-white hover:bg-red-800 disabled:opacity-60 text-lg"
+                className="px-6 py-3 rounded bg-[#7b1113] text-white hover:bg-[#3b0000] disabled:opacity-60 text-lg cursor-pointer"
                 type="button"
               >
                 {saving ? "Saving..." : "Save Changes"}

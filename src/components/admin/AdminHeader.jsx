@@ -5,7 +5,7 @@ import UPNAME from "../../assets/dname-yw-v2.png";
 
 const AdminHeader = ({ onMenuToggle }) => {
     return (
-        <header className="w-full bg-red-900 text-white p-4 flex justify-between items-center md:hidden fixed top-0 left-0 z-50">
+        <header className="w-full bg-[#7b1113] text-white p-4 flex justify-between items-center md:hidden fixed top-0 left-0 z-50">
             <div className="flex items-center gap-2">
                 <img src={UPLogo} alt="UP Logo" className="h-10 w-auto" />
                 <img src={UPDrrm} alt="UP DRRM" className="h-10 w-auto" />

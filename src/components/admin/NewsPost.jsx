@@ -138,7 +138,7 @@ const handleImageUpload = async (e) => {
       {view === "list" && (
         <>
           <div className="flex justify-between items-center mb-4">
-            <h2 className="font-bold text-red-900">News Posts</h2>
+            <h2 className="font-bold text-[#7b1113]">News Posts</h2>
             <button
               onClick={() => {
                 setView("form");
@@ -148,7 +148,7 @@ const handleImageUpload = async (e) => {
                 setImage("");
                 setTags([]);
               }}
-              className="bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900"
+              className="bg-[#7b1113] text-white px-4 py-2 rounded hover:bg-[#3b0000] cursor-pointer"
             >
               + Add News
             </button>
@@ -173,7 +173,7 @@ const handleImageUpload = async (e) => {
                       className="w-full h-40 object-cover mb-2 rounded"
                     />
                   )}
-                  <h3 className="font-bold text-lg text-red-800 mb-1">
+                  <h3 className="font-bold text-lg text-[#7b1113] mb-1">
                     {news.title}
                   </h3>
                   <p className="text-sm text-gray-600 mb-2">
@@ -190,7 +190,7 @@ const handleImageUpload = async (e) => {
                     {news.tags.map((tag, index) => (
                       <span
                         key={index}
-                        className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded"
+                        className="text-xs bg-red-100 text-[#7b1113] px-2 py-1 rounded"
                       >
                         {tag}
                       </span>
@@ -200,14 +200,14 @@ const handleImageUpload = async (e) => {
                     <button
                       onClick={() => startEdit(news)}
                       title="Edit"
-                      className="flex gap-2 text-center bg-yellow-500 p-2 text-white rounded hover:text-blue-800"
+                      className="flex gap-2 text-center bg-[#f3aa2c] hover:bg-[#A66D1A] p-2 text-white rounded cursor-pointer"
                     >
                       <Pencil size={18} /> Edit
                     </button>
                     <button
                       onClick={() => deleteNews(news.id)}
                       title="Delete"
-                      className="text-red-600 hover:text-red-800"
+                      className="text-[#7b1113] hover:text-[#3b0000] cursor-pointer"
                     >
                       <Trash2 size={18} />
                     </button>
@@ -219,27 +219,27 @@ const handleImageUpload = async (e) => {
         </>
       )}
       
-      /* Detail View */
+      {/* Detail View */}
 
       {view === "detail" && selectedNews && (
         <div>
           <div className="flex justify-between items-center mb-4">
             <button
               onClick={() => setView("list")}
-              className="text-red-700 underline"
+              className="text-gray-500 hover:text-[#7b1113] underline cursor-pointer"
             >
               ← Back to News List
             </button>
             <div className="flex gap-4">
               <button
                 onClick={() => startEdit(selectedNews)}
-                className="text-blue-600 hover:text-blue-800"
+                className="text-[#f3aa2c] hover:text-[#A66D1A] cursor-pointer"
               >
                 <Pencil size={20} />
               </button>
               <button
                 onClick={() => deleteNews(selectedNews.id)}
-                className="text-red-600 hover:text-red-800"
+                className="text-[#7b1113] hover:text-[#3b0000] cursor-pointer"
               >
                 <Trash2 size={20} />
               </button>
@@ -253,7 +253,7 @@ const handleImageUpload = async (e) => {
                 className="w-full h-60 object-cover rounded mb-4"
               />
             )}
-            <h2 className="text-2xl font-bold text-red-900 mb-2">
+            <h2 className="text-2xl font-bold text-[#7b1113] mb-2">
               {selectedNews.title}
             </h2>
             <p className="text-sm text-gray-600 mb-4">
@@ -270,7 +270,7 @@ const handleImageUpload = async (e) => {
               {selectedNews.tags.map((tag, index) => (
                 <span
                   key={index}
-                  className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded"
+                  className="text-xs bg-red-100 text-[#7b1113] px-2 py-1 rounded"
                 >
                   {tag}
                 </span>
@@ -281,7 +281,7 @@ const handleImageUpload = async (e) => {
         </div>
       )}
 
-      /* Form View */
+      {/* Form View */}
       {view === "form" && (
         <div>
           <button
@@ -289,11 +289,11 @@ const handleImageUpload = async (e) => {
               setView("list");
               setEditingId(null);
             }}
-            className="mb-4 text-red-700 underline"
+            className="mb-4 text-gray-500 hover:text-[#7b1113] underline cursor-pointer"
           >
             ← Back to News List
           </button>
-          <h2 className="text-2xl font-bold mb-4 text-red-900">
+          <h2 className="text-2xl font-bold mb-4 text-[#7b1113]">
             {editingId ? "Edit News" : "Post New News"}
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -333,7 +333,7 @@ const handleImageUpload = async (e) => {
                               e.stopPropagation();
                               setImageUrls(imageUrls.filter((_, i) => i !== index));
                               }}
-                              className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                              className="absolute top-0 right-0 bg-[#7b1113] hover:bg-[#3b0000] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                           >
                               ✖
                           </button>
@@ -381,6 +381,7 @@ const handleImageUpload = async (e) => {
                       type="checkbox"
                       checked={tags.includes(tag)}
                       onChange={() => handleCheckboxChange(tag)}
+                      className="cursor-pointer accent-[#7b1113]"
                     />
                     <span>{tag}</span>
                   </label>
@@ -389,7 +390,7 @@ const handleImageUpload = async (e) => {
             </div>
             <button
               type="submit"
-              className="bg-red-800 text-white px-6 py-2 rounded hover:bg-red-900"
+              className="text-white px-6 py-2 rounded bg-[#7b1113] hover:bg-[#3b0000] cursor-pointer"
             >
               {editingId ? "Update News" : "Submit News"}
             </button>

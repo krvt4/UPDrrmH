@@ -71,7 +71,7 @@ function News() {
         <div className="flex justify-between items-center">
           <nav aria-label="breadcrumb">
             <div className="flex md:flex-row md:items-center text-gray-500 text-sm md:text-base">
-              <Link to="/" className="hover:text-red-900">
+              <Link to="/" className="hover:text-[#7b1113]">
                 Home
               </Link>
 
@@ -81,7 +81,7 @@ function News() {
 
               <Link
                 to="/news"
-                className="hover:text-red-900"
+                className="hover:text-[#7b1113]"
               >
                 News
               </Link>
@@ -89,7 +89,7 @@ function News() {
           </nav>
         </div>
 
-        <h2 className="font-semibold text-red-900 uppercase text-left py-4">
+        <h2 className="font-semibold text-[#7b1113] uppercase text-left py-4">
           News
         </h2>
 
@@ -163,7 +163,7 @@ function News() {
                     className="h-40 w-full object-cover rounded-md"
                   />
 
-                  <h3 className="text-xl font-semibold mt-2 text-gray-800 hover:text-red-900">
+                  <h3 className="text-xl font-semibold mt-2 text-gray-800 hover:text-[#7b1113]">
                     {news.title}
                   </h3>
 
