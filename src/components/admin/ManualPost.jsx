@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { db } from "../../firebase/firebase";
 import { collection, addDoc, serverTimestamp, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
-import { NotebookText, Plus, XIcon } from "lucide-react";
+import { NotebookText, Plus } from "lucide-react";
 
 function ManualPost() {
   const [title, setTitle] = useState("");
@@ -264,11 +264,11 @@ function ManualPost() {
       <>
         <button
           onClick={() => setIsEditing(false)}
-          className="mb-4 text-gray-500 hover:text-red-900 underline cursor-pointer"
+          className="mb-4 text-gray-500 hover:text-[#7b1113] underline cursor-pointer"
         >
           ← Back to Manual Details
         </button>
-        <h2 className="text-2xl font-bold text-red-900">Edit Manual</h2>
+        <h2 className="text-2xl font-bold text-[#7b1113]">Edit Manual</h2>
         <div className="md:flex items-center w-full gap-2">
           <p className="py-2 w-full font-bold md:w-1/8">Manual Title:
           
@@ -311,7 +311,7 @@ function ManualPost() {
                 value="Non Virtual Module" 
                 checked={category === "Non Virtual Module"} 
                 onChange={(e) => setCategory(e.target.value)} 
-                className="mr-2 accent-red-900"
+                className="mr-2 accent-[#7b1113]"
                 required 
               />
               <span>Non Virtual Module</span>
@@ -323,7 +323,7 @@ function ManualPost() {
                 value="VR Module (Facilitator)" 
                 checked={category === "VR Module (Facilitator)"} 
                 onChange={(e) => setCategory(e.target.value)} 
-                className="mr-2 accent-red-900"
+                className="mr-2 accent-[#7b1113]"
                 required 
               />
               <span>VR Module (Facilitator)</span>
@@ -335,7 +335,7 @@ function ManualPost() {
                 value="VR Module (Participant)" 
                 checked={category === "VR Module (Participant)"} 
                 onChange={(e) => setCategory(e.target.value)} 
-                className="mr-2 accent-red-900"
+                className="mr-2 accent-[#7b1113]"
                 required 
               />
               <span>VR Module (Participant)</span>
@@ -362,7 +362,7 @@ function ManualPost() {
                       e.stopPropagation(); // Prevent triggering the image click event
                       setImageUrls(imageUrls.filter((_, i) => i !== index));
                     }}
-                    className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute top-0 right-0 bg-[#7b1113] hover:bg-[#3b0000] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                   >
                     ✖
                   </button>
@@ -397,18 +397,18 @@ function ManualPost() {
           </div>
         </div>
         
-        <button onClick={handleUpdate} className="bg-red-800 hover:bg-red-900 text-white p-2 rounded w-full mb-2 cursor-pointer">Save Changes</button>
+        <button onClick={handleUpdate} className="bg-[#7b1113] hover:bg-[#3b0000] text-white p-2 rounded w-full mb-2 cursor-pointer">Save Changes</button>
         <button onClick={() => setIsEditing(false)} className="bg-gray-500 text-white p-2 rounded w-full hover:bg-gray-600 cursor-pointer">Cancel</button>
       </>
     ) : (
       <>
         <button
             onClick={() => setSelectedManual(null)}
-            className=" mb-4 text-gray-500 hover:text-red-900 underline cursor-pointer"
+            className=" mb-4 text-gray-500 hover:text-[#7b1113] underline cursor-pointer"
           >
             ← Back to Manuals List
           </button>
-        <h2 className="text-2xl font-bold text-red-900">Manual Details</h2>
+        <h2 className="text-2xl font-bold text-[#7b1113]">Manual Details</h2>
         <div className="md:flex items-center w-full gap-2 pt-2">
           <p className="py-2 md:w-1/8"><strong>Manual Title:</strong></p>
           <p>{selectedManual.title}</p>
@@ -475,8 +475,8 @@ function ManualPost() {
               </div>
             )}
 
-        <button onClick={handleEdit} className="bg-yellow-500 text-white p-2 rounded w-full mt-2 hover:bg-yellow-600 cursor-pointer">Edit</button>
-      <button onClick={() => setShowDeleteConfirmation(true)} className="bg-red-600 text-white p-2 rounded w-full  hover:bg-red-900 mt-2 cursor-pointer">Delete</button>
+        <button onClick={handleEdit} className="text-white p-2 rounded w-full mt-2 bg-[#f3aa2c] hover:bg-[#A66D1A] cursor-pointer">Edit</button>
+      <button onClick={() => setShowDeleteConfirmation(true)} className="text-white p-2 rounded w-full bg-[#7b1113] hover:bg-[#3b0000] mt-2 cursor-pointer">Delete</button>
       </>
     )}
   </div>
@@ -485,11 +485,11 @@ function ManualPost() {
     <button
       type="button"
       onClick={() => setShowForm(false)}
-      className="mb-4 text-gray-500 hover:text-red-900 underline cursor-pointer"
+      className="mb-4 text-gray-500 hover:text-[#7b1113] underline cursor-pointer"
     >
       ← Back to Manuals List
     </button>   
-    <h2 className="text-2xl font-bold text-red-900 mb-4">Post Manual</h2>   
+    <h2 className="text-2xl font-bold text-[#7b1113] mb-4">Post Manual</h2>   
     <form onSubmit={handlePost} className="space-y-3">
         <div className="md:flex items-center w-full space-y-4 ">
           <label className=" w-1/8 font-bold">Manual Title: </label>
@@ -535,7 +535,7 @@ function ManualPost() {
                 value="Non Virtual Module" 
                 checked={category === "Non Virtual Module"} 
                 onChange={(e) => setCategory(e.target.value)} 
-                className="mr-2 accent-red-900"
+                className="mr-2 accent-[#7b1113]"
                 required 
               />
               <span>Non Virtual Module</span>
@@ -547,7 +547,7 @@ function ManualPost() {
                 value="VR Module (Facilitator)" 
                 checked={category === "VR Module (Facilitator)"} 
                 onChange={(e) => setCategory(e.target.value)} 
-                className="mr-2 accent-red-900"
+                className="mr-2 accent-[#7b1113]"
                 required 
               />
               <span>VR Module (Facilitator)</span>
@@ -559,7 +559,7 @@ function ManualPost() {
                 value="VR Module (Participant)" 
                 checked={category === "VR Module (Participant)"} 
                 onChange={(e) => setCategory(e.target.value)} 
-                className="mr-2 accent-red-900"
+                className="mr-2 accent-[#7b1113]"
                 required 
               />
               <span>VR Module (Participant)</span>
@@ -586,7 +586,7 @@ function ManualPost() {
                     e.stopPropagation(); 
                     setImageUrls(imageUrls.filter((_, i) => i !== index));
                   }}
-                  className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute top-0 right-0 bg-[#7b1113] hover:bg-[#3b0000] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                 >
                   ✖
                 </button>
@@ -621,7 +621,7 @@ function ManualPost() {
         </div>
       </div>
 
-      <button type="submit" className="bg-yellow-500 text-white p-2 rounded w-full hover:bg-yellow-600 cursor-pointer" disabled={loading}>
+      <button type="submit" className="bg-[#f3aa2c] hover:bg-[#A66D1A] text-white p-2 rounded w-full cursor-pointer" disabled={loading}>
         {loading ? "Posting..." : "Post Manual"}
       </button>
       <button
@@ -642,7 +642,7 @@ function ManualPost() {
         setShowForm(true);
         setSelectedManual(null); // Hide Manual Details
       }}
-      className="bg-yellow-500 text-white px-4 py-2 rounded-lg mb-4 flex items-center gap-2 hover:bg-yellow-600 cursor-pointer"
+      className="bg-[#f3aa2c] hover:bg-[#A66D1A] text-white px-4 py-2 rounded-lg mb-4 flex items-center gap-2 cursor-pointer"
     > 
       <Plus size={20}/>New Post
     </button>
@@ -712,7 +712,7 @@ function ManualPost() {
             <div className="flex justify-between">
               <button
                 onClick={handleDelete}
-                className="bg-red-600 text-white px-4 py-2 rounded"
+                className="bg-[#7b1113] text-white px-4 py-2 rounded"
               >
                 Yes, Delete
               </button>

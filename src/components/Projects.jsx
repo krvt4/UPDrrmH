@@ -106,24 +106,24 @@ function Projects() {
                 <div className="p-6 flex flex-col flex-grow">
                   <div className="flex justify-center mb-4">
                     <div className="h-14 w-14 rounded-full flex items-center justify-center bg-red-50">
-                      <FolderKanban size={26} className="text-red-900" />
+                      <FolderKanban size={26} className="text-[#7b1113]" />
                     </div>
                   </div>
 
-                  <h3 className="text-xl md:text-2xl font-bold text-red-900 text-center leading-snug">
+                  <h3 className="text-xl md:text-2xl font-bold text-[#7b1113] text-center leading-snug">
                     {project.title}
                   </h3>
 
                   <div className="flex flex-wrap items-center justify-center gap-3 mt-4">
-                    <span className="inline-flex rounded-full bg-red-100 text-red-900 px-3 py-1 text-xs font-semibold">
+                    <span className="inline-flex rounded-full bg-red-100 text-[#7b1113] px-3 py-1 text-xs font-semibold">
                       {project.category}
                     </span>
 
                     <span
                       className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
                         project.status === "Live"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-yellow-100 text-yellow-700"
+                          ? "bg-green-100 text-[#014421]"
+                          : "bg-yellow-100 text-[#A66D1A]"
                       }`}
                     >
                       {project.status}
@@ -140,7 +140,7 @@ function Projects() {
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full inline-flex items-center justify-center gap-2 bg-red-900 hover:bg-red-800 text-white font-semibold px-4 py-3 rounded-lg transition"
+                        className="w-full inline-flex items-center justify-center gap-2 bg-[#7b1113] hover:bg-[#3b0000] text-white font-semibold px-4 py-3 rounded-lg transition"
                       >
                         <span>Visit Project</span>
                         <ExternalLink size={18} />

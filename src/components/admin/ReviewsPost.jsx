@@ -129,7 +129,7 @@ const ReviewsPost = () => {
       {view === "list" && (
         <>
           <div className="flex justify-between items-center mb-4">
-            <h2 className="font-bold text-red-900">Customer Reviews</h2>
+            <h2 className="font-bold text-[#7b1113]">Customer Reviews</h2>
             <button
               onClick={() => {
                 setView("form");
@@ -139,7 +139,7 @@ const ReviewsPost = () => {
                 setContent("");
                 setRating(0);
               }}
-              className="bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900 cursor-pointer"
+              className="bg-[#7b1113] text-white px-4 py-2 rounded hover:bg-[#3b0000] cursor-pointer"
             >
               + Add Review
             </button>
@@ -157,7 +157,7 @@ const ReviewsPost = () => {
                     setView("detail");
                   }}
                 >
-                  <h3 className="font-bold text-lg text-red-800 mb-1">
+                  <h3 className="font-bold text-lg text-[#7b1113] mb-1">
                     {review.name}
                   </h3>
                   <p className="text-sm text-gray-600 mb-2">{review.profession}</p>
@@ -174,7 +174,7 @@ const ReviewsPost = () => {
                         startEdit(review);
                       }}
                       title="Edit"
-                      className="flex gap-2 text-center bg-yellow-500 p-2 text-white rounded hover:text-blue-800 cursor-pointer"
+                      className="flex gap-2 text-center bg-[#f3aa2c] hover:bg-[#A66D1A] p-2 text-white rounded cursor-pointer"
                     >
                       <Pencil size={18} /> Edit
                     </button>
@@ -184,7 +184,7 @@ const ReviewsPost = () => {
                         deleteReview(review.id);
                       }}
                       title="Delete"
-                      className="text-red-600 hover:text-red-800 cursor-pointer"
+                      className="text-[#7b1113] hover:text-[#3b0000] cursor-pointer"
                     >
                       <Trash2 size={18} />
                     </button>
@@ -201,20 +201,20 @@ const ReviewsPost = () => {
           <div className="flex justify-between items-center mb-4">
             <button
               onClick={() => setView("list")}
-              className="text-gray-500 hover:text-red-900 underline cursor-pointer"
+              className="text-gray-500 hover:text-[#7b1113] underline cursor-pointer"
             >
               ← Back to Reviews List
             </button>
             <div className="flex gap-4">
               <button
                 onClick={() => startEdit(selectedReview)}
-                className="text-blue-600 hover:text-blue-800"
+                className="text-[#04204a] hover:text-[#02162f]"
               >
                 <Pencil size={20} />
               </button>
               <button
                 onClick={() => deleteReview(selectedReview.id)}
-                className="text-red-600 hover:text-red-800"
+                className="text-[#7b1113] hover:text-[#3b0000]"
               >
                 <Trash2 size={20} />
               </button>
@@ -223,7 +223,7 @@ const ReviewsPost = () => {
           <div className="bg-white p-4 rounded shadow">
             <div className="flex justify-between items-start mb-4">
               <div>
-                <h2 className="text-2xl font-bold text-red-900 mb-1">
+                <h2 className="text-2xl font-bold text-[#7b1113] mb-1">
                   {selectedReview.name}
                 </h2>
                 <p className="text-lg text-gray-600 mb-2">
@@ -258,11 +258,11 @@ const ReviewsPost = () => {
               setView("list");
               setEditingId(null);
             }}
-            className="mb-4 text-gray-500 hover:text-red-900 underline cursor-pointer"
+            className="mb-4 text-gray-500 hover:text-[#7b1113] underline cursor-pointer"
           >
             ← Back to Reviews List
           </button>
-          <h2 className="text-2xl font-bold mb-4 text-red-900">
+          <h2 className="text-2xl font-bold mb-4 text-[#7b1113]">
             {editingId ? "Edit Review" : "Add New Review"}
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -301,7 +301,7 @@ const ReviewsPost = () => {
             </div>
             <button
               type="submit"
-              className="bg-red-800 text-white px-6 py-2 rounded hover:bg-red-900 cursor-pointer"
+              className="bg-[#7b1113] text-white px-6 py-2 rounded hover:bg-[#3b0000] cursor-pointer"
             >
               {editingId ? "Update Review" : "Submit Review"}
             </button>

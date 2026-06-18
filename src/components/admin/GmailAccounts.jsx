@@ -140,10 +140,10 @@ export default function GmailAccounts() {
     const s = (status || "pending").toLowerCase();
     const cls =
       s === "approved"
-        ? "bg-green-100 text-green-800"
+        ? "bg-green-100 text-[#014421]"
         : s === "rejected"
-        ? "bg-red-100 text-red-800"
-        : "bg-yellow-100 text-yellow-800";
+        ? "bg-red-100 text-[#7b1113]"
+        : "bg-yellow-100 text-[#A66D1A]";
 
     return (
       <span className={`px-2 py-1 rounded text-xs font-semibold ${cls}`}>
@@ -603,7 +603,7 @@ export default function GmailAccounts() {
         <button
           onClick={() => removeOneUser(uid)}
           disabled={busy}
-          className={`${singleBtn} bg-red-900 hover:bg-red-800 cursor-pointer`}
+          className={`${singleBtn} bg-[#7b1113] hover:bg-[#3b0000] cursor-pointer`}
         >
           Remove
         </button>
@@ -615,7 +615,7 @@ export default function GmailAccounts() {
         <button
           onClick={() => approveUser(uid)}
           disabled={busy}
-          className={`${singleBtn} bg-green-600 hover:bg-green-700 cursor-pointer`}
+          className={`${singleBtn} bg-[#014421] hover:bg-[#042e16] cursor-pointer`}
         >
           Approve
         </button>
@@ -627,7 +627,7 @@ export default function GmailAccounts() {
         <button
           onClick={() => rejectUser(uid)}
           disabled={busy}
-          className={`${singleBtn} bg-red-600 hover:bg-red-700 cursor-pointer`}
+          className={`${singleBtn} bg-[#7b1113] hover:bg-[#3b0000] cursor-pointer`}
         >
           Reject
         </button>
@@ -639,7 +639,7 @@ export default function GmailAccounts() {
         <button
           onClick={() => approveUser(uid)}
           disabled={busy}
-          className={`${splitBtn} bg-green-600 hover:bg-green-700 cursor-pointer`}
+          className={`${splitBtn} bg-[#014421] hover:bg-[#042e16] cursor-pointer`}
         >
           Approve
         </button>
@@ -647,7 +647,7 @@ export default function GmailAccounts() {
         <button
           onClick={() => rejectUser(uid)}
           disabled={busy}
-          className={`${splitBtn} bg-red-600 hover:bg-red-700 cursor-pointer`}
+          className={`${splitBtn} bg-[#7b1113] hover:bg-[#3b0000] cursor-pointer`}
         >
           Reject
         </button>

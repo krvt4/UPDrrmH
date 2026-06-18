@@ -268,7 +268,7 @@ function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-50 bg-red-900 shadow-md">
+      <header className="fixed top-0 left-0 w-full z-50 bg-[#7b1113] shadow-md">
         <div className="mx-auto w-full px-4 lg:px-6">
           <div className="flex items-center justify-between h-[76px]">
             <div className="flex items-center min-w-0 shrink-0">
@@ -303,7 +303,7 @@ function Header() {
                           smooth
                           to={fullyAuthenticated ? item.to : "#"}
                           onClick={(e) => requireLoginForPath(item.to, e)}
-                          className="inline-flex items-center gap-2 px-3 py-2 rounded-full font-semibold text-[15px] hover:bg-white/10 hover:text-yellow-300 transition"
+                          className="inline-flex items-center gap-2 px-3 py-2 rounded-full font-semibold text-[15px] hover:bg-white/10 hover:text-[#F3AA2C] transition"
                         >
                           <Icon size={18} strokeWidth={2.2} />
                           <span>{item.label}</span>
@@ -318,7 +318,7 @@ function Header() {
                         <HashLink
                           smooth
                           to={item.to}
-                          className="inline-flex items-center gap-2 px-3 py-2 rounded-full font-semibold text-[15px] hover:bg-white/10 hover:text-yellow-300 transition"
+                          className="inline-flex items-center gap-2 px-3 py-2 rounded-full font-semibold text-[15px] hover:bg-white/10 hover:text-[#F3AA2C] transition"
                         >
                           <Icon size={18} strokeWidth={2.2} />
                           <span>{item.label}</span>
@@ -432,7 +432,7 @@ function Header() {
 
                         <button
                           onClick={handleLogout}
-                          className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-600 hover:bg-red-50"
+                          className="w-full flex items-center gap-3 px-4 py-3 text-sm text-[#7b1113] hover:bg-[#3b0000]"
                         >
                           <LogOut size={18} />
                           Log Out
@@ -447,7 +447,7 @@ function Header() {
                     setRedirectPath("/");
                     setShowLogin(true);
                   }}
-                  className="bg-yellow-500 border border-transparent hover:bg-transparent hover:border-white text-white font-semibold text-sm px-4 py-2 transition rounded-full flex items-center gap-2"
+                  className="bg-[#F3AA2C] border border-transparent hover:bg-transparent hover:border-white text-white font-semibold text-sm px-4 py-2 transition rounded-full flex items-center gap-2"
                 >
                   <span>Log In</span>
                   <LogIn size={20} />
@@ -467,7 +467,7 @@ function Header() {
       </header>
 
       {menuOpen && (
-        <div className="xl:hidden fixed top-[76px] right-0 w-72 h-[calc(100vh-76px)] bg-red-900 text-white p-5 z-50 shadow-lg overflow-y-auto">
+        <div className="xl:hidden fixed top-[76px] right-0 w-72 h-[calc(100vh-76px)] bg-[#7b1113] text-white p-5 z-50 shadow-lg overflow-y-auto">
           <ul className="flex flex-col gap-4 mt-2">
             {mobileNav.map((item) => {
               const Icon = item.icon;

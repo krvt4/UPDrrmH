@@ -494,11 +494,11 @@ const LoginRegisterForm = ({
 
   const labelCls = "block text-white/90 text-sm mb-1";
   const inputCls =
-    "w-full h-11 px-3 rounded-lg border border-white/25 bg-white/10 text-white placeholder:text-white/60 outline-none focus:ring-2 focus:ring-yellow-300/60 focus:border-white/40";
+    "w-full h-11 px-3 rounded-lg border border-white/25 bg-white/10 text-white placeholder:text-white/60 outline-none focus:ring-2 focus:ring-[#F3AA2C] focus:border-white/40";
   const selectCls =
-    "w-full h-11 px-3 rounded-lg border border-white/25 bg-white/10 text-white outline-none focus:ring-2 focus:ring-yellow-300/60 focus:border-white/40";
+    "w-full h-11 px-3 rounded-lg border border-white/25 bg-white/10 text-white outline-none focus:ring-2 focus:ring-[#F3AA2C] focus:border-white/40";
   const textareaCls =
-    "w-full px-3 py-2 rounded-lg border border-white/25 bg-white/10 text-white placeholder:text-white/60 outline-none focus:ring-2 focus:ring-yellow-300/60 focus:border-white/40";
+    "w-full px-3 py-2 rounded-lg border border-white/25 bg-white/10 text-white placeholder:text-white/60 outline-none focus:ring-2 focus:ring-[#F3AA2C] focus:border-white/40";
 
   return (
     <div
@@ -663,7 +663,7 @@ const LoginRegisterForm = ({
                   <label htmlFor="privacyCheckbox" className="text-white/90 text-sm">
                     I agree to the{" "}
                     <span
-                      className="text-yellow-200 hover:text-yellow-100 cursor-pointer underline"
+                      className="text-[#F3AA2C] hover:text-[#A66D1A] cursor-pointer underline"
                       onClick={() => setShowPrivacyPopup(true)}
                     >
                       Privacy Policy
@@ -675,7 +675,7 @@ const LoginRegisterForm = ({
 
             <div>
               <label className={labelCls}>Email</label>
-              <div className="flex gap-2 items-center h-11 px-3 rounded-lg border border-white/25 bg-white/10 text-white focus-within:ring-2 focus-within:ring-yellow-300/60">
+              <div className="flex gap-2 items-center h-11 px-3 rounded-lg border border-white/25 bg-white/10 text-white focus-within:ring-2 focus-within:ring-[#F3AA2C]">
                 <User size={18} className="opacity-80" />
                 <input
                   type="email"
@@ -690,7 +690,7 @@ const LoginRegisterForm = ({
 
             <div>
               <label className={labelCls}>Password</label>
-              <div className="flex gap-2 items-center h-11 px-3 rounded-lg border border-white/25 bg-white/10 text-white focus-within:ring-2 focus-within:ring-yellow-300/60">
+              <div className="flex gap-2 items-center h-11 px-3 rounded-lg border border-white/25 bg-white/10 text-white focus-within:ring-2 focus-within:ring-[#F3AA2C]">
                 <Lock size={18} className="opacity-80" />
                 <input
                   type={showPassword ? "text" : "password"}
@@ -716,7 +716,7 @@ const LoginRegisterForm = ({
                     type="button"
                     onClick={handleForgotPassword}
                     disabled={forgotPasswordLoading || !email.trim()}
-                    className="text-yellow-200 hover:text-yellow-100 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="text-[#F3AA2C] hover:text-[#A66D1A] text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {forgotPasswordLoading ? "Sending reset email..." : "Forgot Password?"}
                   </button>
@@ -727,7 +727,7 @@ const LoginRegisterForm = ({
             {!isLogin && (
               <div>
                 <label className={labelCls}>Confirm Password</label>
-                <div className="flex gap-2 items-center h-11 px-3 rounded-lg border border-white/25 bg-white/10 text-white focus-within:ring-2 focus-within:ring-yellow-300/60">
+                <div className="flex gap-2 items-center h-11 px-3 rounded-lg border border-white/25 bg-white/10 text-white focus-within:ring-2 focus-within:ring-[#F3AA2C]">
                   <input
                     type={showConfirmPassword ? "text" : "password"}
                     value={confirmPassword}
@@ -751,7 +751,7 @@ const LoginRegisterForm = ({
             <button
               type="submit"
               disabled={submitting}
-              className="w-full h-11 rounded-lg bg-yellow-400 hover:bg-yellow-300 disabled:opacity-60 text-zinc-900 font-semibold transition"
+              className="w-full h-11 rounded-lg bg-[#F3AA2C] hover:bg-[#A66D1A] disabled:opacity-60 text-zinc-900 font-semibold transition"
             >
               {submitting ? "Please wait..." : isLogin ? "Login" : "Register"}
             </button>
@@ -805,7 +805,7 @@ const LoginRegisterForm = ({
                 To know more about your privacy rights, visit:{" "}
                 <a
                   href="https://privacy.gov.ph/data-privacy-act/#w11"
-                  className="text-yellow-200 hover:text-yellow-100 underline"
+                  className="text-[#F3AA2C] hover:text-[#A66D1A] underline"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -817,7 +817,7 @@ const LoginRegisterForm = ({
             <div className="px-5 pb-5 flex justify-end">
               <button
                 onClick={() => setShowPrivacyPopup(false)}
-                className="h-11 px-4 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-zinc-900 font-semibold transition"
+                className="h-11 px-4 rounded-lg bg-[#F3AA2C] hover:bg-[#A66D1A] text-zinc-900 font-semibold transition"
                 type="button"
               >
                 I Understand

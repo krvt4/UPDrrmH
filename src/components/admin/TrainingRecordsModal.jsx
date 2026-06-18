@@ -340,7 +340,7 @@ export default function TrainingRecordsModal({ user, onClose }) {
           {loading ? (
             <div className="p-4">Loading...</div>
           ) : error ? (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded">{error}</div>
+            <div className="mb-4 p-3 bg-red-50 border border-[#7b1113] text-[#7b1113] rounded">{error}</div>
           ) : records.length === 0 ? (
             <div className="p-4 bg-gray-50 border rounded text-gray-700">No training records found for this user.</div>
           ) : (
@@ -435,7 +435,7 @@ export default function TrainingRecordsModal({ user, onClose }) {
               disabled={loading || records.length === 0}
               className={
                 "px-4 py-2 rounded border font-semibold disabled:opacity-60 cursor-pointer" +
-                (mode === "remove" ? "bg-red-700 text-white border-red-700 hover:bg-red-800" : "hover:bg-gray-50")
+                (mode === "remove" ? "bg-[#7b1113] text-white border-[#7b1113] hover:bg-[#3b0000]" : "hover:bg-gray-50")
               }
             >
               {mode === "remove" ? "Cancel" : "Remove"}
@@ -450,7 +450,7 @@ export default function TrainingRecordsModal({ user, onClose }) {
               disabled={loading || records.length === 0}
               className={
                 "px-4 py-2 rounded border font-semibold disabled:opacity-60 cursor-pointer" +
-                (mode === "update" ? "bg-red-900 text-white border-red-900 hover:bg-red-800" : "hover:bg-gray-50")
+                (mode === "update" ? "bg-[#7b1113] text-white border-[#7b1113] hover:bg-[#3b0000]" : "hover:bg-gray-50")
               }
             >
               {mode === "update" ? "Cancel" : "Update"}
@@ -490,7 +490,7 @@ export default function TrainingRecordsModal({ user, onClose }) {
             </div>
 
             {deleteError ? (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded">{deleteError}</div>
+              <div className="mb-4 p-3 bg-red-50 border border-[#7b1113] text-[#7b1113] rounded">{deleteError}</div>
             ) : null}
 
             <div className="flex justify-end gap-2">
@@ -499,7 +499,7 @@ export default function TrainingRecordsModal({ user, onClose }) {
               </button>
               <button
                 onClick={confirmDeleteNow}
-                className="px-4 py-2 rounded bg-red-700 text-white hover:bg-red-800 disabled:opacity-60"
+                className="px-4 py-2 rounded bg-[#7b1113] text-white hover:bg-[#3b0000] disabled:opacity-60"
                 type="button"
                 disabled={deleting}
               >
@@ -542,7 +542,7 @@ export default function TrainingRecordsModal({ user, onClose }) {
             </p>
 
             {saveError ? (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded">{saveError}</div>
+              <div className="mb-4 p-3 bg-red-50 border border-[#7b1113] text-[#7b1113] rounded">{saveError}</div>
             ) : null}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -592,7 +592,7 @@ export default function TrainingRecordsModal({ user, onClose }) {
               <button
                 onClick={onSave}
                 disabled={saving}
-                className="px-6 py-3 rounded bg-red-800 text-white hover:bg-red-900 disabled:opacity-60 text-lg cursor-pointer"
+                className="px-6 py-3 rounded bg-[#7b1113] text-white hover:bg-[#3b0000] disabled:opacity-60 text-lg cursor-pointer"
                 type="button"
               >
                 {saving ? "Saving..." : "Save Changes"}

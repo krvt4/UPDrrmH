@@ -20,7 +20,7 @@ import {
 
 const AdminSidebar = ({ adminName, menuOpen, setMenuOpen }) => {
   const sidebarClasses = `
-    bg-red-900 text-white flex flex-col p-4 transition-transform duration-300 z-50
+    bg-[#7b1113] text-white flex flex-col p-4 transition-transform duration-300 z-50
     fixed md:static
     top-18 md:top-0 left-0
     h-screen
@@ -125,7 +125,7 @@ const AdminSidebar = ({ adminName, menuOpen, setMenuOpen }) => {
             <div className="flex items-center gap-2 mr-2">
               <BookOpenText size={25} /> Manuals
             </div>
-            <span className="bg-white text-red-800 text-sm font-bold px-2 py-1 rounded">
+            <span className="bg-white text-[#7b1113] text-sm font-bold px-2 py-1 rounded">
               {manualCount}
             </span>
           </Link>
@@ -138,7 +138,7 @@ const AdminSidebar = ({ adminName, menuOpen, setMenuOpen }) => {
             <div className="flex items-center gap-2 mr-2">
               <PackageOpenIcon size={25} /> Orders
             </div>
-            <span className="bg-white text-red-800 text-sm font-bold px-2 py-1 rounded">
+            <span className="bg-white text-[#7b1113] text-sm font-bold px-2 py-1 rounded">
               {pendingOrdersCount}
             </span>
           </Link>
@@ -202,7 +202,7 @@ const AdminSidebar = ({ adminName, menuOpen, setMenuOpen }) => {
             <div className="flex items-center gap-2 mr-2">
               <Mail size={25} /> Gmail Accounts
             </div>
-            <span className="bg-white text-red-800 text-sm font-bold px-2 py-1 rounded">
+            <span className="bg-white text-[#7b1113] text-sm font-bold px-2 py-1 rounded">
               {pendingUsersCount}
             </span>
           </Link>
@@ -221,7 +221,7 @@ const AdminSidebar = ({ adminName, menuOpen, setMenuOpen }) => {
         {/* Logout */}
         <button
           onClick={handleLogout}
-          className="flex items-center text-white font-semibold text-sm px-4 py-2 bg-red-800 rounded hover:bg-gray-700 transition mt-auto gap-2 text-center"
+          className="flex items-center text-white font-semibold text-sm px-4 py-2 bg-[#7b1113] rounded hover:bg-gray-700 transition mt-auto gap-2 text-center"
         >
           <LogOutIcon size={25} /> Log Out
         </button>

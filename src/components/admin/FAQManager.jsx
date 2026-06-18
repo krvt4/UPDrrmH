@@ -93,7 +93,7 @@ const FAQManager = () => {
       {view === "list" && (
         <>
           <div className="flex justify-between items-center mb-4">
-            <h2 className="font-bold text-red-900">Frequently Asked Questions</h2>
+            <h2 className="font-bold text-[#7b1113]">Frequently Asked Questions</h2>
             <button
               onClick={() => {
                 setView("form");
@@ -101,7 +101,7 @@ const FAQManager = () => {
                 setQuestion("");
                 setAnswer("");
               }}
-              className="bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900"
+              className="bg-[#7b1113] text-white px-4 py-2 rounded hover:bg-[#3b0000]"
             >
               + Add FAQ
             </button>
@@ -115,7 +115,7 @@ const FAQManager = () => {
               >
                 <div className="flex justify-between items-center">
                   <h3 
-                    className="font-bold text-lg text-red-800 cursor-pointer"
+                    className="font-bold text-lg text-[#7b1113] cursor-pointer"
                     onClick={() => toggleExpand(faq.id)}
                   >
                     {faq.question}
@@ -134,14 +134,14 @@ const FAQManager = () => {
                       <button
                         onClick={() => startEdit(faq)}
                         title="Edit"
-                        className="flex gap-2 items-center text-center bg-yellow-500 p-2 text-white rounded hover:text-blue-800"
+                        className="flex gap-2 items-center text-center bg-[#f3aa2c] hover:bg-[#A66D1A] p-2 text-white rounded"
                       >
                         <Pencil size={18} /> Edit
                       </button>
                       <button
                         onClick={() => deleteFaq(faq.id)}
                         title="Delete"
-                        className="flex gap-2 items-center text-red-600 hover:text-red-800"
+                        className="flex gap-2 items-center text-[#7b1113] hover:text-[#3b0000]"
                       >
                         <Trash2 size={18} /> Delete
                       </button>
@@ -161,11 +161,11 @@ const FAQManager = () => {
               setView("list");
               setEditingId(null);
             }}
-            className="mb-4 text-gray-500 hover:text-red-900 underline cursor-pointer"
+            className="mb-4 text-gray-500 hover:text-[#7b1113] underline cursor-pointer"
           >
             ← Back to FAQs List
           </button>
-          <h2 className="text-2xl font-bold mb-4 text-red-900">
+          <h2 className="text-2xl font-bold mb-4 text-[#7b1113]">
             {editingId ? "Edit FAQ" : "Add New FAQ"}
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -190,7 +190,7 @@ const FAQManager = () => {
             </div>
             <button
               type="submit"
-              className="bg-red-800 text-white px-6 py-2 rounded hover:bg-red-900"
+              className="bg-[#7b1113] text-white px-6 py-2 rounded hover:bg-[#3b0000]"
             >
               {editingId ? "Update FAQ" : "Submit FAQ"}
             </button>

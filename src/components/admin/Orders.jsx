@@ -151,7 +151,7 @@ function Orders() {
                       ${
                         statusFilter === "total"
                           ? "bg-white"
-                          : "bg-[#f9f6e8]"
+                          : "bg-yellow-50"
                       }`}>
               <div className="flex justify-between">
                 <h3 className="font-semibold">Total Orders</h3>
@@ -185,7 +185,7 @@ function Orders() {
                           : "bg-red-100 hover:bg-red-200"
                       }`}>
             <div className="flex justify-between">
-              <h3 className="text-lg font-semibold text-red-900">Pending</h3>
+              <h3 className="text-lg font-semibold text-[#7b1113]">Pending</h3>
               <p className="text-gray-700 text-5xl font-semibold">
                 {orders.filter((o) => o.status === "pending").length}
               </p>
@@ -216,7 +216,7 @@ function Orders() {
                           : "bg-green-100 hover:bg-green-200"
                       }`}>
             <div className="flex justify-between">
-              <h3 className="text-lg font-semibold text-green-900">Processed</h3>
+              <h3 className="text-lg font-semibold text-[#014421]">Processed</h3>
               <p className="text-gray-700 text-5xl font-semibold">
                 {orders.filter((o) => o.status === "processed").length}
               </p>
@@ -298,7 +298,7 @@ function Orders() {
                     {order?.cartItems?.reduce((acc, item) => acc + item.quantity, 0) || 0}
                   </td>
 
-                  <td className="px-4 py-2 text-red-900 font-bold">
+                  <td className="px-4 py-2 text-[#7b1113] font-bold">
                     ₱{" "}
                     {order.cartItems?.reduce(
                       (acc, item) => acc + item.price * item.quantity,
@@ -323,10 +323,10 @@ function Orders() {
                       className={`rounded-lg px-4 py-1 font-bold inline-block
                       ${
                         order.status === "pending"
-                          ? "bg-red-200 text-red-900"
+                          ? "bg-red-100 text-[#7b1113]"
                           : order.status === "processed"
-                          ? "bg-orange-200 text-orange-900"
-                          : "bg-green-200 text-green-900"
+                          ? "bg-yellow-100 text-[#A66D1A]"
+                          : "bg-green-100 text-[#014421]"
                       }`}
                     >
                       {order.status}
@@ -429,7 +429,7 @@ function Orders() {
                         value={option}
                         checked={courier === option}
                         onChange={(e) => setCourier(e.target.value)}
-                        className="cursor-pointer accent-red-900"
+                        className="cursor-pointer accent-[#7b1113]"
                       />
                       {option}
                     </label>

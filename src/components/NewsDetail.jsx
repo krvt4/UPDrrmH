@@ -94,7 +94,7 @@ function NewsDetail() {
         <p className="text-red-500">{error || "News not found!"}</p>
         <p className="mt-2">
           Go back to{" "}
-          <Link className="text-blue-600 underline" to="/news">
+          <Link className="text-[#04204a] underline" to="/news">
             News
           </Link>
           .
@@ -110,16 +110,16 @@ function NewsDetail() {
         <nav aria-label="breadcrumb" className="max-w-7xl mx-auto pt-4">
           <div className="flex flex-col md:flex-row md:items-center text-gray-500 text-sm md:text-base">
             <div className="flex items-center flex-wrap">
-              <Link to="/" className="hover:text-red-900">
+              <Link to="/" className="hover:text-[#7b1113]">
                 Home
               </Link>
               <span className="mx-2 text-black font-bold">&gt;&gt;</span>
-              <Link to="/news" className="hover:text-red-900">
+              <Link to="/news" className="hover:text-[#7b1113]">
                 News
               </Link>
               <span className="mx-2 text-black font-bold">&gt;&gt;</span>
             </div>
-            <p className="text-red-900 font-semibold md:ml-2 mt-2 md:mt-0 break-words">
+            <p className="text-[#7b1113] font-semibold md:ml-2 mt-2 md:mt-0 break-words">
               {news.title}
             </p>
           </div>
